@@ -17,7 +17,7 @@ export function createSubmitHandler(callback) {
         event.preventDefault();
         const form = event.currentTarget;
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        const data = Object.fromEntries([...formData.entries()].map(([k,v]) => [k, v.trim()]));
 
         callback(data, form);
     };

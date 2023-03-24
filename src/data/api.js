@@ -15,13 +15,11 @@ async function request(method, url, data) {
         }
     };
 
-    /*
     const userData = getUserData();
     if (userData) {
-        const token = userData.accessToken;
-        options.headers['X-Authorization'] = token;
+        const token = userData.sessionToken;
+        options.headers['X-Parse-Session-Token'] = token;
     }
-    */
 
     if (data !== undefined) {
         options.headers['Content-Type'] = 'application/json';
@@ -37,20 +35,29 @@ async function request(method, url, data) {
         }
 
         if (response.ok == false) {
-            /*
-            if (response.status == 403) {
+            if (result.code == 209) {
                 clearUserData();
             }
-            */
             const error = result;
-            throw error;
+            throw {
+                message: error.error,
+                handled: false
+            };
         }
 
         return result;
 
     } catch (err) {
-        alert(err.message);
+        handleError(err);
         throw err;
+    }
+}
+
+async function handleError(error) {
+    await new Promise(r => setTimeout(r, 50));
+
+    if (!error.handled) {
+        alert(error.message);
     }
 }
 

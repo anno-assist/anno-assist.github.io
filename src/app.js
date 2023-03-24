@@ -1,13 +1,18 @@
 import page from './lib/page.mjs';
-import { html } from './lib/lit-html.js';
+
 import { addRender } from './middlewares/render.js';
+
 import { settingsView } from './views/settings.js';
 import { islandsView } from './views/islands.js';
+import { loginView } from './views/login.js';
+import { addSession } from './middlewares/session.js';
 
 
+page(addSession);
 page(addRender);
 page('/index.html', '/');
 page('/', islandsView);
 page('/settings', settingsView);
+page('/login', loginView);
 
 page.start();
