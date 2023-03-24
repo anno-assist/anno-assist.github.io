@@ -75,3 +75,10 @@ h1 {
     cursor: pointer;
     box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
+
+.error {
+    color: red;
+    padding: 8px 16px;
+    box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.4);
+}

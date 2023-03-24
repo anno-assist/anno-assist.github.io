@@ -1,9 +1,10 @@
-import { create, getGames } from '../data/games.js';
+import { create, deleteGame, getGames } from '../data/games.js';
 import { html } from '../lib/lit-html.js';
 import { createSubmitHandler } from '../util.js';
+import { icon } from './partials.js';
 
 
-const settingsTemplate = (games, user, onCreate, error) => html`
+const settingsTemplate = (games, user, onCreate, onDelete, onLoad, error) => html`
 <h1>Settings Page</h1>
 <section class="main">
     ${!user ? html`
@@ -22,7 +23,7 @@ const settingsTemplate = (games, user, onCreate, error) => html`
             ${games.length == 0 ? html`
             <tr>
                 <td colspan="2">No games are recorded</td>
-            </tr>` : games.map(gameRow)}
+            </tr>` : games.map((g, i) => gameRow(g, onDelete.bind(null, i), onLoad.bind(null, i)))}
         </tbody>
         <tfoot>
             <tr>
@@ -38,12 +39,12 @@ const settingsTemplate = (games, user, onCreate, error) => html`
     </table>
 </section>`;
 
-const gameRow = (game) => html`
+const gameRow = (game, onDelete, onLoad) => html`
 <tr>
-    <td>${game.name}</td>
+    <td>${game.active ? icon('arrow', 'left') : null}${game.name}</td>
     <td>
-        <button class="btn"><i class="fa-solid fa-download"></i> Load</button>
-        <button class="btn"><i class="fa-solid fa-trash-can"></i> Delete</button>
+        <button @click=${onLoad} class="btn"><i class="fa-solid fa-download"></i> Load</button>
+        <button @click=${onDelete} class="btn"><i class="fa-solid fa-trash-can"></i> Delete</button>
     </td>
 </tr>`;
 
@@ -54,7 +55,14 @@ export async function settingsView(ctx) {
     update();
 
     function update(error) {
-        ctx.render(settingsTemplate(games, ctx.user, createSubmitHandler(onCreate), error));
+        if (ctx.game) {
+            const current = games.find(g => g.objectId == ctx.game.objectId);
+            if (current) {
+                current.active = true;
+            }
+        }
+
+        ctx.render(settingsTemplate(games, ctx.user, createSubmitHandler(onCreate), onDelete, onLoad, error));
     }
 
     async function onCreate({ name }) {
@@ -72,6 +80,29 @@ export async function settingsView(ctx) {
             update();
         } catch (err) {
             update(err.message);
+            err.handled = true;
         }
+    }
+
+    async function onDelete(index) {
+        const game = games[index];
+
+        const choice = confirm(`Are you sure you want to delete "${game.name}"?`);
+
+        if (choice) {
+            await deleteGame(game.objectId);
+            games.splice(index, 1);
+            update();
+        }
+    }
+
+    async function onLoad(index) {
+        const game = games[index];
+
+        ctx.setGame(game);
+
+        // TODO load game objects
+        
+        update();
     }
 }

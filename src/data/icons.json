@@ -35,5 +35,7 @@
     "settings": [8,16],
     "islands": [18,16],
     "arrow": [3,17],
-    "minus": [17,17]
+    "minus": [17,17],
+    "missing": [7,13],
+    "waiting": [15, 13]
 }
