@@ -1,0 +1,25 @@
+.debug {
+    position: absolute;
+    border: 1px solid black;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    padding: 16px 32px;
+    overflow-y: auto;
+}
+
+.debug .entry {
+    padding-left: 16px;
+}
+
+.debug .toggle {
+    user-select: none;
+    cursor: pointer;
+}
+
+.iconset {
+    display: block;
+    float: left;
+    margin: 16px;
+}

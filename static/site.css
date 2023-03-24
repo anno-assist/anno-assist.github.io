@@ -1,0 +1,41 @@
+@import url(./layout.css);
+@import url(./style.css);
+@import url(./nav.css);
+@import url(./forms.css);
+
+table {
+    border-collapse: collapse;
+}
+
+table,
+tbody,
+thead,
+tr,
+th,
+td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 4px 8px;
+}
+
+label {
+    display: block;
+}
+
+.chains, .consumption {
+    display: block;
+    text-align: center;
+}
+
+.chains {
+    font-size: 120%;
+    font-weight: 700;
+}
+
+.consumption {
+    font-size: 80%;
+    color: #999999;
+}
+
