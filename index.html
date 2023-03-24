@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anno Assist</title>
+    <link rel="stylesheet" href="/static/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/static/css/solid.min.css">
+    <link rel="stylesheet" href="/static/site.css">
 
     <!-- Start Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
@@ -18,21 +22,27 @@
         // When the single page app is loaded further down in this file,
         // the correct url will be waiting in the browser's history for
         // the single page app to route accordingly.
-        (function(l) {
-          if (l.search[1] === '/' ) {
-            var decoded = l.search.slice(1).split('&').map(function(s) { 
-              return s.replace(/~and~/g, '&')
-            }).join('?');
-            window.history.replaceState(null, null,
-                l.pathname.slice(0, -1) + decoded + l.hash
-            );
-          }
+        (function (l) {
+            if (l.search[1] === '/') {
+                var decoded = l.search.slice(1).split('&').map(function (s) {
+                    return s.replace(/~and~/g, '&')
+                }).join('?');
+                window.history.replaceState(null, null,
+                    l.pathname.slice(0, -1) + decoded + l.hash
+                );
+            }
         }(window.location))
-      </script>
-      <!-- End Single Page Apps for GitHub Pages -->
-      
+    </script>
+    <!-- End Single Page Apps for GitHub Pages -->
+
+    <script src="/src/app.js" type="module"></script>
 </head>
+
 <body>
-    
+    <div id="content">
+        
+    </div>
+
 </body>
+
 </html>

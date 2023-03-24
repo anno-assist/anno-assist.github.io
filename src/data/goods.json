@@ -1,0 +1,65 @@
+{
+    "fish": {
+        "name": "Fish"
+    },
+    "cider": {
+        "name": "Cider"
+    },
+    "linen": {
+        "name": "Linen garments"
+    },
+    "spice": {
+        "name": "Spices"
+    },
+    "bread": {
+        "name": "Bread"
+    },
+    "beer": {
+        "name": "Beer"
+    },
+    "leather": {
+        "name": "Leather jerkins"
+    },
+    "books": {
+        "name": "Books"
+    },
+    "candlestick": {
+        "name": "Candlestick"
+    },
+    "meat": {
+        "name": "Meat"
+    },
+    "wine": {
+        "name": "Wine"
+    },
+    "furcoats": {
+        "name": "Fur coats"
+    },
+    "glasses": {
+        "name": "Glasses"
+    },
+    "brocade": {
+        "name": "Brocade robes"
+    },
+    "dates": {
+        "name": "Dates"
+    },
+    "milk": {
+        "name": "Milk"
+    },
+    "carpets": {
+        "name": "Carpets"
+    },
+    "coffee": {
+        "name": "Coffee"
+    },
+    "necklaces": {
+        "name": "Pearl necklaces"
+    },
+    "perfume": {
+        "name": "Perfume"
+    },
+    "marzipan": {
+        "name": "Marzipan"
+    }
+}
