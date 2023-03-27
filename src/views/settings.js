@@ -74,7 +74,7 @@ export async function settingsView(ctx) {
         ctx.render(settingsTemplate(games, ctx.user, createSubmitHandler(onCreate), onDelete, onLoad, error));
     }
 
-    async function onCreate({ name }) {
+    async function onCreate({ name }, form) {
         try {
             if (name == '') {
                 throw { message: 'Name is required' };
@@ -85,6 +85,8 @@ export async function settingsView(ctx) {
             const result = await create(gameData);
             Object.assign(gameData, result);
             games.push(gameData);
+
+            form.reset();
 
             update();
         } catch (err) {
