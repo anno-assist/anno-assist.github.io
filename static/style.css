@@ -68,12 +68,13 @@ h1 {
 
 .link {
     text-decoration: underline;
-    color: blue
+    color: blue;
+    display: inline-block;
 }
 
 .link:hover {
     cursor: pointer;
-    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .error {
@@ -81,4 +82,24 @@ h1 {
     padding: 8px 16px;
     box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.3);
     background-color: rgba(0, 0, 0, 0.4);
+}
+
+.box {
+    background-color: antiquewhite;
+    box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+@media screen and (min-width: 600px) {
+    .box {
+        margin: 16px;
+        padding: 16px 32px;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .box {
+        margin: 8px;
+        padding: 8px;
+    }
 }

@@ -70,6 +70,27 @@ textarea {
     width: 160px;
 }
 
+.layout {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 2fr;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-row {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.action {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px 16px;
+}
+
 @media screen and (min-width: 600px) {
     .btn-grid {
         grid-auto-columns: 1fr;

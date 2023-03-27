@@ -1,17 +1,19 @@
 import { create, deleteGame, getGames } from '../data/games.js';
 import { html } from '../lib/lit-html.js';
 import { createSubmitHandler } from '../util.js';
-import { icon } from './partials.js';
+import { icon, smallIcon } from './partials.js';
 
 
 const settingsTemplate = (games, user, onCreate, onDelete, onLoad, error) => html`
 <h1>Settings Page</h1>
 <section class="main">
     ${!user ? html`
-    <div>
+    <div class="box label">
         <a class="link" href="/login">Sign in</a> to enable cloud sync
-    </div>` : null}
-
+    </div>` : html`
+    <div class="box">
+        <i class="fa-solid fa-user-check"></i> Logged in as ${user.username}. <a class="link" href="/logout">Logout</a>
+    </div>
     <table>
         <thead>
             <tr>
@@ -30,18 +32,21 @@ const settingsTemplate = (games, user, onCreate, onDelete, onLoad, error) => htm
                 <td colspan="2">
                     <form @submit=${onCreate}>
                         ${error ? html`<p class="error">${error}</p>` : null}
-                        <input type="text" name="name" placeholder="New Game Name">
-                        <button class="btn"><i class="fa-solid fa-plus"></i> Create Game</button>
+                        <input type="text" name="name" placeholder="Game Name">
+                        <button class="btn"><i class="fa-solid fa-plus"></i> Create</button>
                     </form>
                 </td>
             </tr>
         </tfoot>
-    </table>
+    </table>`}
+
 </section>`;
 
 const gameRow = (game, onDelete, onLoad) => html`
 <tr>
-    <td>${game.active ? icon('arrow', 'left') : null}${game.name}</td>
+    <td>
+        ${game.active ? smallIcon('arrow', 'left') : null}<span class="label left">${game.name}</span>
+    </td>
     <td>
         <button @click=${onLoad} class="btn"><i class="fa-solid fa-download"></i> Load</button>
         <button @click=${onDelete} class="btn"><i class="fa-solid fa-trash-can"></i> Delete</button>
@@ -56,9 +61,12 @@ export async function settingsView(ctx) {
 
     function update(error) {
         if (ctx.game) {
-            const current = games.find(g => g.objectId == ctx.game.objectId);
-            if (current) {
-                current.active = true;
+            for (let game of games) {
+                if (game.objectId == ctx.game.objectId) {
+                    game.active = true;
+                } else {
+                    game.active = false;
+                }
             }
         }
 
@@ -102,7 +110,7 @@ export async function settingsView(ctx) {
         ctx.setGame(game);
 
         // TODO load game objects
-        
+
         update();
     }
 }

@@ -17,3 +17,19 @@ function getActiveGame() {
 function removeActiveGame() {
     localStorage.removeItem('activeGame');
 }
+
+const island = {
+    objectId: 'string',
+    name: 'string',
+    // population: 'number'
+};
+
+const population = {
+    peasant: 0,
+    citizen: 0,
+    patrician: 0,
+    noble: 0,
+    beggar: 0,
+    nomad: 0,
+    envoy: 0
+};

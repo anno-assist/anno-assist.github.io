@@ -6,12 +6,14 @@ import { loadConfig } from '../data/config.js';
 let config = null;
 
 export function icon(name, ...classList) {
-
-
-    return until(resolveIcon(name, classList), iconTemplate(15, 13, classList));
+    return until(resolveIcon(46, name, classList), iconTemplate(46, 15, 13, classList));
 }
 
-async function resolveIcon(name, classList) {
+export function smallIcon(name, ...classList) {
+    return until(resolveIcon(23, name, ['small', ...classList]), iconTemplate(23, 15, 13, ['small', ...classList]));
+}
+
+async function resolveIcon(gridSize, name, classList) {
     if (config == null) {
         config = loadConfig('icons');
     }
@@ -22,8 +24,8 @@ async function resolveIcon(name, classList) {
         data = (await config).missing;
     }
 
-    return iconTemplate(data[0], data[1], classList);
+    return iconTemplate(gridSize, data[0], data[1], classList);
 }
 
-const iconTemplate = (x, y, classList) => html`
-<span class="icon ${classList.join(' ')}" style="background-position: -${x * 46}px -${y * 46}px"></span>`;
+const iconTemplate = (gridSize, x, y, classList) => html`
+<span class="icon ${classList.join(' ')}" style="background-position: -${x * gridSize}px -${y * gridSize}px"></span>`;
