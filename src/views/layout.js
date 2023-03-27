@@ -1,44 +1,44 @@
 import { html } from '../lib/lit-html.js';
-import {classMap} from '../lib/directives/class-map.js';
+import { classMap } from '../lib/directives/class-map.js';
 
 
-export const layoutTemplate = (tab, content) => html`
+export const layoutTemplate = (tab, islands, current, mode = 'population', onChange, content) => html`
 <header>
     <nav class="main-nav">
         <div class="nav-left">
-            <a href="/settings" class=${classMap({nav: true, tab: true, active: tab == '/settings'})}>
+            <a href="/settings" class=${classMap({ nav: true, tab: true, active: tab=='/settings'  })}>
                 <span class="icon" style="background-position: -368px -736px"></span>
             </a>
         </div>
         <div class="nav-left">
-            <a href="/" class=${classMap({nav: true, tab: true, active: tab == '/'})}>
+            <a href="/" class=${classMap({ nav: true, tab: true, active: tab=='/'  })}>
                 <span class="icon" style="background-position: -828px -736px"></span>
             </a>
         </div>
         <div class="nav-section">
-            <select class="nav select tab ">
+            <select @change=${onChange} class="nav select tab ${current ? 'active' : ''}" .value=${current}>
 
-                <option value="null" style="font-style: italic" selected="">-- Select Island
-                    --</option>
+            ${!current ? html`<option value="null" style="font-style: italic" selected>-- Select Island
+                    --</option>` : null}
 
-                <!-- Options for islands -->
-                <!-- <option value="Wolf-s-Haven">Wolf's Haven</option>
-                <option value="Ku-Raast">Ku'Raast</option>
-                <option value="Blackrock">Blackrock</option> -->
+                ${islands.map(i => html`<option value=${i.url} ?selected=${current == i.url}>${i.name}</option>`)}
             </select>
 
-            <!-- Links to island -->
-            <!-- <a class="nav island-nav tab " href="/population.html">
-                <span class="nav-label">Wolf's Haven</span>
-            </a>
-            <a class="nav island-nav tab " href="/needs-orient.html">
-                <span class="nav-label">Ku'Raast</span>
-            </a>
-            <a class="nav island-nav tab " href="/population.html">
-                <span class="nav-label">Blackrock</span>
-            </a> -->
+            ${islands.map(i => html`
+            <a
+                class="nav island-nav tab ${current == i.url ? 'active' : ''}"
+                href="/${i.url}/${mode}">
+                <span class="nav-label">${i.name}</span>
+            </a>`)}
         </div>
     </nav>
+
+    ${current ? html`<nav class="sub-nav">
+        <a class=${mode == 'ascension' ? 'active' : ''} href="/${current}/ascension">Ascension</a>
+        <a class=${mode == 'population' ? 'active' : ''} href="/${current}/population">Population</a>
+        <a class=${mode == 'needs' ? 'active' : ''} href="/${current}/needs">Needs</a>
+    </nav>` : null}
+    
 </header>
 <main>
     ${content}
