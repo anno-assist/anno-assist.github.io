@@ -80,7 +80,7 @@ export async function settingsView(ctx) {
                 throw { message: 'Name is required' };
             }
 
-            const gameData = { name };
+            const gameData = { name, islands: [] };
 
             const result = await create(gameData);
             Object.assign(gameData, result);

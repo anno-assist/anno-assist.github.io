@@ -1,6 +1,6 @@
 import { html } from '../lib/lit-html.js';
 import { until } from '../lib/directives/until.js';
-import { loadConfig } from '../data/config.js';
+import { loadConfig } from '../config/config.js';
 
 
 let config = null;

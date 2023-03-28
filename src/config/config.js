@@ -1,6 +1,6 @@
 export async function loadConfig(name) {
     try {
-        const request = await fetch(`/src/data/${name}.json`);
+        const request = await fetch(`/src/config/${name}.json`);
         const data = await request.json();
 
         return data;
