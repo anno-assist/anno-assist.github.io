@@ -7,18 +7,29 @@ export const setUserData = userData.set;
 export const clearUserData = userData.clear;
 
 export function createStorage(name) {
+    let data;
+
     return {
         get: () => {
-            const value = localStorage.getItem(name);
-            try {
-                return JSON.parse(value);
-            } catch (err) {
-                localStorage.removeItem(name);
-                return null;
+            if (data == undefined) {
+                const value = localStorage.getItem(name);
+                try {
+                    data = JSON.parse(value);
+                } catch (err) {
+                    localStorage.removeItem(name);
+                    data = null;
+                }
             }
+            return data;
         },
-        set: (data) => localStorage.setItem(name, JSON.stringify(data)),
-        clear: () => localStorage.removeItem(name)
+        set: (value) => {
+            data = value;
+            localStorage.setItem(name, JSON.stringify(value));
+        },
+        clear: () => {
+            data = undefined;
+            localStorage.removeItem(name);
+        }
     };
 }
 
@@ -27,7 +38,7 @@ export function createSubmitHandler(callback) {
         event.preventDefault();
         const form = event.currentTarget;
         const formData = new FormData(form);
-        const data = Object.fromEntries([...formData.entries()].map(([k,v]) => [k, v.trim()]));
+        const data = Object.fromEntries([...formData.entries()].map(([k, v]) => [k, v.trim()]));
 
         callback(data, form);
     };
