@@ -4,7 +4,7 @@ import { createSubmitHandler, createUrl } from '../util.js';
 import { updateGame } from '../data/games.js';
 
 
-const islandsTemplate = (islands, onCreate, onDelete, onRename, onMove) => html`
+const islandsTemplate = (islands, popSummary, onCreate, onDelete, onRename, onMove) => html`
 <h1>Islands Overview</h1>
 <section class="main">
     <table>
@@ -18,7 +18,7 @@ const islandsTemplate = (islands, onCreate, onDelete, onRename, onMove) => html`
             </tr>
         </thead>
         <tbody>
-            ${islands.map((i, index) => islandRow(index, i, onDelete.bind(i), onRename.bind(i), onMove.bind(i)))}
+            ${islands.map((i, index) => islandRow(index, i, popSummary[i.url], onDelete.bind(i), onRename.bind(i), onMove.bind(i)))}
         </tbody>
         <tfoot>
             <tr>
@@ -34,7 +34,7 @@ const islandsTemplate = (islands, onCreate, onDelete, onRename, onMove) => html`
 </section>`;
 
 
-const islandRow = (index, island, onDelete, onRename, onMove) => html`
+const islandRow = (index, island, popSummary, onDelete, onRename, onMove) => html`
 <tr>
     <td class="wide">
         <div class="btn-grid">
@@ -44,14 +44,14 @@ const islandRow = (index, island, onDelete, onRename, onMove) => html`
     </td>
     <td>
         <span class="label prim">${island.name}</span>
-        <span class="label sub narrow">Population:&nbsp;12061</span>
+        <span class="label sub narrow">Population:&nbsp;${popSummary}</span>
         <div class="grid narrow">
             <button class="btn" @click=${onMove}><i class="fa-solid fa-arrow-down-up-across-line"></i></button>
             <button class="btn" @click=${onRename}><i class="fa-solid fa-pencil"></i></button>
             <button class="btn" @click=${onDelete}><i class="fa-solid fa-trash-can"></i></button>
         </div>
     </td>
-    <td class="wide"><span class="label prim">12061</span></td>
+    <td class="wide"><span class="label prim">${popSummary}</span></td>
     <td>
         <div class="btn-grid">
             <a class="btn" href="/${island.url}/ascension">Ascension</a>
@@ -70,17 +70,25 @@ const islandRow = (index, island, onDelete, onRename, onMove) => html`
 
 
 export async function islandsView(ctx) {
+    const popSettings = ctx.settings.population;
     const game = ctx.game;
     if (!game) {
         ctx.page.redirect('/settings');
     }
 
     const islands = ctx.islands;
+    const popSummary = Object.fromEntries(islands.map(i => [i.url, 0]));
+
+    for (let i in popSummary) {
+        if (ctx.population[i]) {
+            popSummary[i] = Object.keys(popSettings.ascension).map(k => ctx.population[i][k]).reduce((a, c) => a + c, 0);
+        }
+    }
 
     update();
 
     function update() {
-        ctx.render(islandsTemplate(islands, createSubmitHandler(onCreate), onDelete, onRename, onMove));
+        ctx.render(islandsTemplate(islands, popSummary, createSubmitHandler(onCreate), onDelete, onRename, onMove));
     }
 
     async function onCreate({ name }, form) {

@@ -93,7 +93,6 @@ export async function populationView(ctx) {
         const src = event.target;
         const mode = src.dataset.mode;
         const type = src.dataset.type;
-        let total = 0;
 
         if (Number.isFinite(data[`${type}_houses`]) == false || Number.isInteger(data[`${type}_pop`]) == false) {
             return;
@@ -106,13 +105,6 @@ export async function populationView(ctx) {
             const pop = data[`${type}_pop`];
             population[type] = pop;
         }
-
-
-        for (const type of Object.keys(popSettings.ascension)) {
-            total += population[type] || 0;
-        }
-        console.log(total);
-        // island.population = total;
 
         ctx.setPopulation(ctx.population);
         ctx.commit(population.objectId, population, true);
