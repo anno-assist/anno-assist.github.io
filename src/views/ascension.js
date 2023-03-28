@@ -1,12 +1,11 @@
 import { html } from '../lib/lit-html.js';
-import { live}  from '../lib/directives/live.js';
+import { repeat } from '../lib/directives/repeat.js';
 import { createAscension, updateAscension } from '../data/ascension.js';
 import { createSubmitHandler, popRate, throttle } from '../util.js';
 import { icon } from './partials.js';
 
 
-const ascensionTemplate = (occident, orient, data, onSubmit) => html`
-${console.log(data.beggarLvl, data.envoyLvl)}
+const ascensionTemplate = (islandId, occident, orient, data, onSubmit) => html`
 <h1>Ascension Pyramid</h1>
 <section class="main">
     <form @submit=${onSubmit} @input=${onSubmit}>
@@ -28,7 +27,7 @@ ${console.log(data.beggarLvl, data.envoyLvl)}
                     <div class="multi-level">
                         <label class="label">Beggar Prince</label>
                         <div class="label">
-                            ${radioLvl('beggarLvl', data.beggarLvl)}
+                            ${radioLvl(islandId, 'beggarLvl', data.beggarLvl)}
                         </div>
                     </div>
                 </td>
@@ -43,7 +42,7 @@ ${console.log(data.beggarLvl, data.envoyLvl)}
                     <div class="multi-level">
                         <label class="label">Envoy's Favour</label>
                         <div class="label">
-                            ${radioLvl('envoyLvl', data.envoyLvl)}
+                            ${radioLvl(islandId, 'envoyLvl', data.envoyLvl)}
                         </div>
                     </div>
                 </td>
@@ -61,11 +60,8 @@ ${console.log(data.beggarLvl, data.envoyLvl)}
     </form>
 </section>`;
 
-const radioLvl = (name, lvl) => html`
-<input name=${name} type="radio" value="0" ?checked=${live(lvl == 0)}>
-<input name=${name} type="radio" value="1" ?checked=${live(lvl == 1)}>
-<input name=${name} type="radio" value="2" ?checked=${live(lvl == 2)}>
-<input name=${name} type="radio" value="3" ?checked=${live(lvl == 3)}>`;
+const radioLvl = (islandId, name, lvl) => repeat([0, 1, 2, 3], () => Math.random(), n => html`
+<input data-island=${islandId} name=${name} type="radio" value=${n} ?checked=${lvl==n}>`);
 
 const ascensionSection = (distribution) => (form) => html`
 <table>
@@ -87,7 +83,7 @@ const ascensionSection = (distribution) => (form) => html`
 const ascensionRow = ({ key, name, dist }) => html`
 <tr>
     <td>${icon(key, 'dist')}</td>
-    ${[...dist].reverse().map((v, i) => html`<td class=${i> 0 ? 'wide' : ''}>
+    ${[...dist].reverse().map((v, i) => html`<td class=${i > 0 ? 'wide' : ''}>
         ${v.houses ? html`
         <span class="label">${v.houses}</span>
         <span class="label sub">${v.pop} ${name}</span>` : null}
@@ -127,7 +123,7 @@ export async function ascensionView(ctx) {
         const occident = calcAscension(popSettings, 'occident', ascension);
         const orient = calcAscension(popSettings, 'orient', ascension);
 
-        ctx.render(ascensionTemplate(ascensionSection(occident), ascensionSection(orient), ascension, createSubmitHandler(onSubmit)));
+        ctx.render(ascensionTemplate(island.objectId, ascensionSection(occident), ascensionSection(orient), ascension, createSubmitHandler(onSubmit)));
     }
 
     function onSubmit(data, form) {
