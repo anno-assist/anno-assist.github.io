@@ -1,4 +1,4 @@
-import { del, get, post } from './api.js';
+import { del, get, post, put } from './api.js';
 import { addOwner } from './queries.js';
 
 
@@ -18,4 +18,15 @@ export async function create(game) {
 
 export async function deleteGame(id) {
     return del(endpoints.byId + id);
+}
+
+export async function updateGame(id, game) {
+    if (typeof game.owner == 'string') {
+        addOwner(game);
+    }
+    delete game.createdAt;
+    delete game.updatedAt;
+    delete game.active;
+
+    return put(endpoints.byId + id, game);
 }

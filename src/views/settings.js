@@ -112,7 +112,8 @@ export async function settingsView(ctx) {
 
         ctx.setGame(game);
 
-        const islands = await getIslands(game.objectId);
+        const islandData = await getIslands(game.objectId);
+        const islands = game.islands.map(id => islandData.find(i => i.objectId == id));
         ctx.setIslands(islands);
 
         update();

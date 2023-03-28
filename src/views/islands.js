@@ -1,6 +1,7 @@
 import { html } from '../lib/lit-html.js';
 import { createIsland, deleteIsland, updateIsland } from '../data/islands.js';
 import { createSubmitHandler, createUrl } from '../util.js';
+import { updateGame } from '../data/games.js';
 
 
 const islandsTemplate = (islands, onCreate, onDelete, onRename, onMove) => html`
@@ -17,7 +18,7 @@ const islandsTemplate = (islands, onCreate, onDelete, onRename, onMove) => html`
             </tr>
         </thead>
         <tbody>
-            ${islands.map(i => islandRow(i, onDelete.bind(i), onRename.bind(i), onMove.bind(i)))}
+            ${islands.map((i, index) => islandRow(index, i, onDelete.bind(i), onRename.bind(i), onMove.bind(i)))}
         </tbody>
         <tfoot>
             <tr>
@@ -33,12 +34,12 @@ const islandsTemplate = (islands, onCreate, onDelete, onRename, onMove) => html`
 </section>`;
 
 
-const islandRow = (island, onDelete, onRename, onMove) => html`
+const islandRow = (index, island, onDelete, onRename, onMove) => html`
 <tr>
     <td class="wide">
         <div class="btn-grid">
-            <button class="btn" @click=${onMove}><i class="fa-solid fa-arrow-down-up-across-line"></i></button>
-            <span class="label">${island.order}</span>
+            <button class="btn" @click=${onMove.bind(null, index)}><i class="fa-solid fa-arrow-up"></i></button>
+            <button class="btn" @click=${onMove.bind(null, index + 2)}><i class="fa-solid fa-arrow-down"></i></button>
         </div>
     </td>
     <td>
@@ -96,7 +97,11 @@ export async function islandsView(ctx) {
         const result = await createIsland(island);
         Object.assign(island, result);
         islands.push(island);
+        game.islands.push(island.objectId);
         ctx.setIslands(islands);
+
+        // NOTE: Async operation
+        updateGame(game.objectId, game).then(() => ctx.setGame(game));
 
         form.reset();
 
@@ -114,7 +119,11 @@ export async function islandsView(ctx) {
         if (choice) {
             await deleteIsland(id);
             islands.splice(index, 1);
+            game.islands.splice(index, 1);
             ctx.setIslands(islands);
+
+            // NOTE: Async operation
+            updateGame(game.objectId, game).then(() => ctx.setGame(game));
 
             update();
         }
@@ -138,22 +147,33 @@ export async function islandsView(ctx) {
         }
     }
 
-    async function onMove() {
+    async function onMove(order) {
         const id = this.objectId;
         const oldIndex = islands.findIndex(i => id == i.objectId);
         const island = islands[oldIndex];
 
-        const input = prompt('Enter new order', island.order);
-        const order = Number(input);
-        if (input == null || input == '' || Number.isInteger(order) == false) {
-            return;
+        if (typeof order != 'number') {
+            const input = prompt('Enter new order', oldIndex + 1);
+            order = Number(input);
+            if (input == null || input == '' || Number.isInteger(order) == false) {
+                return;
+            }
         }
 
-        island.order = order;
-        const result = await updateIsland(id, island);
-        Object.assign(island, result);
-        islands.sort((a, b) => a.order - b.order);
+        const newIndex = order - 1;
+        if (newIndex < 0) {
+            newIndex = 0;
+        }
+        if (newIndex >= islands.length) {
+            newIndex = islands.length - 1;
+        }
+        islands.splice(oldIndex, 1);
+        islands.splice(newIndex, 0, island);
+        game.islands = islands.map(i => i.objectId);
+
+        await updateGame(game.objectId, game);
         ctx.setIslands(islands);
+        ctx.setGame(game);
 
         update();
     }

@@ -1,12 +1,17 @@
-const itemName = 'userData';
+const userDataName = 'userData';
+const storageVersion = '2';
 
-const userData = createStorage(itemName);
+const userData = createStorage(userDataName);
 
 export const getUserData = userData.get;
 export const setUserData = userData.set;
 export const clearUserData = userData.clear;
 
 export function createStorage(name) {
+    if (name != userDataName && localStorage.getItem(`${name}_version`) != storageVersion) {
+        localStorage.removeItem(name);
+        localStorage.setItem(`${name}_version`, storageVersion);
+    }
     let data;
 
     return {
