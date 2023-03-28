@@ -54,7 +54,7 @@ export function createSubmitHandler(callback) {
             return [k, v];
         }));
 
-        callback(data, form);
+        callback(data, form, event);
     };
 }
 
