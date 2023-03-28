@@ -7,10 +7,10 @@ const registerTemplate = (onRegister, formData = {}, error) => html`
 <h1>Register</h1>
 <section class="main">
     <form @submit=${onRegister}>
+        ${error ? html`<p class="error">${error}</p>` : null}
         <div class="layout">
-            ${error ? html`<p class="error">${error}</p>` : null}
             <label for="username">Username</label>
-            <input id="username" type="text" name="username" .value=${formData.username || '' }>
+            <input id="username" type="text" name="username" .value=${formData.username || ''}>
             <label for="password">Password</label>
             <input id="password" type="password" name="password">
             <label for="repass">Repeat</label>

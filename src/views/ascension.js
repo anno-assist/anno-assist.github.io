@@ -1,10 +1,12 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
+import { html } from '../lib/lit-html.js';
+import { live}  from '../lib/directives/live.js';
 import { createAscension, updateAscension } from '../data/ascension.js';
 import { createSubmitHandler, popRate, throttle } from '../util.js';
 import { icon } from './partials.js';
 
 
 const ascensionTemplate = (occident, orient, data, onSubmit) => html`
+${console.log(data.beggarLvl, data.envoyLvl)}
 <h1>Ascension Pyramid</h1>
 <section class="main">
     <form @submit=${onSubmit} @input=${onSubmit}>
@@ -26,10 +28,7 @@ const ascensionTemplate = (occident, orient, data, onSubmit) => html`
                     <div class="multi-level">
                         <label class="label">Beggar Prince</label>
                         <div class="label">
-                            <input name="beggarLvl" type="radio" value="0" ?checked=${data.beggarLvl==0}>
-                            <input name="beggarLvl" type="radio" value="1" ?checked=${data.beggarLvl==1}>
-                            <input name="beggarLvl" type="radio" value="2" ?checked=${data.beggarLvl==2}>
-                            <input name="beggarLvl" type="radio" value="3" ?checked=${data.beggarLvl==3}>
+                            ${radioLvl('beggarLvl', data.beggarLvl)}
                         </div>
                     </div>
                 </td>
@@ -44,10 +43,7 @@ const ascensionTemplate = (occident, orient, data, onSubmit) => html`
                     <div class="multi-level">
                         <label class="label">Envoy's Favour</label>
                         <div class="label">
-                            <input name="envoyLvl" type="radio" value="0" ?checked=${data.envoyLvl==0}>
-                            <input name="envoyLvl" type="radio" value="1" ?checked=${data.envoyLvl==1}>
-                            <input name="envoyLvl" type="radio" value="2" ?checked=${data.envoyLvl==2}>
-                            <input name="envoyLvl" type="radio" value="3" ?checked=${data.envoyLvl==3}>
+                            ${radioLvl('envoyLvl', data.envoyLvl)}
                         </div>
                     </div>
                 </td>
@@ -64,6 +60,12 @@ const ascensionTemplate = (occident, orient, data, onSubmit) => html`
         </section>
     </form>
 </section>`;
+
+const radioLvl = (name, lvl) => html`
+<input name=${name} type="radio" value="0" ?checked=${live(lvl == 0)}>
+<input name=${name} type="radio" value="1" ?checked=${live(lvl == 1)}>
+<input name=${name} type="radio" value="2" ?checked=${live(lvl == 2)}>
+<input name=${name} type="radio" value="3" ?checked=${live(lvl == 3)}>`;
 
 const ascensionSection = (distribution) => (form) => html`
 <table>
@@ -85,7 +87,7 @@ const ascensionSection = (distribution) => (form) => html`
 const ascensionRow = ({ key, name, dist }) => html`
 <tr>
     <td>${icon(key, 'dist')}</td>
-    ${[...dist].reverse().map((v, i) => html`<td class=${i > 0 ? 'wide' : ''}>
+    ${[...dist].reverse().map((v, i) => html`<td class=${i> 0 ? 'wide' : ''}>
         ${v.houses ? html`
         <span class="label">${v.houses}</span>
         <span class="label sub">${v.pop} ${name}</span>` : null}
@@ -101,6 +103,7 @@ export async function ascensionView(ctx) {
     }
     if (ctx.ascension[islandUrl] == undefined) {
         const model = {
+            game: ctx.game.objectId,
             island: island.objectId,
             occident: 0,
             orient: 0,

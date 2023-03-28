@@ -1,3 +1,4 @@
+import { getAscension } from '../data/ascension.js';
 import { create, deleteGame, getGames } from '../data/games.js';
 import { getIslands } from '../data/islands.js';
 import { html } from '../lib/lit-html.js';
@@ -112,9 +113,15 @@ export async function settingsView(ctx) {
 
         ctx.setGame(game);
 
-        const islandData = await getIslands(game.objectId);
-        const islands = game.islands.map(id => islandData.find(i => i.objectId == id));
+        const [islandData, ascensionData] = await Promise.all([
+            getIslands(game.objectId),
+            getAscension(game.objectId)
+        ]);
+        const islandIndex = Object.fromEntries(islandData.map(i => [i.objectId, i]));
+        const islands = game.islands.map(id => islandIndex[id]);
         ctx.setIslands(islands);
+        const ascension = Object.fromEntries(ascensionData.map(a => [islandIndex[a.island.objectId].url, a]));
+        ctx.setAscension(ascension);
 
         update();
     }

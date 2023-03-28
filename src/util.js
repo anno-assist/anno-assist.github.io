@@ -1,4 +1,4 @@
-const storageVersion = '2';
+const storageVersion = '1';
 const userDataName = 'userData';
 
 
@@ -45,9 +45,11 @@ export function createSubmitHandler(callback) {
         const formData = new FormData(form);
         const data = Object.fromEntries([...formData.entries()].map(([k, v]) => {
             v = v.trim();
-            const asNumber = Number(v);
-            if (Number.isFinite(asNumber)) {
-                v = asNumber;
+            if (k != 'password' && k != 'repass') {
+                const asNumber = Number(v);
+                if (Number.isFinite(asNumber)) {
+                    v = asNumber;
+                }
             }
             return [k, v];
         }));

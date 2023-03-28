@@ -4,6 +4,9 @@ import { addSelection } from './middlewares/selection.js';
 import { addSession } from './middlewares/session.js';
 import { addStorage } from './middlewares/storage.js';
 import { addRender } from './middlewares/render.js';
+import { addConfig } from './middlewares/config.js';
+import { addCommit } from './middlewares/commit.js';
+import { hasGame } from './middlewares/guards.js';
 
 import { settingsView } from './views/settings.js';
 import { islandsView } from './views/islands.js';
@@ -12,11 +15,7 @@ import { registerView } from './views/register.js';
 import { ascensionView } from './views/ascension.js';
 import { populationView } from './views/population.js';
 import { needsView } from './views/needs.js';
-import { addConfig } from './middlewares/config.js';
-import { addCommit } from './middlewares/commit.js';
 
-import * as api from './data/islands.js';
-window.api = api;
 
 
 page('/:island/:mode', addSelection);
@@ -30,8 +29,8 @@ page('/', islandsView);
 page('/settings', settingsView);
 page('/login', loginView);
 page('/register', registerView);
-page('/:island/ascension', ascensionView);
-page('/:island/population', populationView);
-page('/:island/needs', needsView);
+page('/:island/ascension', hasGame, ascensionView);
+page('/:island/population', hasGame, populationView);
+page('/:island/needs', hasGame, needsView);
 
 page.start();
