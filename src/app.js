@@ -14,11 +14,13 @@ import { populationView } from './views/population.js';
 import { needsView } from './views/needs.js';
 
 import * as api from './data/islands.js';
+import { addConfig } from './middlewares/config.js';
 window.api = api;
 
 
 page('/:island/:mode', addSelection);
 page(addSession);
+page(addConfig);
 page(addStorage);
 page(addRender);
 page('/index.html', '/');

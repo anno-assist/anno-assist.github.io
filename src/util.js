@@ -7,7 +7,7 @@ export const getUserData = userData.get;
 export const setUserData = userData.set;
 export const clearUserData = userData.clear;
 
-export function createStorage(name) {
+export function createStorage(name, defaultValue = null) {
     if (name != userDataName && localStorage.getItem(`${name}_version`) != storageVersion) {
         localStorage.removeItem(name);
         localStorage.setItem(`${name}_version`, storageVersion);
@@ -25,7 +25,7 @@ export function createStorage(name) {
                     data = null;
                 }
             }
-            return data;
+            return data || defaultValue;
         },
         set: (value) => {
             data = value;
@@ -53,4 +53,16 @@ const urlPattern = /[^A-Za-z0-9]/g;
 
 export function createUrl(name) {
     return name.replace(urlPattern, () => '-');
+}
+
+export function percent(value, rate) {
+    return value * rate / 100;
+}
+
+export function popRate(value, rate) {
+    return Math.floor(percent(value, rate));
+}
+
+export function round(value, precision) {
+    return Math.round(value * 10 ** precision) / 10 ** precision;
 }
