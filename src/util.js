@@ -1,8 +1,8 @@
-const userDataName = 'userData';
 const storageVersion = '2';
+const userDataName = 'userData';
+
 
 const userData = createStorage(userDataName);
-
 export const getUserData = userData.get;
 export const setUserData = userData.set;
 export const clearUserData = userData.clear;
@@ -43,7 +43,14 @@ export function createSubmitHandler(callback) {
         event.preventDefault();
         const form = event.currentTarget;
         const formData = new FormData(form);
-        const data = Object.fromEntries([...formData.entries()].map(([k, v]) => [k, v.trim()]));
+        const data = Object.fromEntries([...formData.entries()].map(([k, v]) => {
+            v = v.trim();
+            const asNumber = Number(v);
+            if (Number.isFinite(asNumber)) {
+                v = asNumber;
+            }
+            return [k, v];
+        }));
 
         callback(data, form);
     };
@@ -65,4 +72,30 @@ export function popRate(value, rate) {
 
 export function round(value, precision) {
     return Math.round(value * 10 ** precision) / 10 ** precision;
+}
+
+export function throttle(fn, delay) {
+    let timer = null;
+
+    const result = function (...params) {
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+        timer = setTimeout(() => {
+            clearTimeout(timer);
+            timer = null;
+            fn(...params);
+        }, delay);
+
+        result.commit = () => {
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+                fn(...params);
+            }
+        };
+    };
+
+    return result;
 }

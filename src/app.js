@@ -12,9 +12,10 @@ import { registerView } from './views/register.js';
 import { ascensionView } from './views/ascension.js';
 import { populationView } from './views/population.js';
 import { needsView } from './views/needs.js';
+import { addConfig } from './middlewares/config.js';
+import { addCommit } from './middlewares/commit.js';
 
 import * as api from './data/islands.js';
-import { addConfig } from './middlewares/config.js';
 window.api = api;
 
 
@@ -23,6 +24,7 @@ page(addSession);
 page(addConfig);
 page(addStorage);
 page(addRender);
+page(addCommit);
 page('/index.html', '/');
 page('/', islandsView);
 page('/settings', settingsView);

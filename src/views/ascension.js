@@ -1,5 +1,6 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
-import { createSubmitHandler, popRate } from '../util.js';
+import { createAscension, updateAscension } from '../data/ascension.js';
+import { createSubmitHandler, popRate, throttle } from '../util.js';
 import { icon } from './partials.js';
 
 
@@ -91,11 +92,16 @@ const ascensionRow = ({ key, name, dist }) => html`
     </td>`)}
 </tr>`;
 
-export function ascensionView(ctx) {
+export async function ascensionView(ctx) {
     const popSettings = ctx.settings.population;
     const islandUrl = ctx.selection.island;
+    const island = ctx.islands.find(i => i.url == islandUrl);
+    if (!island) {
+        return ctx.page.redirect('/');
+    }
     if (ctx.ascension[islandUrl] == undefined) {
-        ctx.ascension[islandUrl] = {
+        const model = {
+            island: island.objectId,
             occident: 0,
             orient: 0,
             beggars: 0,
@@ -103,8 +109,14 @@ export function ascensionView(ctx) {
             envoys: 0,
             envoyLvl: 0
         };
+        const result = await createAscension(model);
+        Object.assign(model, result);
+        ctx.ascension[islandUrl] = model;
+        ctx.setAscension(ctx.ascension);
     }
     const ascension = ctx.ascension[islandUrl];
+
+    ctx.commit = throttle(updateAscension, 5000);
 
     update();
 
@@ -125,6 +137,8 @@ export function ascensionView(ctx) {
         ascension.envoyLvl = envoyLvl;
 
         ctx.setAscension(ctx.ascension);
+        ctx.commit(ascension.objectId, ascension, true);
+
         update();
     }
 }
