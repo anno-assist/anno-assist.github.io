@@ -23,7 +23,7 @@
             "kgPerMinute": 4.2
         },
         {
-            "key": "spice",
+            "key": "spices",
             "kgPerMinute": 4
         }
     ],
@@ -41,7 +41,7 @@
             "kgPerMinute": 1.9
         },
         {
-            "key": "spice",
+            "key": "spices",
             "kgPerMinute": 2.2
         },
         {
@@ -79,7 +79,7 @@
             "kgPerMinute": 0.8
         },
         {
-            "key": "spice",
+            "key": "spices",
             "kgPerMinute": 1.6
         },
         {

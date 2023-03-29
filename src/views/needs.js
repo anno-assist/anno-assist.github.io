@@ -1,5 +1,5 @@
 import { html } from '../lib/lit-html.js';
-import { round } from '../util.js';
+import { outputToKgPerMin, round } from '../util.js';
 import { icon, smallIcon } from './partials.js';
 
 
@@ -22,19 +22,19 @@ const needsSection = (index, needs, summary, production, goods) => html`
     </tbody>
     <tfoot>
         <th>Total</th>
-        ${index.map(n => html`<th>${needsCell(summary.get(n), production[n])}</th>`)}
+        ${index.map(n => html`<th>${needsCell(summary.get(n), outputToKgPerMin(production[n].output))}</th>`)}
     </tfoot>
 </table>
 <table class="narrow">
     <tbody>
-        ${index.map(n => narrowRow(n, summary.get(n), production[n], needs))}
+        ${index.map(n => narrowRow(n, summary.get(n), outputToKgPerMin(production[n].output), needs))}
     </tbody>
 </table>`;
 
 const needsRow = (index, production, pop) => html`
 <tr>
     <td>${icon(pop.type, 'dist')}<span class="label sub">${pop.pop}</span></td>
-    ${index.map(n => html`<td>${needsCell(pop.index[n], production[n])}</td>`)}
+    ${index.map(n => html`<td>${needsCell(pop.index[n], outputToKgPerMin(production[n].output))}</td>`)}
 </tr>`;
 
 const needsCell = (value, rate) => !value ? null : html`

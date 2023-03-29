@@ -1,23 +1,436 @@
 {
-    "fish": 2000,
-    "cider": 1500,
-    "linen": 2000,
-    "spice": 2000,
-    "bread": 4000,
-    "beer": 1500,
-    "leather": 4000,
-    "books": 3000,
-    "candlestick": 2000,
-    "meat": 2500,
-    "wine": 2000,
-    "furcoats": 2500,
-    "glasses": 2000,
-    "brocade": 3000,
-    "dates": 3000,
-    "milk": 1500,
-    "carpets": 1500,
-    "coffee": 1000,
-    "necklaces": 1000,
-    "perfume": 1000,
-    "marzipan": 4000
+    "spices": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "cider": {
+        "output": 40,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "hemp": {
+        "output": 60,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "almonds": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "wheat": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "herbs": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "grapes": {
+        "output": 90,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "wax": {
+        "output": 90,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "coffee_beans": {
+        "output": 60,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "roses": {
+        "output": 120,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "sugar_cane": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "indigo": {
+        "output": 40,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "silk": {
+        "output": 40,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "dates": {
+        "output": 20,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "milk": {
+        "output": 40,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "cattle": {
+        "output": 48,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "hides": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "clay": {
+        "output": 50,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "wood": {
+        "output": 40,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "potash": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "coal": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "fish": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "quartz": {
+        "output": 45,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "stone": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "iron_ore": {
+        "output": 30,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "brine": {
+        "output": 15,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "copper": {
+        "output": 45,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "gold_ore": {
+        "output": 40,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "furs": {
+        "output": 24,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "pearls": {
+        "output": 60,
+        "input_A": null,
+        "rate_A": null,
+        "input_B": null,
+        "rate_B": null
+    },
+    "leather": {
+        "output": 15,
+        "input_A": "hides",
+        "rate_A": 1,
+        "input_B": "salt",
+        "rate_B": 0.5
+    },
+    "sugar": {
+        "output": 15,
+        "input_A": "sugar_cane",
+        "rate_A": 1,
+        "input_B": null,
+        "rate_B": null
+    },
+    "paper": {
+        "output": 20,
+        "input_A": "wood",
+        "rate_A": 1,
+        "input_B": null,
+        "rate_B": null
+    },
+    "furcoats": {
+        "output": 24,
+        "input_A": "furs",
+        "rate_A": 1,
+        "input_B": "salt",
+        "rate_B": 0.53
+    },
+    "linen": {
+        "output": 30,
+        "input_A": "hemp",
+        "rate_A": 1,
+        "input_B": null,
+        "rate_B": null
+    },
+    "tools": {
+        "output": 30,
+        "input_A": "iron",
+        "rate_A": 0.5,
+        "input_B": null,
+        "rate_B": null
+    },
+    "mosaic": {
+        "output": 25,
+        "input_A": "clay",
+        "rate_A": 1,
+        "input_B": "quartz",
+        "rate_B": 0.5
+    },
+    "flour": {
+        "output": 15,
+        "input_A": "wheat",
+        "rate_A": 1,
+        "input_B": null,
+        "rate_B": null
+    },
+    "bread": {
+        "output": 15,
+        "input_A": "flour",
+        "rate_A": 1,
+        "input_B": null,
+        "rate_B": null
+    },
+    "beer": {
+        "output": 40,
+        "input_A": "herbs",
+        "rate_A": 1.333,
+        "input_B": "wheat",
+        "rate_B": 1.333
+    },
+    "iron": {
+        "output": 30,
+        "input_A": "iron_ore",
+        "rate_A": 1,
+        "input_B": "coal",
+        "rate_B": 1
+    },
+    "rope": {
+        "output": 30,
+        "input_A": "hemp",
+        "rate_A": 0.5,
+        "input_B": null,
+        "rate_B": null
+    },
+    "weapons": {
+        "output": 30,
+        "input_A": "iron",
+        "rate_A": 1,
+        "input_B": null,
+        "rate_B": null
+    },
+    "salt": {
+        "output": 15,
+        "input_A": "brine",
+        "rate_A": 1,
+        "input_B": "coal",
+        "rate_B": 0.5
+    },
+    "meat": {
+        "output": 24,
+        "input_A": "cattle",
+        "rate_A": 1,
+        "input_B": "salt",
+        "rate_B": 0.5
+    },
+    "barrels": {
+        "output": 30,
+        "input_A": "wood",
+        "rate_A": 0.5,
+        "input_B": "iron",
+        "rate_B": 0.5
+    },
+    "wine": {
+        "output": 30,
+        "input_A": "grapes",
+        "rate_A": 1,
+        "input_B": "barrels",
+        "rate_B": 1
+    },
+    "coffee": {
+        "output": 60,
+        "input_A": "coffee_beans",
+        "rate_A": 2,
+        "input_B": null,
+        "rate_B": null
+    },
+    "war_machines": {
+        "output": 40,
+        "input_A": "wood",
+        "rate_A": 2,
+        "input_B": "rope",
+        "rate_B": 2
+    },
+    "brass": {
+        "output": 45,
+        "input_A": "copper",
+        "rate_A": 1,
+        "input_B": "coal",
+        "rate_B": 1
+    },
+    "glasses": {
+        "output": 30,
+        "input_A": "brass",
+        "rate_A": 0.5,
+        "input_B": "quartz",
+        "rate_B": 0.5
+    },
+    "candles": {
+        "output": 45,
+        "input_A": "wax",
+        "rate_A": 1,
+        "input_B": "hemp",
+        "rate_B": 0.75
+    },
+    "candlestick": {
+        "output": 30,
+        "input_A": "brass",
+        "rate_A": 0.5,
+        "input_B": "candles",
+        "rate_B": 1
+    },
+    "perfume": {
+        "output": 60,
+        "input_A": "roses",
+        "rate_A": 1.5,
+        "input_B": null,
+        "rate_B": null
+    },
+    "marzipan": {
+        "output": 15,
+        "input_A": "almonds",
+        "rate_A": 1,
+        "input_B": "sugar",
+        "rate_B": 1
+    },
+    "brocade": {
+        "output": 20,
+        "input_A": "silk",
+        "rate_A": 1,
+        "input_B": "gold",
+        "rate_B": 0.5
+    },
+    "carpets": {
+        "output": 40,
+        "input_A": "silk",
+        "rate_A": 1,
+        "input_B": "indigo",
+        "rate_B": 1
+    },
+    "gold": {
+        "output": 40,
+        "input_A": "gold_ore",
+        "rate_A": 1,
+        "input_B": "coal",
+        "rate_B": 1
+    },
+    "necklaces": {
+        "output": 60,
+        "input_A": "pearls",
+        "rate_A": 1,
+        "input_B": null,
+        "rate_B": null
+    },
+    "cannons": {
+        "output": 60,
+        "input_A": "iron",
+        "rate_A": 1.5,
+        "input_B": "wood",
+        "rate_B": 3
+    },
+    "books": {
+        "output": 20,
+        "input_A": "paper",
+        "rate_A": 0.5,
+        "input_B": "indigo",
+        "rate_B": 1
+    },
+    "glass": {
+        "output": 60,
+        "input_A": "potash",
+        "rate_A": 1,
+        "input_B": "quartz",
+        "rate_B": 0.5
+    }
 }
