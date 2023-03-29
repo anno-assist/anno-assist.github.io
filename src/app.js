@@ -17,6 +17,7 @@ import { populationView } from './views/population.js';
 import { needsView } from './views/needs.js';
 import { productionView } from './views/production.js';
 import { iconsView } from './views/icons.js';
+import { title } from './middlewares/title.js';
 
 
 page('/:island/:mode', addSelection);
@@ -26,14 +27,14 @@ page(addStorage);
 page(addRender);
 page(addCommit);
 page('/index.html', '/');
-page('/', islandsView);
-page('/settings', settingsView);
-page('/login', loginView);
-page('/register', registerView);
-page('/:island/ascension', hasGame, ascensionView);
-page('/:island/population', hasGame, populationView);
-page('/:island/needs', hasGame, needsView);
-page('/production', productionView);
-page('/icons', iconsView);
+page('/', title('Islands'), islandsView);
+page('/settings', title('Settings'), settingsView);
+page('/login', title('Login'), loginView);
+page('/register', title('Register'), registerView);
+page('/:island/ascension', hasGame, title('$name | Ascnesion'), ascensionView);
+page('/:island/population', hasGame, title('$name | Population'), populationView);
+page('/:island/needs', hasGame, title('$name | Needs'), needsView);
+page('/production', title('Production'), productionView);
+page('/icons', title('Icons'), iconsView);
 
 page.start();

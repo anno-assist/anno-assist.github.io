@@ -16,6 +16,8 @@ function renderView(content) {
     const current = this?.selection?.island;
     const mode = this?.selection?.mode;
 
+    document.title = [this?.customTitle, 'Anno Assist'].filter(x => x).join(' | ');
+
     render(layoutTemplate(tab, islands, current, mode, onChange.bind(this), content), root);
 
     function onChange(event) {
