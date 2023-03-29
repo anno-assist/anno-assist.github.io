@@ -15,7 +15,7 @@ import { registerView } from './views/register.js';
 import { ascensionView } from './views/ascension.js';
 import { populationView } from './views/population.js';
 import { needsView } from './views/needs.js';
-import { productionView } from './views/production.js';
+import { ratesView } from './views/rates.js';
 import { iconsView } from './views/icons.js';
 import { title } from './middlewares/title.js';
 
@@ -34,7 +34,7 @@ page('/register', title('Register'), registerView);
 page('/:island/ascension', hasGame, title('$name | Ascnesion'), ascensionView);
 page('/:island/population', hasGame, title('$name | Population'), populationView);
 page('/:island/needs', hasGame, title('$name | Needs'), needsView);
-page('/production', title('Production'), productionView);
+page('/rates', title('Production'), ratesView);
 page('/icons', title('Icons'), iconsView);
 
 page.start();
