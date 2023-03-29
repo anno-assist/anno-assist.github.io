@@ -15,7 +15,8 @@ import { registerView } from './views/register.js';
 import { ascensionView } from './views/ascension.js';
 import { populationView } from './views/population.js';
 import { needsView } from './views/needs.js';
-
+import { productionView } from './views/production.js';
+import { iconsView } from './views/icons.js';
 
 
 page('/:island/:mode', addSelection);
@@ -32,5 +33,7 @@ page('/register', registerView);
 page('/:island/ascension', hasGame, ascensionView);
 page('/:island/population', hasGame, populationView);
 page('/:island/needs', hasGame, needsView);
+page('/production', productionView);
+page('/icons', iconsView);
 
 page.start();

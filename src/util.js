@@ -58,28 +58,6 @@ export function createSubmitHandler(callback) {
     };
 }
 
-const urlPattern = /[^A-Za-z0-9]/g;
-
-export function createUrl(name) {
-    return name.replace(urlPattern, () => '-');
-}
-
-export function percent(value, rate) {
-    return value * rate / 100;
-}
-
-export function popRate(value, rate) {
-    return Math.floor(percent(value, rate));
-}
-
-export function round(value, precision) {
-    return Math.round(value * 10 ** precision) / 10 ** precision;
-}
-
-export function outputToKgPerMin(output) {
-    return (60 / output) * 1000;
-}
-
 export function throttle(fn, delay) {
     let timer = null;
 
@@ -104,4 +82,36 @@ export function throttle(fn, delay) {
     };
 
     return result;
+}
+
+const urlPattern = /[^A-Za-z0-9]/g;
+
+export function createUrl(name) {
+    return name.replace(urlPattern, () => '-');
+}
+
+export function percent(value, rate) {
+    return value * rate / 100;
+}
+
+export function popRate(value, rate) {
+    return Math.floor(percent(value, rate));
+}
+
+export function round(value, precision) {
+    return Math.round(value * 10 ** precision) / 10 ** precision;
+}
+
+export function outputToKgPerMin(output) {
+    return (60 / output) * 1000;
+}
+
+export function getRate(output, input, rate, settings) {
+    if (!input) {
+        return null;
+    }
+    const consumable = settings.find(([n]) => n == input)?.[1];
+    consumable.output / output * rate;
+
+    return round(consumable.output / output * rate, 3);
 }

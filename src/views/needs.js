@@ -90,6 +90,8 @@ function summarizeNeeds(pop, consumption, production, goods) {
     } else {
         const index = [...summary.keys()].slice(1);     // Omit first item (total)
 
+        console.log(index, needs, summary, production, goods);
+
         return needsSection(index, needs, summary, production, goods);
     }
 }

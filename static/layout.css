@@ -45,6 +45,12 @@ section.main {
     float: left;
 }
 
+.clear::after {
+    display: table;
+    clear: both;
+    content: '';
+}
+
 
 @media screen and (min-width: 600px) {
     #content {

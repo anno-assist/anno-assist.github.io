@@ -4,119 +4,204 @@
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 4
+        }
     },
     "cider": {
         "output": 40,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 4
+        }
     },
     "hemp": {
         "output": 60,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 4
+        }
     },
     "almonds": {
         "output": 30,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x4",
+            "count": 5
+        }
     },
     "wheat": {
         "output": 30,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x4",
+            "count": 3
+        }
     },
     "herbs": {
         "output": 30,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "3x2",
+            "count": 8
+        }
     },
     "grapes": {
         "output": 90,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 5
+        }
     },
     "wax": {
         "output": 90,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "3x3",
+            "count": 5
+        }
     },
     "coffee_beans": {
         "output": 60,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 5
+        }
     },
     "roses": {
         "output": 120,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 6
+        }
     },
     "sugar_cane": {
         "output": 30,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 5
+        }
     },
     "indigo": {
         "output": 40,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 5
+        }
     },
     "silk": {
         "output": 40,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 5
+        }
     },
     "dates": {
         "output": 20,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x3",
+            "count": 5
+        }
     },
     "milk": {
         "output": 40,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x4",
+            "count": 3
+        }
     },
     "cattle": {
         "output": 48,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x4",
+            "count": 5
+        }
     },
     "hides": {
         "output": 30,
         "input_A": null,
         "rate_A": null,
         "input_B": null,
-        "rate_B": null
+        "rate_B": null,
+        "size": "3x3",
+        "fields": {
+            "size": "4x4",
+            "count": 4
+        }
     },
     "clay": {
         "output": 50,
@@ -312,7 +397,7 @@
         "input_A": "cattle",
         "rate_A": 1,
         "input_B": "salt",
-        "rate_B": 0.5
+        "rate_B": 0.8
     },
     "barrels": {
         "output": 30,

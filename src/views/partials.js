@@ -27,7 +27,7 @@ async function resolveIcon(gridSize, name, classList) {
     return iconTemplate(gridSize, data[0], data[1], classList);
 }
 
-const iconTemplate = (gridSize, x, y, classList) => html`
+export const iconTemplate = (gridSize, x, y, classList) => html`
 <span class="icon ${classList.join(' ')}" style="background-position: -${x * gridSize}px -${y * gridSize}px"></span>`;
 
 
