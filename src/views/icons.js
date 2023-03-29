@@ -3,7 +3,7 @@ import { iconTemplate } from './partials.js';
 
 
 const iconsTemplate = () => html`
-<h1>icons and Consumption Rates</h1>
+<h1>Icons</h1>
 <section class="main">
     <div class="clear">
         <table class="left">

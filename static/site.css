@@ -2,6 +2,7 @@
 @import url(./style.css);
 @import url(./nav.css);
 @import url(./forms.css);
+@import url(./chains.css);
 
 table {
     border-collapse: collapse;

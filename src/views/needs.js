@@ -1,6 +1,7 @@
 import { html } from '../lib/lit-html.js';
 import { deepClone, outputToKgPerMin, pretty, round } from '../util.js';
 import { icon, smallIcon } from './partials.js';
+import { productionRow, productionSection } from './production.js';
 
 
 const needsTemplate = (sections) => html`
@@ -9,7 +10,7 @@ const needsTemplate = (sections) => html`
     ${sections}
 </section>`;
 
-const needsSection = (civIndex, needsIndex, needsByGroup, summary) => html`
+const needsSection = ({ civIndex, needsIndex, needsByGroup, summary }, productionSettings) => html`
 <table class="wide">
     <thead>
         <tr>
@@ -27,7 +28,7 @@ const needsSection = (civIndex, needsIndex, needsByGroup, summary) => html`
 </table>
 <table class="narrow">
     <tbody>
-        ${needsIndex.map(n => narrowRow(n, summary.get(n), needsByGroup))}
+        ${needsIndex.map(n => narrowRow(n, summary.get(n), needsByGroup, productionSettings))}
     </tbody>
 </table>`;
 
@@ -41,18 +42,42 @@ const needsCell = (need) => !need ? null : html`
 <span class="chains">${round(need.chains, 1)}</span>
 <span class="label sub">${round(need.required / 1000, 1)}&nbsp;t/min</span>`;
 
-const narrowRow = (needType, { required, chains }, needsByGroup) => !required ? null : html`
-<tr>
-    <td>${icon(needType, 'dist')}</td>
-    <td>
-        ${needsCell({ required, chains })}
-    </td>
-    <td>
-        <div class="needs-grid">
-            ${Object.values(needsByGroup).map(p => narrowCell(p.type, p.needs[needType]?.required, p.needs[needType]?.chains))}
-        </div>
-    </td>
-</tr>`;
+const narrowRow = (needType, { required, chains }, needsByGroup, productionSettings) => {
+    let visible = false;
+    const details = productionSettings[needType].input_A != null ? html`
+    <tr data-need=${needType} style="display: none">
+        <td colspan="3">${productionRow(productionSettings, needType, chains)}</td>
+    </tr>` : null;
+
+    const toggle = details && smallIcon('process', 'toggle');
+
+    return !required ? null : html`
+    <tr>
+        <td @click=${toggleDetails} style="position: relative">${icon(needType, 'dist')}${toggle}</td>
+        <td>
+            ${needsCell({ required, chains })}
+        </td>
+        <td>
+            <div class="needs-grid">
+                ${Object.values(needsByGroup).map(p => narrowCell(p.type, p.needs[needType]?.required,
+        p.needs[needType]?.chains))}
+            </div>
+        </td>
+    </tr>
+    ${details}`;
+
+    function toggleDetails() {
+        if (details) {
+            if (visible) {
+                visible = false;
+                document.querySelector(`tr[data-need="${needType}"]`).style.display = 'none';
+            } else {
+                visible = true;
+                document.querySelector(`tr[data-need="${needType}"]`).removeAttribute('style');
+            }
+        }
+    }
+};
 
 const narrowCell = (type, required, chains) => !required ? null : html`
     ${smallIcon(type)}
@@ -71,8 +96,14 @@ export function needsView(ctx) {
 
     const sections = [];
     if (population) {
-        sections.push(summarizeNeeds(occident, consumption, production));
-        sections.push(summarizeNeeds(orient, consumption, production));
+        const occidentSummary = summarizeNeeds(occident, consumption, production);
+        const orientSummary = summarizeNeeds(orient, consumption, production);
+
+        sections.push(occidentSummary && needsSection(occidentSummary, production));
+        sections.push(orientSummary && needsSection(orientSummary, production));
+
+        sections.push(productionSection(production, occidentSummary));
+        sections.push(productionSection(production, orientSummary));
     }
 
     ctx.render(needsTemplate(sections));
@@ -88,7 +119,7 @@ function summarizeNeeds(pop, consumption, production) {
         return null;
     } else {
         const needsIndex = [...summary.keys()].slice(1);     // Omit first item (total)
-        return needsSection(civIndex, needsIndex, needsByGroup, summary);
+        return { civIndex, needsIndex, needsByGroup, summary };
     }
 }
 

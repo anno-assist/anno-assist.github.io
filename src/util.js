@@ -110,7 +110,7 @@ export function getRate(output, input, rate, settings) {
     if (!input) {
         return null;
     }
-    const consumable = settings.find(([n]) => n == input)?.[1];
+    const consumable = settings[input];
     consumable.output / output * rate;
 
     return round(consumable.output / output * rate, 3);

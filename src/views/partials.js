@@ -6,11 +6,11 @@ import { loadConfig } from '../config/config.js';
 let config = null;
 
 export function icon(name, ...classList) {
-    return until(resolveIcon(46, name, classList), iconTemplate(46, 15, 13, classList));
+    return until(resolveIcon(46, name, classList), iconTemplate(46, 15, 13, classList, 'loading'));
 }
 
 export function smallIcon(name, ...classList) {
-    return until(resolveIcon(23, name, ['small', ...classList]), iconTemplate(23, 15, 13, ['small', ...classList]));
+    return until(resolveIcon(23, name, ['small', ...classList]), iconTemplate(23, 15, 13, ['small', ...classList], 'loading'));
 }
 
 async function resolveIcon(gridSize, name, classList) {
@@ -24,11 +24,11 @@ async function resolveIcon(gridSize, name, classList) {
         data = (await config).missing;
     }
 
-    return iconTemplate(gridSize, data[0], data[1], classList);
+    return iconTemplate(gridSize, data[0], data[1], classList, name);
 }
 
-export const iconTemplate = (gridSize, x, y, classList) => html`
-<span class="icon ${classList.join(' ')}" style="background-position: -${x * gridSize}px -${y * gridSize}px"></span>`;
+export const iconTemplate = (gridSize, x, y, classList, alt) => html`
+<span alt=${alt} class="icon ${classList.join(' ')}" style="background-position: -${x * gridSize}px -${y * gridSize}px"></span>`;
 
 
 const loader = document.createElement('div');

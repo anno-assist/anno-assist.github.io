@@ -21,7 +21,7 @@ const ratesTemplate = (rates) => html`
             </tr>
         </thead>
         <tbody>
-            ${rates.map(data => ratesRow(data, rates))}
+            ${rates.map(data => ratesRow(data, Object.fromEntries(rates)))}
         </tbody>
     </table>
 </section>`;

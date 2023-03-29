@@ -79,5 +79,7 @@
     "weapons": [2,4],
     "war_machines": [3,4],
     "cannons": [4,4],
-    "field": [0,1]
+    "field": [0,1],
+    "input": [10,17],
+    "process": [7,16]
 }
