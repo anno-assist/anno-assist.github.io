@@ -115,3 +115,17 @@ export function getRate(output, input, rate, settings) {
 
     return round(consumable.output / output * rate, 3);
 }
+
+export function deepClone(ref) {
+    if (Array.isArray(ref)) {
+        return ref.map(deepClone);
+    } else if (typeof ref == 'object' && ref !== null) {
+        return Object.fromEntries(Object.entries(ref).map(([k, v]) => [k, deepClone(v)]));
+    } else {
+        return ref;
+    }
+}
+
+export function pretty(...refs) {
+    refs.forEach(r => console.log(JSON.stringify(r, null, 2)));
+}

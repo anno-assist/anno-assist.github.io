@@ -1,4 +1,5 @@
 import { loadConfig } from '../config/config.js';
+import { deepClone } from '../util.js';
 
 
 let initialized = false;
@@ -21,7 +22,7 @@ export async function addConfig(ctx, next) {
         initialized = true;
     }
 
-    ctx.settings = settings;
+    ctx.settings = deepClone(settings);
 
     next();
 }

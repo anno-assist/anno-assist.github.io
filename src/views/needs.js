@@ -1,5 +1,5 @@
 import { html } from '../lib/lit-html.js';
-import { outputToKgPerMin, round } from '../util.js';
+import { deepClone, outputToKgPerMin, pretty, round } from '../util.js';
 import { icon, smallIcon } from './partials.js';
 
 
@@ -9,61 +9,60 @@ const needsTemplate = (sections) => html`
     ${sections}
 </section>`;
 
-const needsSection = (index, needs, summary, production, goods) => html`
+const needsSection = (civIndex, needsIndex, needsByGroup, summary) => html`
 <table class="wide">
     <thead>
         <tr>
             <th>Level</th>
-            ${index.map(n => html`<th><abbr title=${goods[n].name}>${icon(n, 'dist')}</abbr></th>`)}
+            ${needsIndex.map(n => html`<th>${icon(n, 'dist')}</th>`)}
         </tr>
     </thead>
     <tbody>
-        ${needs.map(needsRow.bind(null, index, production))}
+        ${civIndex.map(type => needsRow(needsIndex, needsByGroup[type]))}
     </tbody>
     <tfoot>
         <th>Total</th>
-        ${index.map(n => html`<th>${needsCell(summary.get(n), outputToKgPerMin(production[n].output))}</th>`)}
+        ${needsIndex.map(n => html`<th>${needsCell(summary.get(n))}</th>`)}
     </tfoot>
 </table>
 <table class="narrow">
     <tbody>
-        ${index.map(n => narrowRow(n, summary.get(n), outputToKgPerMin(production[n].output), needs))}
+        ${needsIndex.map(n => narrowRow(n, summary.get(n), needsByGroup))}
     </tbody>
 </table>`;
 
-const needsRow = (index, production, pop) => html`
+const needsRow = (needsIndex, pop) => html`
 <tr>
     <td>${icon(pop.type, 'dist')}<span class="label sub">${pop.pop}</span></td>
-    ${index.map(n => html`<td>${needsCell(pop.index[n], outputToKgPerMin(production[n].output))}</td>`)}
+    ${needsIndex.map(needType => html`<td>${needsCell(pop.needs[needType])}</td>`)}
 </tr>`;
 
-const needsCell = (value, rate) => !value ? null : html`
-<span class="chains">${round(value / rate, 1)}</span>
-<span class="label sub">${round(value / 1000, 1)} t/min</span>`;
+const needsCell = (need) => !need ? null : html`
+<span class="chains">${round(need.chains, 1)}</span>
+<span class="label sub">${round(need.required / 1000, 1)}&nbsp;t/min</span>`;
 
-const narrowRow = (name, total, rate, pop) => !total ? null : html`
+const narrowRow = (needType, { required, chains }, needsByGroup) => !required ? null : html`
 <tr>
-    <td>${icon(name, 'dist')}</td>
+    <td>${icon(needType, 'dist')}</td>
     <td>
-        ${needsCell(total, rate)}
+        ${needsCell({ required, chains })}
     </td>
     <td>
         <div class="needs-grid">
-            ${pop.map(p => [p.type, p.index[name]]).map(([type, value]) => narrowCell(type, value, rate))}
+            ${Object.values(needsByGroup).map(p => narrowCell(p.type, p.needs[needType]?.required, p.needs[needType]?.chains))}
         </div>
     </td>
 </tr>`;
 
-const narrowCell = (type, value, rate) => !value ? null : html`
+const narrowCell = (type, required, chains) => !required ? null : html`
     ${smallIcon(type)}
-    <span class="label">${round(value / rate, 1)}</span>
-    <span class="label sub">(${round(value / 1000, 1)} t/min)</span>`;
+    <span class="label">${round(chains, 1)}</span>
+    <span class="label sub">(${round(required / 1000, 1)}&nbsp;t/min)</span>`;
 
 export function needsView(ctx) {
     const popSettings = ctx.settings.population;
     const consumption = ctx.settings.consumption;
     const production = ctx.settings.production;
-    const goods = ctx.settings.goods;
     const islandUrl = ctx.selection.island;
     const population = ctx.population[islandUrl];
 
@@ -72,52 +71,66 @@ export function needsView(ctx) {
 
     const sections = [];
     if (population) {
-        sections.push(summarizeNeeds(occident, consumption, production, goods));
-        sections.push(summarizeNeeds(orient, consumption, production, goods));
+        sections.push(summarizeNeeds(occident, consumption, production));
+        sections.push(summarizeNeeds(orient, consumption, production));
     }
 
     ctx.render(needsTemplate(sections));
 }
 
-function summarizeNeeds(pop, consumption, production, goods) {
-    const needs = getNeeds(pop, consumption);
-    needs.forEach(calcNeeds);
-    const summary = summarize(needs);
-    needs.forEach(n => n.index = Object.fromEntries(n.needs.map(x => [x.key, x.total])));
+function summarizeNeeds(pop, consumption, production) {
+    const civIndex = Object.keys(pop);
+    const needsByGroup = addNeeds(pop, consumption);
+    Object.values(needsByGroup).forEach(group => calcNeeds(group, production));
+    const summary = summarize(needsByGroup);
 
-    if (summary.get('total') == 0) {
+    if (summary.get('total').required == 0) {
         return null;
     } else {
-        const index = [...summary.keys()].slice(1);     // Omit first item (total)
-
-        console.log(index, needs, summary, production, goods);
-
-        return needsSection(index, needs, summary, production, goods);
+        const needsIndex = [...summary.keys()].slice(1);     // Omit first item (total)
+        return needsSection(civIndex, needsIndex, needsByGroup, summary);
     }
 }
 
-function getNeeds(group, config) {
-    return Object.entries(group)
-        .map(([type, pop]) => ({ type, pop, needs: config[type] }));
+function addNeeds(civ, config) {
+    return Object.fromEntries(Object.entries(civ)
+        .map(([type, pop]) => [
+            type,
+            {
+                type,
+                pop,
+                needs: Object.fromEntries(config[type].map(n => [n.key, deepClone(n)]))
+            }
+        ]));
 }
 
 /**
  * 
  * @param {{ type: string, pop: number, needs: PopNeed[]}} group 
  */
-function calcNeeds(group) {
-    group.needs.forEach(n => n.total = n.kgPerMinute * group.pop);
+function calcNeeds(group, production) {
+    Object.values(group.needs).forEach(n => {
+        n.required = n.kgPerMinute * group.pop;
+        n.chains = n.required / outputToKgPerMin(production[n.key].output);
+        n.name = production[n.key].name;
+    });
 }
 
-function summarize(pop) {
-    const summary = new Map([['total', 0]]);
+function summarize(needsByGroup) {
+    const total = { required: 0 };
+    const summary = new Map([['total', total]]);
 
-    for (const { key, total } of pop.flatMap(g => g.needs)) {
+    for (const { key, required, chains } of Object.values(needsByGroup).flatMap(g => Object.values(g.needs))) {
         if (summary.has(key) == false) {
-            summary.set(key, 0);
+            summary.set(key, {
+                required: 0,
+                chains: 0
+            });
         }
-        summary.set(key, summary.get(key) + total);
-        summary.set('total', summary.get('total') + total);
+        const entry = summary.get(key);
+        entry.required += required;
+        entry.chains += chains;
+        total.required += required;
     }
 
     return summary;
@@ -127,5 +140,6 @@ function summarize(pop) {
  * @typedef {Object} PopNeed
  * @property {string} key
  * @property {number} kgPerMinute
- * @property {number?} total
+ * @property {number?} required
+ * @property {number?} chains
  */
