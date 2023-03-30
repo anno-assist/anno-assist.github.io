@@ -18,6 +18,7 @@ import { needsView } from './views/needs.js';
 import { ratesView } from './views/rates.js';
 import { iconsView } from './views/icons.js';
 import { title } from './middlewares/title.js';
+import { chainsView } from './views/chains.js';
 
 
 page('/:island/:mode', addSelection);
@@ -36,5 +37,6 @@ page('/:island/population', hasGame, title('$name | Population'), populationView
 page('/:island/needs', hasGame, title('$name | Needs'), needsView);
 page('/rates', title('Production'), ratesView);
 page('/icons', title('Icons'), iconsView);
+page('/chains', title('Production Chains'), chainsView);
 
 page.start();
