@@ -26,17 +26,19 @@ const ratesTemplate = (rates) => html`
     </table>
 </section>`;
 
-const ratesRow = ([type, { output, input_A, rate_A, input_B, rate_B }], settings) => html`
+const ratesRow = ([type, { output, inputs }], settings) => html`
 <tr>
     <td>${icon(type)}</td>
     <td><span class="label">${output}</span></td>
-    <td>${input_A && icon(input_A)}</td>
-    <td><span class="label">${rate_A}</span></td>
-    <td><span class="label">${getRate(output, input_A, rate_A, settings)}</span></td>
-    <td>${input_B && icon(input_B)}</td>
-    <td><span class="label">${rate_B}</span></td>
-    <td><span class="label">${getRate(output, input_B, rate_B, settings)}</span></td>
+    ${inputCols(inputs[0], output, settings)}
+    ${inputCols(inputs[1], output, settings)}
 </tr>`;
+
+const inputCols = (input, output, settings) => input ? html`
+<td>${icon(input.type)}</td>
+<td><span class="label">${input.rate}</span></td>
+<td><span class="label">${getRate(output, input.type, input.rate, settings)}</span></td>` : html`
+<td colspan="3"></td>`;
 
 export function ratesView(ctx) {
     const rates = ctx.settings.production;

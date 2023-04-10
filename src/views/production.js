@@ -45,16 +45,10 @@ export function productionRow(settings, type, chains) {
 function productionChain(settings, type, chains) {
     const chain = settings[type];
 
-    const requirements = [];
-
-    if (chain.input_A) {
-        const required = getRate(chain.output, chain.input_A, chain.rate_A, settings) * chains;
-        requirements.push(productionChain(settings, chain.input_A, required));
-    }
-    if (chain.input_B) {
-        const required = getRate(chain.output, chain.input_B, chain.rate_B, settings) * chains;
-        requirements.push(productionChain(settings, chain.input_B, required));
-    }
+    const requirements = chain.inputs.map(({type: inputType, rate}) => {
+        const required = getRate(chain.output, inputType, rate, settings) * chains;
+        return productionChain(settings, inputType, required);
+    });
 
     return productionTemplate(type, chains, requirements);
 }

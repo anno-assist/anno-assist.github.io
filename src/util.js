@@ -106,6 +106,14 @@ export function outputToKgPerMin(output) {
     return (60 / output) * 1000;
 }
 
+/**
+ * 
+ * @param {number} output Seconds per ton produced
+ * @param {string} input Input good
+ * @param {number} rate Tons consumed per ton produced
+ * @param {Object} settings Production config
+ * @returns 
+ */
 export function getRate(output, input, rate, settings) {
     if (!input) {
         return null;

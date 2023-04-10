@@ -1,583 +1,641 @@
 {
     "spices": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 4
         },
-        "name": "Spices"
+        "name": "Spices",
+        "inputs": []
     },
     "cider": {
         "output": 40,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 4
         },
-        "name": "Cider"
+        "name": "Cider",
+        "inputs": []
     },
     "hemp": {
         "output": 60,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 4
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "almonds": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x4",
             "count": 5
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "wheat": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x4",
             "count": 3
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "herbs": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "3x2",
             "count": 8
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "grapes": {
         "output": 90,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 5
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "wax": {
         "output": 90,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "3x3",
             "count": 5
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "coffee_beans": {
         "output": 60,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 5
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "roses": {
         "output": 120,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 6
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "sugar_cane": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 5
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "indigo": {
         "output": 40,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 5
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "silk": {
         "output": 40,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 5
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "dates": {
         "output": 20,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x3",
             "count": 5
         },
-        "name": "Dates"
+        "name": "Dates",
+        "inputs": []
     },
     "milk": {
         "output": 40,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x4",
             "count": 3
         },
-        "name": "Milk"
+        "name": "Milk",
+        "inputs": []
     },
     "cattle": {
         "output": 48,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x4",
             "count": 5
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "hides": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
         "size": "3x3",
         "fields": {
             "size": "4x4",
             "count": 4
         },
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "clay": {
         "output": 50,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "wood": {
         "output": 40,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "potash": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "coal": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "fish": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": "Fish"
+        "name": "Fish",
+        "inputs": []
     },
     "quartz": {
         "output": 45,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "stone": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "iron_ore": {
         "output": 30,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "brine": {
         "output": 15,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "copper": {
         "output": 45,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "gold_ore": {
         "output": 40,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "furs": {
         "output": 24,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "pearls": {
         "output": 60,
-        "input_A": null,
-        "rate_A": null,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": []
     },
     "leather": {
         "output": 15,
-        "input_A": "hides",
-        "rate_A": 1,
-        "input_B": "salt",
-        "rate_B": 0.5,
-        "name": "Leather jerkins"
+        "name": "Leather jerkins",
+        "inputs": [
+            {
+                "type": "hides",
+                "rate": 1
+            },
+            {
+                "type": "salt",
+                "rate": 0.5
+            }
+        ]
     },
     "sugar": {
         "output": 15,
-        "input_A": "sugar_cane",
-        "rate_A": 1,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "sugar_cane",
+                "rate": 1
+            }
+        ]
     },
     "paper": {
         "output": 20,
-        "input_A": "wood",
-        "rate_A": 1,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "wood",
+                "rate": 1
+            }
+        ]
     },
     "furcoats": {
         "output": 24,
-        "input_A": "furs",
-        "rate_A": 1,
-        "input_B": "salt",
-        "rate_B": 0.53,
-        "name": "Fur coats"
+        "name": "Fur coats",
+        "inputs": [
+            {
+                "type": "furs",
+                "rate": 1
+            },
+            {
+                "type": "salt",
+                "rate": 0.53
+            }
+        ]
     },
     "linen": {
         "output": 30,
-        "input_A": "hemp",
-        "rate_A": 1,
-        "input_B": null,
-        "rate_B": null,
-        "name": "Linen garments"
+        "name": "Linen garments",
+        "inputs": [
+            {
+                "type": "hemp",
+                "rate": 1
+            }
+        ]
     },
     "tools": {
         "output": 30,
-        "input_A": "iron",
-        "rate_A": 0.5,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "iron",
+                "rate": 0.5
+            }
+        ]
     },
     "mosaic": {
         "output": 25,
-        "input_A": "clay",
-        "rate_A": 1,
-        "input_B": "quartz",
-        "rate_B": 0.5,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "clay",
+                "rate": 1
+            },
+            {
+                "type": "quartz",
+                "rate": 0.5
+            }
+        ]
     },
     "flour": {
         "output": 15,
-        "input_A": "wheat",
-        "rate_A": 1,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "wheat",
+                "rate": 1
+            }
+        ]
     },
     "bread": {
         "output": 15,
-        "input_A": "flour",
-        "rate_A": 1,
-        "input_B": null,
-        "rate_B": null,
-        "name": "Bread"
+        "name": "Bread",
+        "inputs": [
+            {
+                "type": "flour",
+                "rate": 1
+            }
+        ]
     },
     "beer": {
         "output": 40,
-        "input_A": "herbs",
-        "rate_A": 1.333,
-        "input_B": "wheat",
-        "rate_B": 1.333,
-        "name": "Beer"
+        "name": "Beer",
+        "inputs": [
+            {
+                "type": "herbs",
+                "rate": 1.333
+            },
+            {
+                "type": "wheat",
+                "rate": 1.333
+            }
+        ]
     },
     "iron": {
         "output": 30,
-        "input_A": "iron_ore",
-        "rate_A": 1,
-        "input_B": "coal",
-        "rate_B": 1,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "iron_ore",
+                "rate": 1
+            },
+            {
+                "type": "coal",
+                "rate": 1
+            }
+        ]
     },
     "rope": {
         "output": 30,
-        "input_A": "hemp",
-        "rate_A": 0.5,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "hemp",
+                "rate": 0.5
+            }
+        ]
     },
     "weapons": {
         "output": 30,
-        "input_A": "iron",
-        "rate_A": 1,
-        "input_B": null,
-        "rate_B": null,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "iron",
+                "rate": 1
+            }
+        ]
     },
     "salt": {
         "output": 15,
-        "input_A": "brine",
-        "rate_A": 1,
-        "input_B": "coal",
-        "rate_B": 0.5,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "brine",
+                "rate": 1
+            },
+            {
+                "type": "coal",
+                "rate": 0.5
+            }
+        ]
     },
     "meat": {
         "output": 24,
-        "input_A": "cattle",
-        "rate_A": 1,
-        "input_B": "salt",
-        "rate_B": 0.8,
-        "name": "Meat"
+        "name": "Meat",
+        "inputs": [
+            {
+                "type": "cattle",
+                "rate": 1
+            },
+            {
+                "type": "salt",
+                "rate": 0.8
+            }
+        ]
     },
     "barrels": {
         "output": 30,
-        "input_A": "wood",
-        "rate_A": 0.5,
-        "input_B": "iron",
-        "rate_B": 0.5,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "wood",
+                "rate": 0.5
+            },
+            {
+                "type": "iron",
+                "rate": 0.5
+            }
+        ]
     },
     "wine": {
         "output": 30,
-        "input_A": "grapes",
-        "rate_A": 1,
-        "input_B": "barrels",
-        "rate_B": 1,
-        "name": "Wine"
+        "name": "Wine",
+        "inputs": [
+            {
+                "type": "grapes",
+                "rate": 1
+            },
+            {
+                "type": "barrels",
+                "rate": 1
+            }
+        ]
     },
     "coffee": {
         "output": 60,
-        "input_A": "coffee_beans",
-        "rate_A": 2,
-        "input_B": null,
-        "rate_B": null,
-        "name": "Coffee"
+        "name": "Coffee",
+        "inputs": [
+            {
+                "type": "coffee_beans",
+                "rate": 2
+            }
+        ]
     },
     "war_machines": {
         "output": 40,
-        "input_A": "wood",
-        "rate_A": 2,
-        "input_B": "rope",
-        "rate_B": 2,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "wood",
+                "rate": 2
+            },
+            {
+                "type": "rope",
+                "rate": 2
+            }
+        ]
     },
     "brass": {
         "output": 45,
-        "input_A": "copper",
-        "rate_A": 1,
-        "input_B": "coal",
-        "rate_B": 1,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "copper",
+                "rate": 1
+            },
+            {
+                "type": "coal",
+                "rate": 1
+            }
+        ]
     },
     "glasses": {
         "output": 30,
-        "input_A": "brass",
-        "rate_A": 0.5,
-        "input_B": "quartz",
-        "rate_B": 0.5,
-        "name": "Glasses"
+        "name": "Glasses",
+        "inputs": [
+            {
+                "type": "brass",
+                "rate": 0.5
+            },
+            {
+                "type": "quartz",
+                "rate": 0.5
+            }
+        ]
     },
     "candles": {
         "output": 45,
-        "input_A": "wax",
-        "rate_A": 1,
-        "input_B": "hemp",
-        "rate_B": 0.75,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "wax",
+                "rate": 1
+            },
+            {
+                "type": "hemp",
+                "rate": 0.75
+            }
+        ]
     },
     "candlestick": {
         "output": 30,
-        "input_A": "brass",
-        "rate_A": 0.5,
-        "input_B": "candles",
-        "rate_B": 1,
-        "name": "Candlestick"
+        "name": "Candlestick",
+        "inputs": [
+            {
+                "type": "brass",
+                "rate": 0.5
+            },
+            {
+                "type": "candles",
+                "rate": 1
+            }
+        ]
     },
     "perfume": {
         "output": 60,
-        "input_A": "roses",
-        "rate_A": 1.5,
-        "input_B": null,
-        "rate_B": null,
-        "name": "Perfume"
+        "name": "Perfume",
+        "inputs": [
+            {
+                "type": "roses",
+                "rate": 1.5
+            }
+        ]
     },
     "marzipan": {
         "output": 15,
-        "input_A": "almonds",
-        "rate_A": 1,
-        "input_B": "sugar",
-        "rate_B": 1,
-        "name": "Marzipan"
+        "name": "Marzipan",
+        "inputs": [
+            {
+                "type": "almonds",
+                "rate": 1
+            },
+            {
+                "type": "sugar",
+                "rate": 1
+            }
+        ]
     },
     "brocade": {
         "output": 20,
-        "input_A": "silk",
-        "rate_A": 1,
-        "input_B": "gold",
-        "rate_B": 0.5,
-        "name": "Brocade robes"
+        "name": "Brocade robes",
+        "inputs": [
+            {
+                "type": "silk",
+                "rate": 1
+            },
+            {
+                "type": "gold",
+                "rate": 0.5
+            }
+        ]
     },
     "carpets": {
         "output": 40,
-        "input_A": "silk",
-        "rate_A": 1,
-        "input_B": "indigo",
-        "rate_B": 1,
-        "name": "Carpets"
+        "name": "Carpets",
+        "inputs": [
+            {
+                "type": "silk",
+                "rate": 1
+            },
+            {
+                "type": "indigo",
+                "rate": 1
+            }
+        ]
     },
     "gold": {
         "output": 40,
-        "input_A": "gold_ore",
-        "rate_A": 1,
-        "input_B": "coal",
-        "rate_B": 1,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "gold_ore",
+                "rate": 1
+            },
+            {
+                "type": "coal",
+                "rate": 1
+            }
+        ]
     },
     "necklaces": {
         "output": 60,
-        "input_A": "pearls",
-        "rate_A": 1,
-        "input_B": null,
-        "rate_B": null,
-        "name": "Pearl necklaces"
+        "name": "Pearl necklaces",
+        "inputs": [
+            {
+                "type": "pearls",
+                "rate": 1
+            }
+        ]
     },
     "cannons": {
         "output": 60,
-        "input_A": "iron",
-        "rate_A": 1.5,
-        "input_B": "wood",
-        "rate_B": 3,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "iron",
+                "rate": 1.5
+            },
+            {
+                "type": "wood",
+                "rate": 3
+            }
+        ]
     },
     "books": {
         "output": 20,
-        "input_A": "paper",
-        "rate_A": 0.5,
-        "input_B": "indigo",
-        "rate_B": 1,
-        "name": "Books"
+        "name": "Books",
+        "inputs": [
+            {
+                "type": "paper",
+                "rate": 0.5
+            },
+            {
+                "type": "indigo",
+                "rate": 1
+            }
+        ]
     },
     "glass": {
         "output": 60,
-        "input_A": "potash",
-        "rate_A": 1,
-        "input_B": "quartz",
-        "rate_B": 0.5,
-        "name": null
+        "name": null,
+        "inputs": [
+            {
+                "type": "potash",
+                "rate": 1
+            },
+            {
+                "type": "quartz",
+                "rate": 0.5
+            }
+        ]
     }
 }
