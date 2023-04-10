@@ -52,7 +52,7 @@ function productionChain(settings, type, chains) {
         requirements.push(productionChain(settings, chain.input_A, required));
     }
     if (chain.input_B) {
-        const required = getRate(chain.output, chain.input_B, chain.rate_B, settings);
+        const required = getRate(chain.output, chain.input_B, chain.rate_B, settings) * chains;
         requirements.push(productionChain(settings, chain.input_B, required));
     }
 
