@@ -1,10 +1,15 @@
 export function title(value) {
     return function (ctx, next) {
+        let currentValue = value;
+
         const name = ctx.islands?.find(i => i.url == ctx.selection?.island)?.name;
         if (name) {
-            value = value.replace('$name', name);
+            currentValue = currentValue.replace('$name', name);
         }
-        ctx.customTitle = value;
+        ctx.customTitle = currentValue;
+
+        document.title = [currentValue, 'Anno Assist'].filter(x => x).join(' | ');
+
         next();
     };
 }
