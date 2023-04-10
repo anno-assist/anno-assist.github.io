@@ -76,7 +76,7 @@ section.main {
         padding-bottom: 60px;
     }
 
-    table,
+    table:not(.chain-table),
     tr {
         width: 100%;
     }

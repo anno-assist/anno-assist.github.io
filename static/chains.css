@@ -14,8 +14,8 @@
 }
 
 .product {
-    background-color: rgba(224, 189, 140, 0.2);
-    box-shadow: 8px 0 4px -4px rgba(0, 0, 0, 0.2);
+    /* background-color: rgba(224, 189, 140, 0.2); */
+    /* box-shadow: 8px 0 4px -4px rgba(0, 0, 0, 0.2); */
 
     margin-top: 8px;
     margin-bottom: 8px;
@@ -52,6 +52,50 @@
     position: absolute;
     right: 0;
     bottom: 0;
+}
+
+.arrow {
+    position: relative;
+    width: 16px;
+    padding: 0;
+}
+
+.arrow div {
+    position: absolute;
+    /* background-color: black; */
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+    border-left: 3px solid black;
+}
+
+.arrow.top div {
+    top: 50%;
+    bottom: 0;
+    border-top-left-radius: 10px;
+    border-top: 3px solid black;
+}
+
+.arrow.bottom div {
+    top: 0;
+    bottom: 50%;
+    border-bottom-left-radius: 10px;
+    border-bottom: 3px solid black;
+}
+
+.arrow.mid div {
+    top: 50%;
+    border-top: 3px solid black;
+}
+
+.chain-table, .chain-table tr, .chain-table td {
+    border: none;
+}
+
+.ingredient {
+    border-radius: 8px;
+    background-color: rgba(224, 189, 140, 0.4);
+    box-shadow: 0 0 4px 4px rgba(224, 189, 140, 0.4);
 }
 
 @media screen and (max-width: 599px) {

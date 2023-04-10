@@ -102,6 +102,10 @@ export function round(value, precision) {
     return Math.round(value * 10 ** precision) / 10 ** precision;
 }
 
+export function ceil(value, precision) {
+    return Math.ceil(value * 10 ** precision) / 10 ** precision;
+}
+
 export function outputToKgPerMin(output) {
     return (60 / output) * 1000;
 }

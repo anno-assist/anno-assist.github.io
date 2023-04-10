@@ -1,5 +1,6 @@
 import { html } from '../lib/lit-html.js';
 import { getRate, pretty, round } from '../util.js';
+import { productionChain } from './chains.js';
 import { icon, smallIcon } from './partials.js';
 
 
@@ -30,18 +31,21 @@ export function productionSection(settings, summary) {
     <div class="clear wide">
         ${summary.needsIndex.map(n => html`
         <div class="product">
-            ${productionChain(settings, n, summary.summary.get(n).chains)}
+            ${productionChain(n, settings, summary.summary.get(n).chains)}
         </div>`)}
     </div>`;
 }
 
+/*
 export function productionRow(settings, type, chains) {
     return html`
         <div class="product">
             ${productionChain(settings, type, chains)}
         </div>`;
 }
+*/
 
+/*
 function productionChain(settings, type, chains) {
     const chain = settings[type];
 
@@ -52,3 +56,4 @@ function productionChain(settings, type, chains) {
 
     return productionTemplate(type, chains, requirements);
 }
+*/

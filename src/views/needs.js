@@ -1,7 +1,8 @@
 import { html } from '../lib/lit-html.js';
 import { deepClone, outputToKgPerMin, pretty, round } from '../util.js';
+import { productionChain } from './chains.js';
 import { icon, smallIcon } from './partials.js';
-import { productionRow, productionSection } from './production.js';
+import { productionSection } from './production.js';
 
 
 const needsTemplate = (sections) => html`
@@ -44,9 +45,9 @@ const needsCell = (need) => !need ? null : html`
 
 const narrowRow = (needType, { required, chains }, needsByGroup, productionSettings) => {
     let visible = false;
-    const details = productionSettings[needType].input_A != null ? html`
+    const details = productionSettings[needType].inputs.length ? html`
     <tr data-need=${needType} style="display: none">
-        <td colspan="3">${productionRow(productionSettings, needType, chains)}</td>
+        <td colspan="3">${productionChain(needType, productionSettings, chains)}</td>
     </tr>` : null;
 
     const toggle = details && smallIcon('process', 'toggle');
