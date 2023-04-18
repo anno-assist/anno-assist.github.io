@@ -41,6 +41,18 @@ section.main {
     background-image: url('/static/icons.webp');
 }
 
+.icon-2070 {
+    display: block;
+    width: 46px;
+    height: 46px;
+    background-image: url('/static/icons_2070.png');
+}
+
+.found {
+    filter: saturate(0);
+    filter: opacity(0.2);
+}
+
 .left {
     float: left;
 }

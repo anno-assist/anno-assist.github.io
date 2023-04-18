@@ -3,7 +3,7 @@ import { getRate, round } from '../util.js';
 import { icon } from './partials.js';
 
 
-const chainsTemplate = (chains) => html`
+export const chainsTemplate = (chains) => html`
 <h1>Production and Consumption chains</h1>
 <section class="main">
     <style>th { position: sticky; top: 0; }</style>
@@ -28,7 +28,7 @@ const chainsTemplate = (chains) => html`
 
 const chainsRow = ([type, { output, inputs }], settings) => html`
 <tr>
-    <td>${icon(type)}</td>
+    <td><abbr title=${type}>${icon(type)}</abbr></td>
     <td><span class="label">${output}</span></td>
     ${inputCols(inputs[0], output, settings)}
     ${inputCols(inputs[1], output, settings)}
@@ -44,7 +44,7 @@ const inputCols = (input, output, settings) => input ? html`
 <td colspan="3"></td>`;
 
 const chainTable = (matrix, type, visible, toggle) => html`
-<table @click=${toggle} class="chain-table" data-type=${type} data-role="chain" style=${!visible && 'display: none'}>
+<table @click=${toggle} class="chain-table" data-type=${type} data-role="chain" style=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx>
     ${matrix.map(chainRow)}
 </table>`;
 
@@ -69,8 +69,10 @@ const chainArrow = col => html`<td class="arrow ${col.position}" rowspan=${col.s
 
 const ingredient = (name, rate, ...classList) => html`
 <div class=${['ingredient', ...classList].join(' ')}>
-    ${icon(name)}
-    ${rate && html`<span class="label">${round(rate, 1)}</span>`}
+    <abbr title=${name}>
+        ${icon(name)}
+    </abbr>
+    ${rate && html`<span class="label">${round(rate, 2)}</span>`}
 </div>`;
 
 export function productionChain(type, settings, rate = 1, hasToggle) {
@@ -213,7 +215,6 @@ function cell(content, depth, rate, position) {
 
 export async function chainsView(ctx) {
     const chains = ctx.settings.production;
-    // const chains = await loadConfig('production2070');
 
     ctx.render(chainsTemplate(Object.entries(chains)));
 }

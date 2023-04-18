@@ -1,0 +1,820 @@
+{
+    "SuperFlavor": {
+        "output": 60,
+        "inputs": [],
+        "name": "SuperFlavor",
+        "factory": "flavor_lab"
+    },
+    "Meat": {
+        "output": 40,
+        "inputs": [],
+        "name": "Meat",
+        "factory": "meatfactory"
+    },
+    "TVDinner": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "Meat",
+                "rate": 1
+            },
+            {
+                "type": "SuperFlavor",
+                "rate": 1
+            }
+        ],
+        "name": "TVDinner",
+        "factory": "food_supply_factory"
+    },
+    "Lobster": {
+        "output": 30,
+        "inputs": [],
+        "name": "Lobster",
+        "factory": "lobster_farm"
+    },
+    "Truffles": {
+        "output": 80,
+        "inputs": [],
+        "name": "Truffles",
+        "factory": "truffle_farm"
+    },
+    "LuxuryMeal": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "Lobster",
+                "rate": 1
+            },
+            {
+                "type": "Truffles",
+                "rate": 1.5
+            }
+        ],
+        "name": "LuxuryMeal",
+        "factory": "gourmet_factory"
+    },
+    "Liquor": {
+        "output": 40,
+        "inputs": [],
+        "name": "Liquor",
+        "factory": "distillery"
+    },
+    "Champagne": {
+        "output": 48,
+        "inputs": [
+            {
+                "type": "Grapes",
+                "rate": 1
+            },
+            {
+                "type": "Sugar",
+                "rate": 1
+            }
+        ],
+        "name": "Champagne",
+        "factory": "champagne_cellar"
+    },
+    "Grapes": {
+        "output": 96,
+        "inputs": [],
+        "name": "Grapes",
+        "factory": "vineyard"
+    },
+    "RawOil": {
+        "output": 60,
+        "inputs": [],
+        "name": "RawOil",
+        "factory": "oil_driller"
+    },
+    "Toys": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Oil",
+                "rate": 1
+            }
+        ],
+        "name": "Toys",
+        "factory": "plastic_factory"
+    },
+    "GoldNuggets": {
+        "output": 45,
+        "inputs": [],
+        "name": "GoldNuggets",
+        "factory": "gold_refinery"
+    },
+    "Gold": {
+        "output": 45,
+        "inputs": [
+            {
+                "type": "GoldNuggets",
+                "rate": 1
+            },
+            {
+                "type": "Coal",
+                "rate": 1.5
+            }
+        ],
+        "name": "Gold",
+        "factory": "gold_smeltery"
+    },
+    "Jewelry": {
+        "output": 45,
+        "inputs": [
+            {
+                "type": "Gold",
+                "rate": 1
+            },
+            {
+                "type": "Diamonds",
+                "rate": 1
+            }
+        ],
+        "name": "Jewelry",
+        "factory": "jewelry_manufactory"
+    },
+    "OmegaAcids": {
+        "output": 120,
+        "inputs": [],
+        "name": "OmegaAcids",
+        "factory": "fat_factory"
+    },
+    "SecretIngredient": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "OmegaAcids",
+                "rate": 1.5
+            },
+            {
+                "type": "Algae",
+                "rate": 1
+            }
+        ],
+        "name": "SecretIngredient",
+        "factory": "chemical_plant"
+    },
+    "Pharmaceuticals": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "SecretIngredient",
+                "rate": 1
+            },
+            {
+                "type": "RareEarths",
+                "rate": 1
+            }
+        ],
+        "name": "Pharmaceuticals",
+        "factory": "pharmaceutical_factory"
+    },
+    "Coal": {
+        "output": 30,
+        "inputs": [],
+        "name": "Coal",
+        "factory": "excavator"
+    },
+    "Steel": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Iron",
+                "rate": 2
+            }
+        ],
+        "name": "Steel",
+        "factory": "steelwork"
+    },
+    "HeavyWeapons": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Iron",
+                "rate": 2
+            },
+            {
+                "type": "Explosives",
+                "rate": 1
+            }
+        ],
+        "name": "HeavyWeapons",
+        "factory": "heavy_arsenal"
+    },
+    "Explosives": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Uranium",
+                "rate": 0.5
+            }
+        ],
+        "name": "Explosives",
+        "factory": "explosive_factory"
+    },
+    "Concrete": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Sand",
+                "rate": 0.5
+            },
+            {
+                "type": "Limestone",
+                "rate": 1
+            }
+        ],
+        "name": "Concrete",
+        "factory": "concrete_factory"
+    },
+    "FuleRod": {
+        "output": 120,
+        "inputs": [
+            {
+                "type": "Uranium",
+                "rate": 1
+            }
+        ],
+        "name": "FuleRod",
+        "factory": "fuel_assembly_factory"
+    },
+    "Granulate": {
+        "output": 40,
+        "inputs": [],
+        "name": "Granulate",
+        "factory": "basalt_crusher"
+    },
+    "Vegetables": {
+        "output": 40,
+        "inputs": [],
+        "name": "Vegetables",
+        "factory": "vegetable_farm"
+    },
+    "Soy": {
+        "output": 60,
+        "inputs": [],
+        "name": "Soy",
+        "factory": "rice_farm"
+    },
+    "HealthFood": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "Soy",
+                "rate": 1
+            },
+            {
+                "type": "Vegetables",
+                "rate": 1
+            }
+        ],
+        "name": "HealthFood",
+        "factory": "health_food_factory"
+    },
+    "Grain": {
+        "output": 90,
+        "inputs": [],
+        "name": "Grain",
+        "factory": "grain_farm"
+    },
+    "Flour": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Grain",
+                "rate": 1
+            }
+        ],
+        "name": "Flour",
+        "factory": "water_mill"
+    },
+    "ComfortFood": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "Flour",
+                "rate": 1
+            },
+            {
+                "type": "Vegetables",
+                "rate": 1.5
+            }
+        ],
+        "name": "ComfortFood",
+        "factory": "bakery"
+    },
+    "Tea": {
+        "output": 40,
+        "inputs": [],
+        "name": "Tea",
+        "factory": "tea_plantation"
+    },
+    "Fruits": {
+        "output": 96,
+        "inputs": [],
+        "name": "Fruits",
+        "factory": "fruit_plantation"
+    },
+    "Milk": {
+        "output": 48,
+        "inputs": [],
+        "name": "Milk",
+        "factory": "dairy_farm"
+    },
+    "HealthDrink": {
+        "output": 48,
+        "inputs": [
+            {
+                "type": "Fruits",
+                "rate": 1
+            },
+            {
+                "type": "Milk",
+                "rate": 1
+            }
+        ],
+        "name": "HealthDrink",
+        "factory": "health_drink_factory"
+    },
+    "Communicator": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Microchips",
+                "rate": 1
+            }
+        ],
+        "name": "Communicator",
+        "factory": "communicator_factory"
+    },
+    "Holographer": {
+        "output": 40,
+        "inputs": [
+            {
+                "type": "RareEarths",
+                "rate": 0.5
+            },
+            {
+                "type": "Diamonds",
+                "rate": 0.5
+            }
+        ],
+        "name": "Holographer",
+        "factory": "holograph_factory"
+    },
+    "Corn": {
+        "output": 120,
+        "inputs": [],
+        "name": "Corn",
+        "factory": "corn_farm"
+    },
+    "Biopolymer": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "Corn",
+                "rate": 1
+            },
+            {
+                "type": "Algae",
+                "rate": 1
+            }
+        ],
+        "name": "Biopolymer",
+        "factory": "biopolymer_factory"
+    },
+    "HomeRobot": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "Microchips",
+                "rate": 1
+            },
+            {
+                "type": "Biopolymer",
+                "rate": 1
+            }
+        ],
+        "name": "HomeRobot",
+        "factory": "robot_factory"
+    },
+    "Wood": {
+        "output": 60,
+        "inputs": [],
+        "name": "Wood",
+        "factory": "saw_mill"
+    },
+    "Glass": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Sand",
+                "rate": 0.5
+            },
+            {
+                "type": "Limestone",
+                "rate": 1
+            }
+        ],
+        "name": "Glass",
+        "factory": "glassworks"
+    },
+    "Granulate_2": {
+        "output": 40,
+        "inputs": [],
+        "name": "Granulate",
+        "factory": "rubble_recycler"
+    },
+    "Algae": {
+        "output": 60,
+        "inputs": [],
+        "name": "Algae",
+        "factory": "algae_farm"
+    },
+    "FunctionalFood": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "Algae",
+                "rate": 1
+            }
+        ],
+        "name": "FunctionalFood",
+        "factory": "functional_food_factory"
+    },
+    "Caffeine": {
+        "output": 48,
+        "inputs": [],
+        "name": "Caffeine",
+        "factory": "coffee_plantation"
+    },
+    "EnergyDrink": {
+        "output": 48,
+        "inputs": [
+            {
+                "type": "Caffeine",
+                "rate": 1
+            },
+            {
+                "type": "Sugar",
+                "rate": 1
+            }
+        ],
+        "name": "EnergyDrink",
+        "factory": "energy_drink_factory"
+    },
+    "Kerosene": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Oil",
+                "rate": 1
+            }
+        ],
+        "name": "Kerosene",
+        "factory": "fuel_factory"
+    },
+    "AdvancedWeapons": {
+        "output": 45,
+        "inputs": [
+            {
+                "type": "Iron",
+                "rate": 1.5
+            },
+            {
+                "type": "Microchips",
+                "rate": 3
+            }
+        ],
+        "name": "AdvancedWeapons",
+        "factory": "advanced_arsenal"
+    },
+    "BuildingModules": {
+        "output": 60,
+        "inputs": [],
+        "name": "BuildingModules",
+        "factory": "recycling_station"
+    },
+    "Carbon": {
+        "output": 45,
+        "inputs": [
+            {
+                "type": "Coal",
+                "rate": 1.5
+            },
+            {
+                "type": "Oil",
+                "rate": 1.5
+            }
+        ],
+        "name": "Carbon",
+        "factory": "carbon_factory"
+    },
+    "Fish": {
+        "output": 30,
+        "inputs": [],
+        "name": "Fish",
+        "factory": "fishery"
+    },
+    "Sugar": {
+        "output": 48,
+        "inputs": [],
+        "name": "Sugar",
+        "factory": "sugar_beet_plantation"
+    },
+    "IronOre": {
+        "output": 30,
+        "inputs": [],
+        "name": "IronOre",
+        "factory": "iron_mine"
+    },
+    "Iron": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Coal",
+                "rate": 1
+            },
+            {
+                "type": "IronOre",
+                "rate": 1
+            }
+        ],
+        "name": "Iron",
+        "factory": "iron_smeltery"
+    },
+    "Tools": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Iron",
+                "rate": 0.5
+            }
+        ],
+        "name": "Tools",
+        "factory": "tool_factory"
+    },
+    "Coal_2": {
+        "output": 15,
+        "inputs": [],
+        "name": "Coal",
+        "factory": "coal_mine"
+    },
+    "Copper": {
+        "output": 15,
+        "inputs": [],
+        "name": "Copper",
+        "factory": "copper_mine"
+    },
+    "Uranium": {
+        "output": 120,
+        "inputs": [],
+        "name": "Uranium",
+        "factory": "uranium_mine"
+    },
+    "Sand": {
+        "output": 60,
+        "inputs": [],
+        "name": "Sand",
+        "factory": "sand_extractor"
+    },
+    "Limestone": {
+        "output": 30,
+        "inputs": [],
+        "name": "Limestone",
+        "factory": "limestone_quarry"
+    },
+    "Microchips": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Sand",
+                "rate": 0.5
+            },
+            {
+                "type": "Copper",
+                "rate": 1
+            }
+        ],
+        "name": "Microchips",
+        "factory": "chip_factory"
+    },
+    "Weapons": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "Iron",
+                "rate": 1
+            }
+        ],
+        "name": "Weapons",
+        "factory": "arsenal"
+    },
+    "RawOil_2": {
+        "output": 60,
+        "inputs": [],
+        "name": "RawOil",
+        "factory": "oilrig"
+    },
+    "Oil": {
+        "output": 30,
+        "inputs": [
+            {
+                "type": "RawOil",
+                "rate": 1.5
+            }
+        ],
+        "name": "Oil",
+        "factory": "oil_refinery"
+    },
+    "ManganeseNodules": {
+        "output": 45,
+        "inputs": [],
+        "name": "ManganeseNodules",
+        "factory": "manganese_miner"
+    },
+    "RareEarths": {
+        "output": 90,
+        "inputs": [
+            {
+                "type": "ManganeseNodules",
+                "rate": 1
+            }
+        ],
+        "name": "RareEarths",
+        "factory": "manganese_harvesting_station"
+    },
+    "Diamonds": {
+        "output": 45,
+        "inputs": [],
+        "name": "Diamonds",
+        "factory": "diamond_harvesting_station"
+    },
+    "GoldNuggets_2": {
+        "output": 40,
+        "inputs": [],
+        "name": "GoldNuggets",
+        "factory": "black_smoker_miner_gold"
+    },
+    "Copper_2": {
+        "output": 15,
+        "inputs": [],
+        "name": "Copper",
+        "factory": "black_smoker_miner_copper"
+    },
+    "Uranium_2": {
+        "output": 60,
+        "inputs": [],
+        "name": "Uranium",
+        "factory": "black_smoker_miner_uranium"
+    },
+    "IronOre_2": {
+        "output": 60,
+        "inputs": [],
+        "name": "IronOre",
+        "factory": "black_smoker_miner_iron"
+    },
+    "BuildingModules_2": {
+        "output": 40,
+        "inputs": [
+            {
+                "type": "Granulate",
+                "rate": 1
+            }
+        ],
+        "name": "BuildingModules",
+        "factory": "smelting_works"
+    },
+    "Enzymes": {
+        "output": 60,
+        "inputs": [],
+        "name": "Enzymes",
+        "factory": "gene_pharming_laboratory"
+    },
+    "Microchips_2": {
+        "output": 60,
+        "inputs": [],
+        "name": "Microchips",
+        "factory": "electronic_recycler"
+    },
+    "Sponges": {
+        "output": 90,
+        "inputs": [],
+        "name": "Sponges",
+        "factory": "sponges_harvesting_station"
+    },
+    "NeuroImplants": {
+        "output": 90,
+        "inputs": [
+            {
+                "type": "Sponges",
+                "rate": 1
+            },
+            {
+                "type": "Microchips",
+                "rate": 1.5
+            }
+        ],
+        "name": "NeuroImplants",
+        "factory": "neurotechnology_factory"
+    },
+    "EnergyCells": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "OmegaAcids",
+                "rate": 1
+            },
+            {
+                "type": "Lithium",
+                "rate": 1
+            }
+        ],
+        "name": "EnergyCells",
+        "factory": "energy_cell_factory"
+    },
+    "Lithium": {
+        "output": 120,
+        "inputs": [],
+        "name": "Lithium",
+        "factory": "lithium_harvesting_station"
+    },
+    "BioSuites": {
+        "output": 90,
+        "inputs": [
+            {
+                "type": "Exoskeleton",
+                "rate": 1
+            },
+            {
+                "type": "Biopolymer",
+                "rate": 1.5
+            }
+        ],
+        "name": "BioSuites",
+        "factory": "bio_suite_factory"
+    },
+    "LaboratoryInstruments": {
+        "output": 45,
+        "inputs": [
+            {
+                "type": "Platinum",
+                "rate": 0.5
+            },
+            {
+                "type": "Iron",
+                "rate": 1.5
+            }
+        ],
+        "name": "LaboratoryInstruments",
+        "factory": "equipment_factory"
+    },
+    "Exoskeleton": {
+        "output": 90,
+        "inputs": [
+            {
+                "type": "Platinum",
+                "rate": 1
+            },
+            {
+                "type": "EnergyCells",
+                "rate": 1.5
+            }
+        ],
+        "name": "Exoskeleton",
+        "factory": "cybernatic_factory"
+    },
+    "CoralExtract": {
+        "output": 60,
+        "inputs": [
+            {
+                "type": "Enzymes",
+                "rate": 1
+            },
+            {
+                "type": "Coral",
+                "rate": 1
+            }
+        ],
+        "name": "CoralExtract",
+        "factory": "coral_extract_factory"
+    },
+    "Platinum": {
+        "output": 90,
+        "inputs": [],
+        "name": "Platinum",
+        "factory": "black_smoker_miner_platinum"
+    },
+    "Coral": {
+        "output": 30,
+        "inputs": [],
+        "name": "Coral",
+        "factory": "coral_breeder"
+    },
+    "RawOil_3": {
+        "output": 60,
+        "inputs": [],
+        "name": "RawOil",
+        "factory": "oil_driller_variation_Sokow"
+    }
+}
