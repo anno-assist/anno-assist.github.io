@@ -43,8 +43,8 @@ const inputCols = (input, output, settings) => input ? html`
 <td><span class="label">${getRate(output, input.type, input.rate, settings)}</span></td>` : html`
 <td colspan="3"></td>`;
 
-const chainTable = (matrix) => html`
-<table class="chain-table">
+const chainTable = (matrix, type, visible, toggle) => html`
+<table @click=${toggle} class="chain-table" data-type=${type} data-role="chain" style=${!visible && 'display: none'}>
     ${matrix.map(chainRow)}
 </table>`;
 
@@ -56,12 +56,8 @@ const chainCol = col => {
             return chainArrow(col);
         } else {
             return html`
-            <td rowspan=${col.size}>
-                ${col.content && html`
-                <div class="ingredient">
-                    ${icon(col.content)}
-                    ${col.rate && html`<span class="label">${round(col.rate, 1)}</span>`}
-                </div>`}
+            <td rowspan=${col.size} class="chain-cell">
+                ${col.content && ingredient(col.content, col.rate)}
             </td>`;
         }
     }
@@ -71,22 +67,57 @@ const chainArrow = col => html`<td class="arrow ${col.position}" rowspan=${col.s
     <div></div>
 </td>`;
 
-export function productionChain(type, settings, rate = 1) {
+const ingredient = (name, rate, ...classList) => html`
+<div class=${['ingredient', ...classList].join(' ')}>
+    ${icon(name)}
+    ${rate && html`<span class="label">${round(rate, 1)}</span>`}
+</div>`;
+
+export function productionChain(type, settings, rate = 1, hasToggle) {
+    let detailed = true;
+
     const matrix = chain(type, settings, 0, rate);
+    const output = parse(matrix);
 
     const result = [];
 
-    for (let i = 0; i < matrix.size; i++) {
-        const row = [];
-        for (let j = 0; j < matrix.levels; j++) {
-            row[j] = null;
+    if (hasToggle) {
+        detailed = false;
+        result.push(flat(matrix, type, toggle));
+    }
+    result.push(chainTable(output, type, detailed, toggle));
+
+    return result;
+
+    function toggle() {
+        if (!hasToggle) {
+            return;
         }
-        result[i] = row;
+
+        if (detailed) {
+            detailed = false;
+            document.querySelector(`table[data-type="${type}"][data-role="chain"]`).style.display = 'none';
+            document.querySelector(`div[data-type="${type}"][data-role="flat"]`).removeAttribute('style');
+        } else {
+            detailed = true;
+            document.querySelector(`table[data-type="${type}"][data-role="chain"]`).removeAttribute('style');
+            document.querySelector(`div[data-type="${type}"][data-role="flat"]`).style.display = 'none';
+        }
+    }
+}
+
+function flat(data, type, toggle) {
+    const queue = [data];
+    const result = [];
+
+    while (queue.length > 0) {
+        const item = queue.shift();
+        queue.push(...item.inputs);
+
+        result.push(ingredient(item.content, item.rate, 'inline'));
     }
 
-    const output = parse(matrix);
-
-    return chainTable(output);
+    return html`<div @click=${toggle} data-type=${type} data-role="flat">${result}</div>`;
 }
 
 function parse(data) {

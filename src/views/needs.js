@@ -12,57 +12,51 @@ const needsTemplate = (sections) => html`
 </section>`;
 
 const needsSection = ({ civIndex, needsIndex, needsByGroup, summary }, productionSettings) => html`
-<table class="wide">
-    <thead>
+<table>
+    <thead class="wide">
         <tr>
-            <th>Level</th>
-            ${needsIndex.map(n => html`<th>${icon(n, 'dist')}</th>`)}
+            <th>Goods</th>
+            <th>Total</th>
+            ${civIndex.map(type => html`<th>${icon(type)}</th>`)}
+            <th>Production Chains</th>
         </tr>
     </thead>
     <tbody>
-        ${civIndex.map(type => needsRow(needsIndex, needsByGroup[type]))}
-    </tbody>
-    <tfoot>
-        <th>Total</th>
-        ${needsIndex.map(n => html`<th>${needsCell(summary.get(n))}</th>`)}
-    </tfoot>
-</table>
-<table class="narrow">
-    <tbody>
-        ${needsIndex.map(n => narrowRow(n, summary.get(n), needsByGroup, productionSettings))}
+        ${needsIndex.map(n => needsRow(n, summary.get(n), needsByGroup, productionSettings))}
     </tbody>
 </table>`;
 
-const needsRow = (needsIndex, pop) => html`
-<tr>
-    <td>${icon(pop.type, 'dist')}<span class="label sub">${pop.pop}</span></td>
-    ${needsIndex.map(needType => html`<td>${needsCell(pop.needs[needType])}</td>`)}
-</tr>`;
-
-const needsCell = (need) => !need ? null : html`
-<span class="chains">${round(need.chains, 1)}</span>
-<span class="label sub">${round(need.required / 1000, 1)}&nbsp;t/min</span>`;
-
-const narrowRow = (needType, { required, chains }, needsByGroup, productionSettings) => {
+const needsRow = (needType, { required, chains }, needsByGroup, productionSettings) => {
     let visible = false;
     const details = productionSettings[needType].inputs.length ? html`
     <tr data-need=${needType} style="display: none">
         <td colspan="3">${productionChain(needType, productionSettings, chains)}</td>
     </tr>` : null;
 
-    const toggle = details && smallIcon('process', 'toggle');
+    const toggle = details && smallIcon('process', 'toggle', 'narrow');
 
     return !required ? null : html`
     <tr>
-        <td @click=${toggleDetails} style="position: relative">${icon(needType, 'dist')}${toggle}</td>
+        <td class="wide">${icon(needType, 'dist')}</td>
+        <td class="narrow" @click=${toggleDetails} style="position: relative">${icon(needType, 'dist')}${toggle}</td>
         <td>
             ${needsCell({ required, chains })}
         </td>
-        <td>
+
+        ${Object.values(needsByGroup).map(p => html`<td class="wide">
+            ${needsCell(p.needs[needType])}
+        </td>`)}
+
+        <td class="narrow">
             <div class="needs-grid">
                 ${Object.values(needsByGroup).map(p => narrowCell(p.type, p.needs[needType]?.required,
         p.needs[needType]?.chains))}
             </div>
+        </td>
+
+        <td class="wide" style="position: relative">
+            ${productionChain(needType, productionSettings, chains, true)}
+            ${details && smallIcon('process', 'toggle')}
         </td>
     </tr>
     ${details}`;
@@ -79,6 +73,10 @@ const narrowRow = (needType, { required, chains }, needsByGroup, productionSetti
         }
     }
 };
+
+const needsCell = (need) => !need ? null : html`
+<span class="chains">${round(need.chains, 1)}</span>
+<span class="label sub">${round(need.required / 1000, 1)}&nbsp;t/min</span>`;
 
 const narrowCell = (type, required, chains) => !required ? null : html`
     ${smallIcon(type)}
@@ -102,9 +100,6 @@ export function needsView(ctx) {
 
         sections.push(occidentSummary && needsSection(occidentSummary, production));
         sections.push(orientSummary && needsSection(orientSummary, production));
-
-        sections.push(productionSection(production, occidentSummary));
-        sections.push(productionSection(production, orientSummary));
     }
 
     ctx.render(needsTemplate(sections));
