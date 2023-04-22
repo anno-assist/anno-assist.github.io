@@ -1,6 +1,6 @@
 {
     "SuperFlavor": {
-        "output": 60,
+        "output": 20,
         "inputs": [],
         "name": "SuperFlavor",
         "factory": "flavor_lab"
@@ -12,7 +12,7 @@
         "factory": "meatfactory"
     },
     "TVDinner": {
-        "output": 60,
+        "output": 20,
         "inputs": [
             {
                 "type": "Meat",
@@ -251,13 +251,13 @@
         "factory": "vegetable_farm"
     },
     "Soy": {
-        "output": 60,
+        "output": 20,
         "inputs": [],
         "name": "Soy",
         "factory": "rice_farm"
     },
     "HealthFood": {
-        "output": 60,
+        "output": 20,
         "inputs": [
             {
                 "type": "Soy",
@@ -489,8 +489,8 @@
         "name": "AdvancedWeapons",
         "factory": "advanced_arsenal"
     },
-    "BuildingModules": {
-        "output": 60,
+    "BuildingModules_2": {
+        "output": 20,
         "inputs": [],
         "name": "BuildingModules",
         "factory": "recycling_station"
@@ -573,7 +573,7 @@
         "factory": "uranium_mine"
     },
     "Sand": {
-        "output": 60,
+        "output": 20,
         "inputs": [],
         "name": "Sand",
         "factory": "sand_extractor"
@@ -611,7 +611,7 @@
         "factory": "arsenal"
     },
     "RawOil_2": {
-        "output": 60,
+        "output": 20,
         "inputs": [],
         "name": "RawOil",
         "factory": "oilrig"
@@ -669,12 +669,12 @@
         "factory": "black_smoker_miner_uranium"
     },
     "IronOre_2": {
-        "output": 60,
+        "output": 20,
         "inputs": [],
         "name": "IronOre",
         "factory": "black_smoker_miner_iron"
     },
-    "BuildingModules_2": {
+    "BuildingModules": {
         "output": 40,
         "inputs": [
             {
@@ -692,7 +692,7 @@
         "factory": "gene_pharming_laboratory"
     },
     "Microchips_2": {
-        "output": 60,
+        "output": 20,
         "inputs": [],
         "name": "Microchips",
         "factory": "electronic_recycler"
@@ -812,7 +812,7 @@
         "factory": "coral_breeder"
     },
     "RawOil_3": {
-        "output": 60,
+        "output": 20,
         "inputs": [],
         "name": "RawOil",
         "factory": "oil_driller_variation_Sokow"

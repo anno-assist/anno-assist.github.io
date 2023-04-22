@@ -28,7 +28,7 @@ export const chainsTemplate = (chains) => html`
 
 const chainsRow = ([type, { output, inputs }], settings) => html`
 <tr>
-    <td><abbr title=${type}>${icon(type)}</abbr></td>
+    <td><abbr title=${type}>${icon(type, 'dist')}</abbr><span class="label">${type}</span></td>
     <td><span class="label">${output}</span></td>
     ${inputCols(inputs[0], output, settings)}
     ${inputCols(inputs[1], output, settings)}
@@ -38,13 +38,13 @@ ${inputs.length > 0 ? html`<tr>
 </tr>` : null}`;
 
 const inputCols = (input, output, settings) => input ? html`
-<td>${icon(input.type)}</td>
+<td>${icon(input.type, 'dist')}<span class="label">${input.type}</span></td>
 <td><span class="label">${input.rate}</span></td>
 <td><span class="label">${getRate(output, input.type, input.rate, settings)}</span></td>` : html`
 <td colspan="3"></td>`;
 
 const chainTable = (matrix, type, visible, toggle) => html`
-<table @click=${toggle} class="chain-table" data-type=${type} data-role="chain" style=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx>
+<table @click=${toggle} class="chain-table" data-type=${type} data-role="chain" style=${!visible ? 'display: none' : ''}>
     ${matrix.map(chainRow)}
 </table>`;
 
