@@ -1,8 +1,9 @@
-import { setUserData } from '../util.js';
-import { post } from './api.js';
+import { clearUserData, setUserData } from '../util.js';
+import { get, post, del } from './api.js';
+import { filter } from './queries.js';
 
 const endpoints = {
-    sessionByToken: (token) => `/sessions${filter('sessionToken', token)}`,
+    sessionByToken: (token) => `/sessions?${filter('sessionToken', token)}`,
     sessionById: (id) => `/sessions/${id}`,
 };
 
@@ -26,14 +27,10 @@ export async function login(username, password) {
     });
 }
 
-export async function logout(ctx, next) {
-    const user = getUserData();
-    const [session] = (await get(endpoints.sessionByToken(user.sessionToken)))
+export async function logout(sessionToken) {
+    const [session] = (await get(endpoints.sessionByToken(sessionToken)))
         .results;
 
     await del(endpoints.sessionById(session.objectId));
     clearUserData();
-
-    ctx.page.redirect('/settings');
-    next();
 }
