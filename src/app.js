@@ -24,6 +24,7 @@ import { layoutView } from './views/layout/layout.js';
 import { chains2070View } from './views/2070/chains_2070.js';
 import { icons2070View } from './views/2070/icons_2070.js';
 
+import { logout } from './data/auth.js';
 
 page('/:island/:mode', addSelection);
 page(addSession);
@@ -36,6 +37,7 @@ page('/', title('Islands'), islandsView);
 page('/settings', title('Settings'), settingsView);
 page('/login', title('Login'), loginView);
 page('/register', title('Register'), registerView);
+page('/logout', logout);
 page('/:island/ascension', hasGame, title('$name | Ascnesion'), ascensionView);
 page('/:island/population', hasGame, title('$name | Population'), populationView);
 page('/:island/needs', hasGame, title('$name | Needs'), needsView);

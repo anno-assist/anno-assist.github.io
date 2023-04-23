@@ -21,6 +21,9 @@ export async function login(username, password) {
     });
 }
 
-export async function logout() {
-    
+export async function logout(ctx, next) {
+    //? Session token sits on Back4App, needs a way to be deleted
+    clearUserData();
+    ctx.page.redirect('/settings');
+    next();
 }
