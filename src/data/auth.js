@@ -28,9 +28,11 @@ export async function login(username, password) {
 }
 
 export async function logout(sessionToken) {
-    const [session] = (await get(endpoints.sessionByToken(sessionToken)))
-        .results;
-
-    await del(endpoints.sessionById(session.objectId));
-    clearUserData();
+    try {
+        const sessions = await get(endpoints.sessionByToken(sessionToken));
+        const [currentSession] = sessions.results;
+        await del(endpoints.sessionById(currentSession.objectId));  
+    } finally {
+        clearUserData();
+    }
 }
