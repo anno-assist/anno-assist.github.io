@@ -24,14 +24,16 @@ export async function login(username, password) {
         username,
         objectId,
         sessionToken
-    });
+    }); 
 }
 
 export async function logout(sessionToken) {
     try {
         const sessions = await get(endpoints.sessionByToken(sessionToken));
         const [currentSession] = sessions.results;
-        await del(endpoints.sessionById(currentSession.objectId));  
+        await del(endpoints.sessionById(currentSession.objectId));    
+    } catch (err) {
+        err.handled = true;
     } finally {
         clearUserData();
     }

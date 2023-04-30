@@ -29,11 +29,6 @@ async function request(method, url, data, dontMask) {
     }
 
     try {
-        // Used for testing purposes
-        // if (method === 'delete')
-        //     throw { message: 'Test' };
-
-
         if (!dontMask) {
             inFlight++;
             mask();
