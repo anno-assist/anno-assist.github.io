@@ -3,8 +3,8 @@
  */
 export function bindContext(canvas) {
     const nodes = [];
-    
-    const camera = { x: 0, y: 0, scale: 0.5 };
+
+    const camera = { x: 0, y: 0, scale: 2 };
     const gridSize = 20;
 
     const ctx = canvas.getContext('2d');
@@ -89,10 +89,29 @@ export function bindContext(canvas) {
         render();
     }
 
+    function highlight(x, y) {
+        [x, y] = screenToWorld(x, y);
+        x = Math.floor(x / gridSize) * gridSize;
+        y = Math.floor(y / gridSize) * gridSize;
+
+        beginFrame();
+        ctx.fillStyle = 'rgba(128,255,128,0.2)';
+        ctx.fillRect(x, y, gridSize, gridSize);
+        endFrame();
+    }
+
+    function screenToWorld(x, y) {
+        return [
+            (x - canvas.width / 2 + camera.x) / camera.scale,
+            (y - canvas.height / 2 + camera.y) / camera.scale
+        ];
+    }
+
     return {
         camera,
         render,
         offsetCamera,
-        zoomCamera
+        zoomCamera,
+        highlight
     };
 }

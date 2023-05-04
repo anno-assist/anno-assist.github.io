@@ -18,20 +18,38 @@ function setupDragging() {
     let lastX;
     let lastY;
 
-    canvas.addEventListener('mousedown', onDragStart);
-    canvas.addEventListener('mousemove', onDrag);
+    canvas.addEventListener('mousedown', onClick);
+    canvas.addEventListener('mousemove', onMove);
     canvas.addEventListener('mouseup', onDragEnd);
     canvas.addEventListener('mouseleave', onDragEnd);
 
     canvas.addEventListener('wheel', onScroll);
 
-    function onDragStart(event) {
+    function onClick(event) {
         if (event.buttons == 4) {
-            event.preventDefault();
-            dragging = true;
-            lastX = event.offsetX;
-            lastY = event.offsetY;
+            onDragStart(event);
+        } else if (event.buttons == 1) {
+            onPlace(event);
         }
+    }
+
+    function onPlace(event) {
+        gfx.highlight(event.offsetX, event.offsetY);
+    }
+
+    function onMove(event) {
+        if (dragging) {
+            onDrag(event);
+        } else {
+            // gfx.highlight(event.offsetX, event.offsetY);
+        }
+    }
+
+    function onDragStart(event) {
+        event.preventDefault();
+        dragging = true;
+        lastX = event.offsetX;
+        lastY = event.offsetY;
     }
 
     function onDrag(event) {
