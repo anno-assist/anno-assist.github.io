@@ -1,0 +1,32 @@
+section.canvas-main {
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 0 4px;
+}
+
+#layout-canvas {
+    margin: 0;
+}
+
+#canvas-container {
+    float: left;
+    margin: 0;
+}
+
+#canvas-controls {
+    float: left;
+    width: 200px;
+    margin: 0;
+}
+
+.layout-controls {
+    padding: 4px 8px;
+}
+
+.layout-controls label {
+    display: block;
+}
+
+.layout-controls input {
+    display: block;
+    width: 150px;
+}

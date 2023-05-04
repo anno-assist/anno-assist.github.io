@@ -1,25 +1,74 @@
 import { throttle } from '../../util.js';
+import { bindContext } from './gfx.js';
 
 
 const canvas = document.createElement('canvas');
 canvas.id = 'layout-canvas';
 canvas.style.backgroundColor = 'black';
+const gfx = bindContext(canvas);
+setupDragging();
 
 resize();
 const onResize = throttle(resize, 50);
 window.addEventListener('resize', onResize);
 
-const ctx = canvas.getContext('2d');
 
+function setupDragging() {
+    let dragging = false;
+    let lastX;
+    let lastY;
 
-function resize() {
-    const root =     document.getElementById('content');
-    if (root) {
-        const size = root.getBoundingClientRect();
-        canvas.width = size.width - 8;
-        canvas.height = size.height - 98;
+    canvas.addEventListener('mousedown', onDragStart);
+    canvas.addEventListener('mousemove', onDrag);
+    canvas.addEventListener('mouseup', onDragEnd);
+    canvas.addEventListener('mouseleave', onDragEnd);
+
+    canvas.addEventListener('wheel', onScroll);
+
+    function onDragStart(event) {
+        if (event.buttons == 4) {
+            event.preventDefault();
+            dragging = true;
+            lastX = event.offsetX;
+            lastY = event.offsetY;
+        }
+    }
+
+    function onDrag(event) {
+        if (dragging) {
+            const currentX = event.offsetX;
+            const currentY = event.offsetY;
+
+            const deltaX = currentX - lastX;
+            const deltaY = currentY - lastY;
+
+            gfx.offsetCamera(deltaX, deltaY);
+
+            lastX = currentX;
+            lastY = currentY;
+        }
+    }
+
+    function onDragEnd() {
+        dragging = false;
+    }
+
+    function onScroll(event) {
+        gfx.zoomCamera(Math.sign(event.deltaY));
     }
 }
 
 
-export { canvas, ctx };
+function resize() {
+    const root = document.getElementById('content');
+    if (root) {
+        const size = root.getBoundingClientRect();
+        canvas.width = size.width - 208;
+        canvas.height = size.height - 98;
+
+        gfx.render();
+    }
+}
+
+
+export { canvas, gfx };
