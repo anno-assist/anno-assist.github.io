@@ -1,10 +1,13 @@
+import { smoothZoom } from './util.js';
+import { World } from './world.js';
+
 /**
  * @param {HTMLCanvasElement} canvas 
+ * @param {import('./world.js').World} world
  */
-export function bindContext(canvas) {
-    const nodes = [];
-
+export function bindContext(canvas, world) {
     const camera = { x: 0, y: 0, scale: 2 };
+    const target = { x: 0, y: 0 };
     const gridSize = 20;
 
     const ctx = canvas.getContext('2d');
@@ -57,7 +60,7 @@ export function bindContext(canvas) {
 
     function beginFrame() {
         ctx.save();
-        ctx.translate(canvas.width / 2 - camera.x,  canvas.height / 2 - camera.y);
+        ctx.translate(canvas.width / 2 - camera.x, canvas.height / 2 - camera.y);
         ctx.scale(camera.scale, camera.scale);
     }
 
@@ -69,6 +72,12 @@ export function bindContext(canvas) {
         clear();
         beginFrame();
         grid();
+
+        for (let building of world.buildings) {
+            rect(building.x, building.y, building.width, building.height, 'rgb(128, 128, 128)');
+        }
+
+        rect(target.x, target.y);
         endFrame();
     }
 
@@ -80,38 +89,56 @@ export function bindContext(canvas) {
     }
 
     function zoomCamera(delta) {
-        camera.scale -= (delta * 0.1);
-        if (camera.scale < 0.5) {
-            camera.scale = 0.5;
-        } else if (camera.scale > 3) {
-            camera.scale = 3;
+        currentZoom += delta;
+        if (currentZoom < 0) {
+            currentZoom = 0;
+        } else if (currentZoom > zoomFactors.length - 1) {
+            currentZoom = zoomFactors.length - 1;
         }
+        smoothZoom(camera, zoomFactors[currentZoom], render);
         render();
     }
 
     function highlight(x, y) {
         [x, y] = screenToWorld(x, y);
-        x = Math.floor(x / gridSize) * gridSize;
-        y = Math.floor(y / gridSize) * gridSize;
-
-        beginFrame();
-        ctx.fillStyle = 'rgba(128,255,128,0.2)';
-        ctx.fillRect(x, y, gridSize, gridSize);
-        endFrame();
+        target.x = x;
+        target.y = y;
+        render();
+    }
+    
+    function rect(x, y, w = 1, h = 1, style = 'rgba(128,255,128,0.2)') {
+        ctx.save();
+        ctx.fillStyle = style;
+        ctx.translate(x * gridSize, y * gridSize);
+        ctx.fillRect(0, 0, w * gridSize, h * gridSize);
+        ctx.restore();
     }
 
     function screenToWorld(x, y) {
         return [
-            (x - canvas.width / 2 + camera.x) / camera.scale,
-            (y - canvas.height / 2 + camera.y) / camera.scale
+            Math.floor((x - canvas.width / 2 + camera.x) / camera.scale / gridSize),
+            Math.floor((y - canvas.height / 2 + camera.y) / camera.scale / gridSize)
         ];
     }
 
     return {
         camera,
+        screenToWorld,
         render,
         offsetCamera,
         zoomCamera,
         highlight
     };
 }
+
+let currentZoom = 3;
+const zoomFactors = [
+    3.0,
+    2.0,
+    1.5,
+    1.25,
+    1.0,
+    0.8,
+    0.6,
+    0.5,
+];

@@ -1,11 +1,13 @@
 import { throttle } from '../../util.js';
 import { bindContext } from './gfx.js';
+import { World } from './world.js';
 
 
+const world = new World();
 const canvas = document.createElement('canvas');
 canvas.id = 'layout-canvas';
 canvas.style.backgroundColor = 'black';
-const gfx = bindContext(canvas);
+const gfx = bindContext(canvas, world);
 setupDragging();
 
 resize();
@@ -34,14 +36,16 @@ function setupDragging() {
     }
 
     function onPlace(event) {
-        gfx.highlight(event.offsetX, event.offsetY);
+        const [x, y] = gfx.screenToWorld(event.offsetX, event.offsetY);
+        world.place(x, y);
+        gfx.render();
     }
 
     function onMove(event) {
         if (dragging) {
             onDrag(event);
         } else {
-            // gfx.highlight(event.offsetX, event.offsetY);
+            gfx.highlight(event.offsetX, event.offsetY);
         }
     }
 
