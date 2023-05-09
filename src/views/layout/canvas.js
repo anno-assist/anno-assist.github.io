@@ -1,21 +1,26 @@
 import { throttle } from '../../util.js';
 import { bindContext } from './gfx.js';
-import { World } from './world.js';
 
 
-const world = new World();
 const canvas = document.createElement('canvas');
 canvas.id = 'layout-canvas';
 canvas.style.backgroundColor = 'black';
-const gfx = bindContext(canvas, world);
-setupDragging();
+const gfx = bindContext(canvas);
+setupEvents();
 
 resize();
 const onResize = throttle(resize, 50);
 window.addEventListener('resize', onResize);
+window.addEventListener('keydown', onKeyPress);
+
+const handlers = {
+    onClick: null,
+    onCancel: null,
+    onRotate: null
+};
 
 
-function setupDragging() {
+function setupEvents() {
     let dragging = false;
     let lastX;
     let lastY;
@@ -37,8 +42,10 @@ function setupDragging() {
 
     function onPlace(event) {
         const [x, y] = gfx.screenToWorld(event.offsetX, event.offsetY);
-        world.place(x, y);
-        gfx.render();
+        if (typeof handlers.onClick == 'function') {
+            handlers.onClick(Math.round(x), Math.round(y));
+        }
+        gfx.invalidate();
     }
 
     function onMove(event) {
@@ -88,9 +95,21 @@ function resize() {
         canvas.width = size.width - 208;
         canvas.height = size.height - 98;
 
-        gfx.render();
+        gfx.invalidate();
+    }
+}
+
+/**
+ * 
+ * @param {KeyboardEvent} event 
+ */
+function onKeyPress(event) {
+    if (event.code == 'Escape' && typeof handlers.onCancel == 'function') {
+        handlers.onCancel();
+    } else if ((event.code == 'Comma' || event.code == 'Period') && typeof handlers.onRotate == 'function') {
+        handlers.onRotate();
     }
 }
 
 
-export { canvas, gfx };
+export { canvas, gfx, handlers };

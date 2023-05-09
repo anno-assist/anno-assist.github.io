@@ -1,16 +1,21 @@
 import { smoothZoom } from './util.js';
-import { World } from './world.js';
+
 
 /**
  * @param {HTMLCanvasElement} canvas 
- * @param {import('./world.js').World} world
  */
-export function bindContext(canvas, world) {
-    const camera = { x: 0, y: 0, scale: 2 };
-    const target = { x: 0, y: 0 };
+export function bindContext(canvas) {
+    const ctx = canvas.getContext('2d');
+    ctx.textBaseline = 'top';
+    ctx.font = '6px, sans-serif';
     const gridSize = 20;
 
-    const ctx = canvas.getContext('2d');
+    const camera = { x: 0, y: 0, scale: 2 };
+    const cursor = { x: 0, y: 0, w: 1, h: 1, r: 0 };
+
+    let valid = false;
+
+    let debugText = '';
 
     function clear() {
         ctx.save();
@@ -68,24 +73,11 @@ export function bindContext(canvas, world) {
         ctx.restore();
     }
 
-    function render() {
-        clear();
-        beginFrame();
-        grid();
-
-        for (let building of world.buildings) {
-            rect(building.x, building.y, building.width, building.height, 'rgb(128, 128, 128)');
-        }
-
-        rect(target.x, target.y);
-        endFrame();
-    }
-
     function offsetCamera(x, y) {
         camera.x -= x;
         camera.y -= y;
 
-        render();
+        invalidate();
     }
 
     function zoomCamera(delta) {
@@ -95,18 +87,35 @@ export function bindContext(canvas, world) {
         } else if (currentZoom > zoomFactors.length - 1) {
             currentZoom = zoomFactors.length - 1;
         }
-        smoothZoom(camera, zoomFactors[currentZoom], render);
-        render();
+        smoothZoom(camera, zoomFactors[currentZoom], invalidate);
+
+        invalidate();
     }
 
-    function highlight(x, y) {
+    function highlight(x, y, w, h) {
         [x, y] = screenToWorld(x, y);
-        target.x = x;
-        target.y = y;
-        render();
+        [x, y] = [Math.floor(x), Math.floor(y)];
+        if (cursor.x != x || cursor.y != y) {
+            cursor.x = x;
+            cursor.y = y;
+            if (w !== undefined && h !== undefined) {
+                cursor.w = w;
+                cursor.h = h;
+            }
+            debugText = `${x},${y}`;
+
+            invalidate();
+        }
     }
-    
-    function rect(x, y, w = 1, h = 1, style = 'rgba(128,255,128,0.2)') {
+
+    function preview(w, h, r = 0) {
+        cursor.w = w;
+        cursor.h = h;
+        cursor.r = r;
+        invalidate();
+    }
+
+    function rect(x, y, w = 1, h = 1, style = 'rgba(128,255,128,0.25)') {
         ctx.save();
         ctx.fillStyle = style;
         ctx.translate(x * gridSize, y * gridSize);
@@ -114,21 +123,89 @@ export function bindContext(canvas, world) {
         ctx.restore();
     }
 
+    function circle(x, y, r, style = 'rgba(128,255,128,0.1)') {
+        const top = (y - r);
+        const dy = y - top;
+        const dx = (Math.sqrt(r ** 2 - dy ** 2));
+        debugText = `${x} ${y}`;
+        rect(x - dx, y - dy, 1, 1, 'rgba(255,128,128,0.25)');
+        rect(x + dx, y - dy, 1, 1, 'rgba(255,128,128,0.25)');
+
+        ctx.save();
+        ctx.fillStyle = style;
+        ctx.translate(x * gridSize, y * gridSize);
+        ctx.beginPath();
+        ctx.arc(0, 0, r * gridSize, 0, 2 * Math.PI, false);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+    }
+
+    function text(text, x, y) {
+        ctx.save();
+        ctx.fillStyle = 'white';
+        ctx.fillText(text, x * gridSize, y * gridSize + 6);
+        ctx.restore();
+    }
+
     function screenToWorld(x, y) {
         return [
-            Math.floor((x - canvas.width / 2 + camera.x) / camera.scale / gridSize),
-            Math.floor((y - canvas.height / 2 + camera.y) / camera.scale / gridSize)
+            (x - canvas.width / 2 + camera.x) / camera.scale / gridSize,
+            (y - canvas.height / 2 + camera.y) / camera.scale / gridSize
         ];
     }
 
-    return {
+    function invalidate() {
+        valid = false;
+    }
+
+    /**
+     * @param {import('./world.js').World} world 
+     */
+    function render(world) {
+        clear();
+        beginFrame();
+        grid();
+
+        for (let building of world.buildings) {
+            rect(building.x, building.y, building.width, building.height, 'rgb(128, 128, 128)');
+            text(`${building.cx},${building.cy}`, building.x, building.y);
+        }
+
+        const left = cursor.x - Math.floor(cursor.w / 2);
+        const top = cursor.y - Math.floor(cursor.h / 2);
+        if (cursor.r) {
+            const cx = left + cursor.w / 2;
+            const cy = top + cursor.h / 2;
+            circle(cx, cy, cursor.r);
+        }
+        rect(left, top, cursor.w, cursor.h);
+        endFrame();
+
+        ctx.fillText(debugText, 10, 16);
+
+        valid = true;
+    }
+
+    const result = {
         camera,
         screenToWorld,
         render,
         offsetCamera,
         zoomCamera,
-        highlight
+        highlight,
+        preview,
+        invalidate,
+        isValid() {
+            return valid;
+        },
+        set debug(value) {
+            debugText = value;
+            invalidate();
+        }
     };
+
+    return result;
 }
 
 let currentZoom = 3;
