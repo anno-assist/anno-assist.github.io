@@ -1,5 +1,6 @@
 import { World } from './world.js';
 import { canvas, gfx, handlers } from './canvas.js';
+import { positionRect } from './util.js';
 
 export class LayoutController {
     /** @type {LayoutController} */
@@ -56,7 +57,8 @@ export class LayoutController {
 
     onClick(x, y) {
         if (this.mode == modes.Preview) {
-            this.world.place(x, y, this.stateData.width, this.stateData.height);
+            const [top, left] = positionRect(x, y, this.stateData.width, this.stateData.height);
+            this.world.place(top, left, this.stateData.width, this.stateData.height);
         }
     }
 

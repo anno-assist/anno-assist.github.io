@@ -41,11 +41,11 @@ function setupEvents() {
     }
 
     function onPlace(event) {
-        const [x, y] = gfx.screenToWorld(event.offsetX, event.offsetY);
         if (typeof handlers.onClick == 'function') {
-            handlers.onClick(Math.round(x), Math.round(y));
+            let [x, y] = gfx.screenToWorld(event.offsetX, event.offsetY);
+            handlers.onClick(x, y);
+            gfx.invalidate();
         }
-        gfx.invalidate();
     }
 
     function onMove(event) {

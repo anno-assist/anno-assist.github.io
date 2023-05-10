@@ -1,4 +1,4 @@
-import { smoothZoom } from './util.js';
+import { positionRect, smoothZoom } from './util.js';
 
 
 /**
@@ -41,11 +41,11 @@ export function bindContext(canvas) {
         ctx.stroke();
         ctx.closePath();
 
-        const l = Math.floor(left / gridSize) * gridSize;
-        const r = Math.ceil(right / gridSize) * gridSize;
+        const l = (Math.floor(left / gridSize) - 0.5) * gridSize;
+        const r = (Math.ceil(right / gridSize) + 0.5) * gridSize;
 
-        const t = Math.floor(top / gridSize) * gridSize;
-        const b = Math.ceil(bottom / gridSize) * gridSize;
+        const t = (Math.floor(top / gridSize) - 0.5) * gridSize;
+        const b = (Math.ceil(bottom / gridSize) + 0.5) * gridSize;
 
         ctx.strokeStyle = 'rgba(0,0,0,0.2)';
         ctx.beginPath();
@@ -94,7 +94,7 @@ export function bindContext(canvas) {
 
     function highlight(x, y, w, h) {
         [x, y] = screenToWorld(x, y);
-        [x, y] = [Math.floor(x), Math.floor(y)];
+        // [x, y] = [Math.round(x), Math.round(y)];
         if (cursor.x != x || cursor.y != y) {
             cursor.x = x;
             cursor.y = y;
@@ -102,7 +102,6 @@ export function bindContext(canvas) {
                 cursor.w = w;
                 cursor.h = h;
             }
-            debugText = `${x},${y}`;
 
             invalidate();
         }
@@ -118,7 +117,7 @@ export function bindContext(canvas) {
     function rect(x, y, w = 1, h = 1, style = 'rgba(128,255,128,0.25)') {
         ctx.save();
         ctx.fillStyle = style;
-        ctx.translate(x * gridSize, y * gridSize);
+        ctx.translate((x - 0.5) * gridSize, (y - 0.5) * gridSize);
         ctx.fillRect(0, 0, w * gridSize, h * gridSize);
         ctx.restore();
     }
@@ -144,7 +143,7 @@ export function bindContext(canvas) {
     function text(text, x, y) {
         ctx.save();
         ctx.fillStyle = 'white';
-        ctx.fillText(text, x * gridSize, y * gridSize + 6);
+        ctx.fillText(text, (x - 0.5) * gridSize, (y - 0.5) * gridSize + 7);
         ctx.restore();
     }
 
@@ -168,23 +167,33 @@ export function bindContext(canvas) {
         grid();
 
         for (let building of world.buildings) {
-            rect(building.x, building.y, building.width, building.height, 'rgb(128, 128, 128)');
-            text(`${building.cx},${building.cy}`, building.x, building.y);
+            renderBuilding(building);
         }
 
-        const left = cursor.x - Math.floor(cursor.w / 2);
-        const top = cursor.y - Math.floor(cursor.h / 2);
-        if (cursor.r) {
-            const cx = left + cursor.w / 2;
-            const cy = top + cursor.h / 2;
-            circle(cx, cy, cursor.r);
-        }
-        rect(left, top, cursor.w, cursor.h);
+        renderCursor();
+
         endFrame();
 
         ctx.fillText(debugText, 10, 16);
 
         valid = true;
+    }
+
+    function renderCursor() {
+        const [left, top] = positionRect(cursor.x, cursor.y, cursor.w, cursor.h);
+        /*
+        if (cursor.r) {
+            const cx = left + cursor.w / 2;
+            const cy = top + cursor.h / 2;
+            circle(cx, cy, cursor.r);
+        }
+        */
+        rect(left, top, cursor.w, cursor.h);
+    }
+
+    function renderBuilding(building) {
+        rect(building.x, building.y, building.width, building.height, 'rgb(128, 128, 128)');
+        text(`${building.cx},${building.cy}`, building.x, building.y);
     }
 
     const result = {

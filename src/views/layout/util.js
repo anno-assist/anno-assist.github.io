@@ -31,12 +31,8 @@ export function lerp(a, b, t) {
     return a + (b - a) * t;
 }
 
-/*
-rate > 0 (sign = 1)
-scale + rate ^^^ ? scale > target
-(scale - target) * 1 > 0
-
-rate < 0 (sign = -1)
-scale + rate ___ ? scale < target
-(scale - target) * -1 > 0
-*/
+export function positionRect(cx, cy, w, h) {
+    const left = Math.round(cx - (w - 1) / 2);
+    const top = Math.round(cy - (h - 1) / 2);
+    return [left, top];
+}
