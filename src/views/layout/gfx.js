@@ -10,7 +10,7 @@ export function bindContext(canvas) {
     ctx.font = '6px, sans-serif';
     const gridSize = 20;
 
-    const camera = { x: 0, y: 0, scale: 2 };
+    const camera = { x: 0, y: 0, scale: zoomFactors[currentZoom] };
     const cursor = { x: 0, y: 0, w: 1, h: 1, r: 0 };
 
     let valid = false;
@@ -94,7 +94,6 @@ export function bindContext(canvas) {
 
     function highlight(x, y, w, h) {
         [x, y] = screenToWorld(x, y);
-        // [x, y] = [Math.round(x), Math.round(y)];
         if (cursor.x != x || cursor.y != y) {
             cursor.x = x;
             cursor.y = y;
@@ -122,14 +121,24 @@ export function bindContext(canvas) {
         ctx.restore();
     }
 
-    function circle(x, y, r, style = 'rgba(128,255,128,0.1)') {
-        const top = (y - r);
-        const dy = y - top;
-        const dx = (Math.sqrt(r ** 2 - dy ** 2));
-        debugText = `${x} ${y}`;
-        rect(x - dx, y - dy, 1, 1, 'rgba(255,128,128,0.25)');
-        rect(x + dx, y - dy, 1, 1, 'rgba(255,128,128,0.25)');
+    function circle(x, y, r, style = 'rgba(128,255,128,0.25)') {
+        const ox = x - Math.floor(x);
+        const offsetY = Math.floor(r + y) - y;
 
+        for (let row = offsetY; row > 0; row--) {
+            const rawOffsetX = Math.sqrt(r ** 2 - row ** 2);
+            const left = Math.floor(ox + rawOffsetX);
+            const offsetX = left - ox;
+            rect(x - offsetX, y - row, offsetX * 2 + 1, 1, style);
+            rect(x - offsetX, y + row, offsetX * 2 + 1, 1, style);
+        }
+        if (y == Math.floor(y)) {
+            const left = Math.floor(ox + r);
+            const offsetX = left - ox;
+            rect(x - offsetX, y, offsetX * 2 + 1, 1, style);
+        }
+
+        /*
         ctx.save();
         ctx.fillStyle = style;
         ctx.translate(x * gridSize, y * gridSize);
@@ -138,6 +147,7 @@ export function bindContext(canvas) {
         ctx.fill();
         ctx.closePath();
         ctx.restore();
+        */
     }
 
     function text(text, x, y) {
@@ -181,13 +191,10 @@ export function bindContext(canvas) {
 
     function renderCursor() {
         const [left, top] = positionRect(cursor.x, cursor.y, cursor.w, cursor.h);
-        /*
         if (cursor.r) {
-            const cx = left + cursor.w / 2;
-            const cy = top + cursor.h / 2;
-            circle(cx, cy, cursor.r);
+            // TODO use logic matching equivalent building center
+            circle(Math.round(cursor.x * 2) / 2, Math.round(cursor.y * 2) / 2, cursor.r);
         }
-        */
         rect(left, top, cursor.w, cursor.h);
     }
 
@@ -217,7 +224,7 @@ export function bindContext(canvas) {
     return result;
 }
 
-let currentZoom = 3;
+let currentZoom = 4;
 const zoomFactors = [
     3.0,
     2.0,
@@ -227,4 +234,10 @@ const zoomFactors = [
     0.8,
     0.6,
     0.5,
+    0.4,
+    0.3,
+    0.25,
+    0.20,
+    0.15,
+    0.10,
 ];

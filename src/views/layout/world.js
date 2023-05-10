@@ -1,6 +1,8 @@
 export class World {
     /** @type {Building[]} */
-    buildings = [];
+    buildings = [
+        new Building(0, 0, 2, 3, 8),
+    ];
 
     place(top, left, w, h) {
         const building = new Building(top, left, w, h);
