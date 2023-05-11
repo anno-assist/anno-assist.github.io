@@ -11,7 +11,7 @@ export function bindContext(canvas) {
     const gridSize = 20;
 
     const camera = { x: 0, y: 0, scale: zoomFactors[currentZoom] };
-    const cursor = { x: 0, y: 0, preview: null, mode: modes.Default };
+    const cursor = { x: 0, y: 0, x1: 0, y1: 0, preview: [], mode: modes.Default };
     const overlay = [];
 
     let valid = false;
@@ -93,10 +93,17 @@ export function bindContext(canvas) {
         invalidate();
     }
 
-    function setCursor(x, y) {
+    function setCursor(x, y, x1, y1) {
         if (cursor.x != x || cursor.y != y) {
             cursor.x = x;
             cursor.y = y;
+            if (x1 != undefined && y1 != undefined) {
+                cursor.mode = modes.Selection;
+                cursor.x1 = x1;
+                cursor.y1 = y1;
+            } else if (cursor.mode == modes.Selection) {
+                cursor.mode = modes.Default;
+            }
             invalidate();
         }
     }
@@ -106,8 +113,8 @@ export function bindContext(canvas) {
      * @param {import('./world.js').Building} building 
      * @param {boolean} showPreview 
      */
-    function preview(building, showPreview) {
-        cursor.preview = building;
+    function preview(buildings, showPreview) {
+        cursor.preview = buildings;
         cursor.mode = showPreview ? modes.Preview : modes.Default;
         invalidate();
     }
@@ -195,6 +202,10 @@ export function bindContext(canvas) {
             renderPreview();
         }
 
+        if (cursor.mode == modes.Selection) {
+            renderSelection();
+        }
+
         endFrame();
 
         ctx.fillText(debugText, 10, 16);
@@ -203,10 +214,25 @@ export function bindContext(canvas) {
     }
 
     function renderPreview() {
-        if (cursor.preview.radius) {
-            circle(cursor.preview.cx, cursor.preview.cy, cursor.preview.radius);
+        if (cursor.preview.length == 1 && cursor.preview[0].radius) {
+            const building = cursor.preview[0];
+
+            if (building.radius) {
+                circle(building.cx, building.cy, building.radius);
+            }
         }
-        rect(cursor.preview.x, cursor.preview.y, cursor.preview.width, cursor.preview.height, rgba(128, 128, 128, 0.5));
+        for (let building of cursor.preview) {
+            rect(building.x, building.y, building.width, building.height, rgba(128, 128, 128, 0.5));
+        }
+    }
+
+    function renderSelection() {
+        const left = Math.min(cursor.x, cursor.x1) + 0.5;
+        const top = Math.min(cursor.y, cursor.y1) + 0.5;
+        const w = Math.abs(cursor.x - cursor.x1);
+        const h = Math.abs(cursor.y - cursor.y1);
+
+        frame(left, top, w, h, 2);
     }
 
     /** @param {import('./world.js').Building} building */

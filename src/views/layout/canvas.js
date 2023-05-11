@@ -18,11 +18,13 @@ const handlers = {
     onCancel: null,
     onRotate: null,
     onMove: null,
+    onSelectionStart: null
 };
 
 
 function setupEvents() {
     let dragging = false;
+    let dragMode = null;
     let lastX;
     let lastY;
 
@@ -35,9 +37,14 @@ function setupEvents() {
 
     function onClick(event) {
         if (event.buttons == 4) {
+            dragMode = 'camera';
             onDragStart(event);
         } else if (event.buttons == 1) {
-            onPlace(event);
+            dragMode = 'selection';
+            if (typeof handlers.onSelectionStart == 'function') {
+                let [x, y] = gfx.screenToWorld(event.offsetX, event.offsetY);
+                handlers.onSelectionStart(x, y);
+            }
         }
     }
 
@@ -73,15 +80,21 @@ function setupEvents() {
             const deltaX = currentX - lastX;
             const deltaY = currentY - lastY;
 
-            gfx.offsetCamera(deltaX, deltaY);
+            if (dragMode == 'camera') {
+                gfx.offsetCamera(deltaX, deltaY);
+            }
 
             lastX = currentX;
             lastY = currentY;
         }
     }
 
-    function onDragEnd() {
+    function onDragEnd(event) {
         dragging = false;
+        if (dragMode == 'selection') {
+            onPlace(event);
+        }
+        dragMode = null;
     }
 
     function onScroll(event) {

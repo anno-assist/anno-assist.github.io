@@ -6,7 +6,8 @@ let going = false;
 
 export const modes = {
     Default: Symbol('default'),
-    Preview: Symbol('preview')
+    Preview: Symbol('preview'),
+    Selection: Symbol('selection'),
 };
 
 export function smoothZoom(targetCamera, targetZoom, renderCallback) {
@@ -59,4 +60,27 @@ export function rgb(r, g, b) {
 
 export function rgba(r, g, b, a) {
     return `rgb(${r},${g},${b},${a})`;
+}
+
+/**
+ * 
+ * @param {Array<import('./world.js').Building>} buildings 
+ */
+export function createCluster(buildings) {
+    const left = Math.min(...buildings.map(b => b.cx));
+    const right = Math.max(...buildings.map(b => b.cx));
+    const top = Math.min(...buildings.map(b => b.cy));
+    const bottom = Math.max(...buildings.map(b => b.cy));
+
+    const cx = (left + right) / 2;
+    const cy = (top + bottom) / 2;
+
+    return {
+        cx, cy,
+        buildings: buildings.map(ref => ({
+            offsetX: ref.cx - cx,
+            offsetY: ref.cy - cy,
+            ref: ref.clone()
+        }))
+    };
 }

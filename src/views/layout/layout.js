@@ -2,6 +2,7 @@ import { html, render } from '../../lib/lit-html.js';
 import { createSubmitHandler } from '../../util.js';
 import { LayoutController } from './controller.js';
 import { detailsTemplate } from './details.js';
+import { listen, stop } from './eventBus.js';
 import { buildings } from './world.js';
 
 
@@ -25,13 +26,16 @@ export function layoutView(ctx) {
 
     ctx.render(layoutTemplate(controller.canvas, list, createSubmitHandler(controller.onFormUpdate), onSave));
 
-    controller.activate(ctx.layoutStorage, onEvent);
+    controller.activate(ctx.layoutStorage);
     controller.load();
+
+    listen('select', onSelect);
 }
 
 export function layoutExit(ctx, next) {
     const controller = LayoutController.instance;
     controller.disable();
+    stop('select', onSelect);
     next();
 }
 
@@ -40,14 +44,7 @@ function onSave() {
     controller.save();
 }
 
-function onEvent(type, data) {
-    if (type == 'selected') {
-        onSelect(data);
-    }
-}
-
 function onSelect(building) {
-    console.log(building);
     if (building) {
         render(detailsTemplate(building), document.getElementById('building-details'));
     } else {

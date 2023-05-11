@@ -1,4 +1,4 @@
-import { pointInRect, positionRect } from './util.js';
+import { pointInRect, positionRect, rectInRect } from './util.js';
 
 export class World {
     /** @type {Building[]} */
@@ -8,44 +8,54 @@ export class World {
         this.buildings.push(building);
     }
 
+    demolish(building) {
+        const index = this.buildings.indexOf(building);
+        this.buildings.splice(index, 1);
+    }
+
     tryHover(x, y) {
         for (let building of this.buildings) {
             building.hover = building.pointInside(x, y);
         }
     }
 
-    trySelect(x, y) {
-        let selected = null;
-        for (let building of this.buildings) {
-            const value = building.pointInside(x, y);
-            building.selected = value;
-            building.showInfluence = value;
-            selected = value ? building : selected;
-        }
-        for (let building of this.buildings) {
-            if (selected) {
-                if (building == selected) {
-                    continue;
+    trySelect(x, y, x1, y1) {
+        const [left, top] = [Math.min(x, x1), Math.min(y, y1)];
+        const [width, height] = [Math.abs(x - x1), Math.abs(y - y1)];
+
+        const selected = [];
+
+        if (width > 0.1 && height > 0.1) {
+            for (let building of this.buildings) {
+                const value = rectInRect({ x: building.x - 0.5, y: building.y - 0.5, width: building.width, height: building.height }, { x: left, y: top, width, height });
+                building.selected = value;
+                building.showInfluence = false;
+                if (value) {
+                    selected.push(building);
                 }
-                building.influenced = selected.hasInfluence(building) || building.hasInfluence(selected);
-            } else {
-                building.influenced = false;
+            }
+        } else {
+            for (let building of this.buildings) {
+                const value = building.pointInside(x, y);
+                building.selected = value;
+                building.showInfluence = value;
+                if (value) {
+                    selected.push(building);
+                }
+            }
+            for (let building of this.buildings) {
+                if (selected.length > 0) {
+                    if (building == selected[0]) {
+                        continue;
+                    }
+                    building.influenced = selected[0].hasInfluence(building) || building.hasInfluence(selected[0]);
+                } else {
+                    building.influenced = false;
+                }
             }
         }
+
         return selected;
-    }
-
-    createBuilding(type, x = 0, y = 0, w) {
-        const template = buildingTemplates[type];
-        let [width, height] = [template.w, template.h];
-        if (w !== undefined && w != template.w) {
-            [width, height] = [height, width];
-        }
-        const result = new Building(type, x, y, width, height, template.radius);
-        result.effect = template.effect;
-        result.affected = [...template.affected];
-
-        return result;
     }
 
     serialize() {
@@ -53,7 +63,7 @@ export class World {
     }
 
     deserialize(value) {
-        const data = value.map(b => this.createBuilding(b.type, b.x, b.y, b.width));
+        const data = value.map(b => createBuilding(b.type, b.x, b.y, b.width));
         this.buildings = data;
     }
 }
@@ -174,6 +184,23 @@ export class Building {
             radius: this.radius
         };
     }
+
+    clone() {
+        return createBuilding(this.type, this.x, this.y, this.width);
+    }
+}
+
+export function createBuilding(type, x = 0, y = 0, w) {
+    const template = buildingTemplates[type];
+    let [width, height] = [template.w, template.h];
+    if (w !== undefined && w != template.w) {
+        [width, height] = [height, width];
+    }
+    const result = new Building(type, x, y, width, height, template.radius);
+    result.effect = template.effect;
+    result.affected = [...template.affected];
+
+    return result;
 }
 
 export const buildings = {
