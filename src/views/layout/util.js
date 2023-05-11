@@ -1,3 +1,5 @@
+import { loadConfig, loadImage } from '../../config/config.js';
+
 let camera = null;
 let target = null;
 let rate;
@@ -83,4 +85,23 @@ export function createCluster(buildings) {
             ref: ref.clone()
         }))
     };
+}
+
+export function loadResources() {
+    const configPromise = loadConfig('icons_2070');
+    const iconsPromise = loadImage('icons_2070.png');
+
+    const result = {
+        ready: false,
+        config: null,
+        icons: null
+    };
+
+    Promise.all([configPromise, iconsPromise]).then(([config, icons]) => {
+        result.ready = true;
+        result.config = config;
+        result.icons = icons;
+    });
+
+    return result;
 }

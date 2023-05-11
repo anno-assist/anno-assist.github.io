@@ -95,7 +95,6 @@ export class LayoutController {
     }
 
     onClick(x, y) {
-        console.log('click');
         if (this.mode == modes.Preview) {
             if (this.stateData.building) {
                 this.stateData.building.centerOn(x, y);
@@ -109,7 +108,6 @@ export class LayoutController {
                 this.onCancel();
             }
         } else if (this.mode == modes.Selection) {
-            console.log('selection end', x, y);
             const selected = this.world.trySelect(x, y, this.stateData.startX, this.stateData.startY);
             emit('select', selected);
             this.mode = modes.Default;

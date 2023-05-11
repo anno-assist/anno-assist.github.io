@@ -1,10 +1,11 @@
-import { modes, positionRect, rgb, rgba, smoothZoom } from './util.js';
+import { loadResources, modes, rgb, rgba, smoothZoom } from './util.js';
 
 
 /**
  * @param {HTMLCanvasElement} canvas 
  */
 export function bindContext(canvas) {
+    const resources = loadResources();
     const ctx = canvas.getContext('2d');
     ctx.textBaseline = 'top';
     ctx.font = '6px, sans-serif';
@@ -222,7 +223,8 @@ export function bindContext(canvas) {
             }
         }
         for (let building of cursor.preview) {
-            rect(building.x, building.y, building.width, building.height, rgba(128, 128, 128, 0.5));
+            rect(building.x + 0.1, building.y + 0.1, building.width - 0.2, building.height - 0.2, rgba(128, 128, 128, 0.5));
+            renderIcon(building.type, building.cx, building.cy);
         }
     }
 
@@ -239,6 +241,7 @@ export function bindContext(canvas) {
     function renderBuilding(building) {
         let style = rgb(128, 128, 128);
         rect(building.x + 0.1, building.y + 0.1, building.width - 0.2, building.height - 0.2, style);
+        renderIcon(building.type, building.cx, building.cy);
 
         if (building.influenced) {
             rect(building.x, building.y, building.width, building.height, rgba(128, 255, 128, 0.5));
@@ -248,12 +251,25 @@ export function bindContext(canvas) {
         }
         if (building.selected) {
             overlay.push(rect.bind(null, building.x, building.y, building.width, building.height, style));
+            overlay.push(renderIcon.bind(null, building.type, building.cx, building.cy));
             overlay.push(frame.bind(null, building.x, building.y, building.width, building.height, 5));
         } else if (building.hover && cursor.mode == modes.Default) {
             frame(building.x, building.y, building.width, building.height, 3);
         }
 
         text(`${building.cx},${building.cy}`, building.x, building.y);
+    }
+
+    function renderIcon(name, cx, cy) {
+        if (resources.ready) {
+            const data = resources.config[name];
+
+            if (data) {
+                let [offsetX, offsetY] = data;
+                [offsetX, offsetY] = [offsetX * 46, offsetY * 46];
+                ctx.drawImage(resources.icons, offsetX, offsetY, 46, 46, (cx - 1) * gridSize, (cy - 1) * gridSize, 2 * gridSize, 2 * gridSize);
+            }
+        }
     }
 
     const result = {

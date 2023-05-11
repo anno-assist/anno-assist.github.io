@@ -101,5 +101,12 @@
     "LaboratoryInstruments": [10,15],
     "Exoskeleton": [11,15],
     "NeuroImplants": [12,15],
-    "missing": [7,5]
+    "missing": [7,5],
+    "market": [7,0],
+    "activity": [5,4],
+    "information": [20,9],
+    "participation": [17,8],
+    "firestation": [1,5],
+    "hospital": [3,5],
+    "police": [2,5]
 }

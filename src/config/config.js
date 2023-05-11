@@ -10,3 +10,12 @@ export async function loadConfig(name) {
         throw new Error('Could not load config file: ' + name);
     }
 }
+
+export async function loadImage(name) {
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.src = `/static/${name}`;
+        image.addEventListener('load', resolve(image));
+        image.addEventListener('error', reject(new Error('Could not load file: ' + name)));
+    });
+}
