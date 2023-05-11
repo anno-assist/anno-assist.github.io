@@ -52,7 +52,7 @@ function setupEvents() {
         if (dragging) {
             onDrag(event);
         } else {
-            gfx.highlight(event.offsetX, event.offsetY);
+            gfx.setCursor(event.offsetX, event.offsetY);
         }
     }
 

@@ -1,4 +1,4 @@
-import { positionRect, smoothZoom } from './util.js';
+import { modes, positionRect, smoothZoom } from './util.js';
 
 
 /**
@@ -11,7 +11,7 @@ export function bindContext(canvas) {
     const gridSize = 20;
 
     const camera = { x: 0, y: 0, scale: zoomFactors[currentZoom] };
-    const cursor = { x: 0, y: 0, w: 1, h: 1, r: 0 };
+    const cursor = { x: 0, y: 0, w: 1, h: 1, r: 0, mode: modes.Default };
 
     let valid = false;
 
@@ -92,7 +92,7 @@ export function bindContext(canvas) {
         invalidate();
     }
 
-    function highlight(x, y, w, h) {
+    function setCursor(x, y, w, h) {
         [x, y] = screenToWorld(x, y);
         if (cursor.x != x || cursor.y != y) {
             cursor.x = x;
@@ -106,10 +106,11 @@ export function bindContext(canvas) {
         }
     }
 
-    function preview(w, h, r = 0) {
+    function preview(w, h, r = 0, showPreview) {
         cursor.w = w;
         cursor.h = h;
         cursor.r = r;
+        cursor.mode = showPreview ? modes.Preview : modes.Default;
         invalidate();
     }
 
@@ -180,7 +181,9 @@ export function bindContext(canvas) {
             renderBuilding(building);
         }
 
-        renderCursor();
+        if (cursor.mode == modes.Preview) {
+            renderPreview();
+        }
 
         endFrame();
 
@@ -189,11 +192,12 @@ export function bindContext(canvas) {
         valid = true;
     }
 
-    function renderCursor() {
+    function renderPreview() {
         const [left, top] = positionRect(cursor.x, cursor.y, cursor.w, cursor.h);
         if (cursor.r) {
-            // TODO use logic matching equivalent building center
-            circle(Math.round(cursor.x * 2) / 2, Math.round(cursor.y * 2) / 2, cursor.r);
+            const cx = left + (cursor.w - 1) / 2;
+            const cy = top + (cursor.h - 1) / 2;
+            circle(cx, cy, cursor.r);
         }
         rect(left, top, cursor.w, cursor.h);
     }
@@ -209,7 +213,7 @@ export function bindContext(canvas) {
         render,
         offsetCamera,
         zoomCamera,
-        highlight,
+        setCursor,
         preview,
         invalidate,
         isValid() {

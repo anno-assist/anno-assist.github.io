@@ -36,3 +36,8 @@ export function positionRect(cx, cy, w, h) {
     const top = Math.round(cy - (h - 1) / 2);
     return [left, top];
 }
+
+export const modes = {
+    Default: Symbol('default'),
+    Preview: Symbol('preview')
+};

@@ -1,6 +1,6 @@
 import { World } from './world.js';
 import { canvas, gfx, handlers } from './canvas.js';
-import { positionRect } from './util.js';
+import { modes, positionRect } from './util.js';
 
 export class LayoutController {
     /** @type {LayoutController} */
@@ -57,15 +57,15 @@ export class LayoutController {
 
     onClick(x, y) {
         if (this.mode == modes.Preview) {
-            const [top, left] = positionRect(x, y, this.stateData.width, this.stateData.height);
-            this.world.place(top, left, this.stateData.width, this.stateData.height);
+            const [left, top] = positionRect(x, y, this.stateData.width, this.stateData.height);
+            this.world.place(left, top, this.stateData.width, this.stateData.height);
         }
     }
 
     onCancel() {
         this.mode = modes.Default;
         this.stateData = null;
-        gfx.preview(1, 1, 0);
+        gfx.preview(1, 1, 0, false);
     }
 
     onRotate() {
@@ -73,7 +73,7 @@ export class LayoutController {
             const t = this.stateData.width;
             this.stateData.width = this.stateData.height;
             this.stateData.height = t;
-            gfx.preview(this.stateData.width, this.stateData.height, this.stateData.radius);
+            gfx.preview(this.stateData.width, this.stateData.height, this.stateData.radius, true);
         }
     }
 
@@ -85,11 +85,6 @@ export class LayoutController {
             height: data.height,
             radius: data.radius
         };
-        gfx.preview(data.width, data.height, data.radius);
+        gfx.preview(data.width, data.height, data.radius, true);
     }
 }
-
-const modes = {
-    Default: Symbol('default'),
-    Preview: Symbol('preview')
-};
