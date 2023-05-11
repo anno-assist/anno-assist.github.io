@@ -153,10 +153,11 @@ export async function islandsView(ctx) {
             ctx.setIslands(islands);
 
             ctx.population[island.url] = ctx.population[oldUrl];
-            population[island.url] = population[oldUrl];
+            popSummary[island.url] = popSummary[oldUrl];
+            delete ctx.population[oldUrl];
+            delete popSummary[oldUrl];
 
-            delete ctx.popSettings[oldUrl];
-            delete popSettings[oldUrl];
+            ctx.setPopulation(ctx.population);
 
             update();
         }
