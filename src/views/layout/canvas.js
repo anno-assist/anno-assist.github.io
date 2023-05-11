@@ -16,7 +16,8 @@ window.addEventListener('keydown', onKeyPress);
 const handlers = {
     onClick: null,
     onCancel: null,
-    onRotate: null
+    onRotate: null,
+    onMove: null,
 };
 
 
@@ -51,8 +52,9 @@ function setupEvents() {
     function onMove(event) {
         if (dragging) {
             onDrag(event);
-        } else {
-            gfx.setCursor(event.offsetX, event.offsetY);
+        } else if (typeof handlers.onMove == 'function') {
+            let [x, y] = gfx.screenToWorld(event.offsetX, event.offsetY);
+            handlers.onMove(x, y);
         }
     }
 

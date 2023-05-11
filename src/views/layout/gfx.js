@@ -1,4 +1,4 @@
-import { modes, positionRect, smoothZoom } from './util.js';
+import { modes, positionRect, rgb, rgba, smoothZoom } from './util.js';
 
 
 /**
@@ -11,7 +11,8 @@ export function bindContext(canvas) {
     const gridSize = 20;
 
     const camera = { x: 0, y: 0, scale: zoomFactors[currentZoom] };
-    const cursor = { x: 0, y: 0, w: 1, h: 1, r: 0, mode: modes.Default };
+    const cursor = { x: 0, y: 0, preview: null, mode: modes.Default };
+    const overlay = [];
 
     let valid = false;
 
@@ -32,7 +33,7 @@ export function bindContext(canvas) {
         const right = (camera.x + canvas.width / 2) / camera.scale;
         const top = (camera.y - canvas.height / 2) / camera.scale;
         const bottom = (camera.y + canvas.height / 2) / camera.scale;
-        ctx.strokeStyle = 'rgba(255,0,0,1)';
+        ctx.strokeStyle = rgba(255, 0, 0, 1);
         ctx.beginPath();
         ctx.moveTo(left + 10, 0);
         ctx.lineTo(right - 10, 0);
@@ -47,7 +48,7 @@ export function bindContext(canvas) {
         const t = (Math.floor(top / gridSize) - 0.5) * gridSize;
         const b = (Math.ceil(bottom / gridSize) + 0.5) * gridSize;
 
-        ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+        ctx.strokeStyle = rgba(0, 0, 0, 0.2);
         ctx.beginPath();
         for (let y = t; y < b; y += gridSize) {
             ctx.moveTo(l, y);
@@ -92,29 +93,26 @@ export function bindContext(canvas) {
         invalidate();
     }
 
-    function setCursor(x, y, w, h) {
-        [x, y] = screenToWorld(x, y);
+    function setCursor(x, y) {
         if (cursor.x != x || cursor.y != y) {
             cursor.x = x;
             cursor.y = y;
-            if (w !== undefined && h !== undefined) {
-                cursor.w = w;
-                cursor.h = h;
-            }
-
             invalidate();
         }
     }
 
-    function preview(w, h, r = 0, showPreview) {
-        cursor.w = w;
-        cursor.h = h;
-        cursor.r = r;
+    /**
+     * 
+     * @param {import('./world.js').Building} building 
+     * @param {boolean} showPreview 
+     */
+    function preview(building, showPreview) {
+        cursor.preview = building;
         cursor.mode = showPreview ? modes.Preview : modes.Default;
         invalidate();
     }
 
-    function rect(x, y, w = 1, h = 1, style = 'rgba(128,255,128,0.25)') {
+    function rect(x, y, w = 1, h = 1, style = rgba(128, 255, 128, 0.25)) {
         ctx.save();
         ctx.fillStyle = style;
         ctx.translate((x - 0.5) * gridSize, (y - 0.5) * gridSize);
@@ -122,7 +120,16 @@ export function bindContext(canvas) {
         ctx.restore();
     }
 
-    function circle(x, y, r, style = 'rgba(128,255,128,0.25)') {
+    function frame(x, y, w = 1, h = 1, thickness = 1) {
+        ctx.save();
+        ctx.strokeStyle = rgb(255, 255, 128);
+        ctx.lineWidth = thickness;
+        ctx.translate((x - 0.5) * gridSize, (y - 0.5) * gridSize);
+        ctx.strokeRect(0, 0, w * gridSize, h * gridSize);
+        ctx.restore();
+    }
+
+    function circle(x, y, r, style = rgba(128, 255, 128, 0.1)) {
         const ox = x - Math.floor(x);
         const offsetY = Math.floor(r + y) - y;
 
@@ -154,7 +161,7 @@ export function bindContext(canvas) {
     function text(text, x, y) {
         ctx.save();
         ctx.fillStyle = 'white';
-        ctx.fillText(text, (x - 0.5) * gridSize, (y - 0.5) * gridSize + 7);
+        ctx.fillText(text, (x - 0.5) * gridSize + 3, (y - 0.5) * gridSize + 10);
         ctx.restore();
     }
 
@@ -181,6 +188,9 @@ export function bindContext(canvas) {
             renderBuilding(building);
         }
 
+        overlay.forEach(o => o());
+        overlay.length = 0;
+
         if (cursor.mode == modes.Preview) {
             renderPreview();
         }
@@ -193,17 +203,30 @@ export function bindContext(canvas) {
     }
 
     function renderPreview() {
-        const [left, top] = positionRect(cursor.x, cursor.y, cursor.w, cursor.h);
-        if (cursor.r) {
-            const cx = left + (cursor.w - 1) / 2;
-            const cy = top + (cursor.h - 1) / 2;
-            circle(cx, cy, cursor.r);
+        if (cursor.preview.radius) {
+            circle(cursor.preview.cx, cursor.preview.cy, cursor.preview.radius);
         }
-        rect(left, top, cursor.w, cursor.h);
+        rect(cursor.preview.x, cursor.preview.y, cursor.preview.width, cursor.preview.height, rgba(128, 128, 128, 0.5));
     }
 
+    /** @param {import('./world.js').Building} building */
     function renderBuilding(building) {
-        rect(building.x, building.y, building.width, building.height, 'rgb(128, 128, 128)');
+        let style = rgb(128, 128, 128);
+        rect(building.x + 0.1, building.y + 0.1, building.width - 0.2, building.height - 0.2, style);
+
+        if (building.influenced) {
+            rect(building.x, building.y, building.width, building.height, rgba(128, 255, 128, 0.5));
+        }
+        if (building.showInfluence && building.radius) {
+            overlay.push(circle.bind(null, building.cx, building.cy, building.radius));
+        }
+        if (building.selected) {
+            overlay.push(rect.bind(null, building.x, building.y, building.width, building.height, style));
+            overlay.push(frame.bind(null, building.x, building.y, building.width, building.height, 5));
+        } else if (building.hover && cursor.mode == modes.Default) {
+            frame(building.x, building.y, building.width, building.height, 3);
+        }
+
         text(`${building.cx},${building.cy}`, building.x, building.y);
     }
 

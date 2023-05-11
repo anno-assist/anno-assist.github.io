@@ -43,6 +43,9 @@ export function createSubmitHandler(callback) {
         event.preventDefault();
         const form = event.currentTarget;
         const formData = new FormData(form);
+        if (event.submitter) {
+            formData.append(event.submitter.name, event.submitter.value);
+        }
         const data = Object.fromEntries([...formData.entries()].map(([k, v]) => {
             v = v.trim();
             if (k != 'password' && k != 'repass') {

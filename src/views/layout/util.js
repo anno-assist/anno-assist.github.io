@@ -4,6 +4,11 @@ let rate;
 let callback = null;
 let going = false;
 
+export const modes = {
+    Default: Symbol('default'),
+    Preview: Symbol('preview')
+};
+
 export function smoothZoom(targetCamera, targetZoom, renderCallback) {
     camera = targetCamera;
     target = targetZoom;
@@ -37,7 +42,21 @@ export function positionRect(cx, cy, w, h) {
     return [left, top];
 }
 
-export const modes = {
-    Default: Symbol('default'),
-    Preview: Symbol('preview')
-};
+export function pointInRect(x, y, rect) {
+    return x > rect.x
+        && x < rect.x + rect.width
+        && y > rect.y
+        && y < rect.y + rect.height;
+}
+
+export function rectInRect(a, b) {
+    return !(a.x + a.width <= b.x || b.x + b.width <= a.x || a.y + a.height <= b.y || b.y + b.height <= a.y);
+}
+
+export function rgb(r, g, b) {
+    return `rgb(${r},${g},${b})`;
+}
+
+export function rgba(r, g, b, a) {
+    return `rgb(${r},${g},${b},${a})`;
+}

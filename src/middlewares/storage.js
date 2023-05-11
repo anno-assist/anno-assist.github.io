@@ -14,6 +14,8 @@ export function addStorage(ctx, next) {
     ctx.population = populationStorage.get();
     ctx.setPopulation = setPopulation.bind(ctx);
 
+    ctx.layoutStorage = layoutStorage;
+
     next();
 }
 
@@ -21,6 +23,7 @@ const gameStorage = createStorage('activeGame');
 const islandStorage = createStorage('islands');
 const ascensionStorage = createStorage('ascension', {});
 const populationStorage = createStorage('population', {});
+const layoutStorage = createStorage('layout', []);
 
 function setActiveGame(game) {
     this.game = game;
