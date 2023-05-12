@@ -4,7 +4,6 @@ import { loadConfig } from '../config/config.js';
 
 
 let config = null;
-let config_2070 = null;
 
 export function icon(name, ...classList) {
     return until(resolveIcon(46, name, classList), iconTemplate(46, 15, 13, classList, 'loading'));
@@ -17,15 +16,9 @@ export function smallIcon(name, ...classList) {
 async function resolveIcon(gridSize, name, classList) {
     if (config == null) {
         config = loadConfig('icons');
-        config_2070 = loadConfig('icons_2070');
     }
 
     let data = (await config)[name];
-
-    if (!data) {
-        data = (await config_2070)[name];
-        classList.push('icon-2070');
-    }
 
     if (!data) {
         data = (await config).missing;
@@ -35,7 +28,7 @@ async function resolveIcon(gridSize, name, classList) {
 }
 
 export const iconTemplate = (gridSize, x, y, classList, alt) => html`
-<span alt=${alt} class=${(classList.includes('icon-2070') ? classList : ['icon' , ...classList]).join(' ')} style="background-position: -${x * gridSize}px -${y * gridSize}px"></span>`;
+<span alt=${alt} class=${['icon' , ...classList].join(' ')} style="background-position: -${x * gridSize}px -${y * gridSize}px"></span>`;
 
 
 const loader = document.createElement('div');

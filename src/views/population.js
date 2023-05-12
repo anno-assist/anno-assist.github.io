@@ -1,6 +1,6 @@
 import { createPopulation, updatePopulation } from '../data/population.js';
 import { html } from '../lib/lit-html.js';
-import { createSubmitHandler, round, throttle } from '../util.js';
+import { createSubmitHandler, round, throttle, to } from '../util.js';
 import { icon } from './partials.js';
 
 
@@ -52,7 +52,7 @@ export async function populationView(ctx) {
     const islandUrl = ctx.selection.island;
     const island = ctx.islands.find(i => i.url == islandUrl);
     if (!island) {
-        return ctx.page.redirect('/');
+        return ctx.page.redirect(to('/'));
     }
     if (ctx.population[islandUrl] == undefined) {
         const model = {

@@ -1,0 +1,74 @@
+{
+    "ascension": {
+        "peasant": {
+            "type": "occident",
+            "level": 0,
+            "name": "Peasants",
+            "capacity": 8,
+            "next": "citizen",
+            "rate": 100
+        },
+        "citizen": {
+            "type": "occident",
+            "level": 1,
+            "name": "Citizens",
+            "capacity": 15,
+            "next": "patrician",
+            "rate": 80
+        },
+        "patrician": {
+            "type": "occident",
+            "level": 2,
+            "name": "Patricians",
+            "capacity": 25,
+            "next": "noble",
+            "rate": 60
+        },
+        "noble": {
+            "type": "occident",
+            "level": 3,
+            "name": "Noblemen",
+            "capacity": 40,
+            "next": null,
+            "rate": 40
+        },
+        "beggar": {
+            "type": "occident",
+            "level": -1,
+            "name": "Beggars",
+            "capacity": 500,
+            "next": null,
+            "rate": null
+        },
+        "nomad": {
+            "type": "orient",
+            "level": 0,
+            "name": "Nomads",
+            "capacity": 15,
+            "next": "envoy",
+            "rate": 100
+        },
+        "envoy": {
+            "type": "orient",
+            "level": 1,
+            "name": "Envoys",
+            "capacity": 25,
+            "next": null,
+            "rate": 70
+        }
+    },
+    "bonuses": {
+        "beggarLvl": [
+            40,
+            37,
+            34,
+            30
+        ],
+        "envoyLvl": [
+            110,
+            105,
+            100,
+            90
+        ]
+    }
+}

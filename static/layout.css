@@ -3,9 +3,6 @@ body {
     padding: 0;
     margin: 0;
     min-height: 100vh;
-    background-image: url('/static/background.png');
-    background-size: cover;
-    background-position: center;
 }
 
 #content {
@@ -38,14 +35,6 @@ section.main {
     display: block;
     width: 46px;
     height: 46px;
-    background-image: url('/static/icons.webp');
-}
-
-.icon-2070 {
-    display: block;
-    width: 46px;
-    height: 46px;
-    background-image: url('/static/icons_2070.png');
 }
 
 .found {

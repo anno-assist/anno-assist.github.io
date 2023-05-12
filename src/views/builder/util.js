@@ -1,4 +1,4 @@
-import { loadConfig, loadImage } from '../../config/config.js';
+import { loadConfig, loadIcons } from '../../config/config.js';
 
 let camera = null;
 let target = null;
@@ -88,8 +88,8 @@ export function createCluster(buildings) {
 }
 
 export function loadResources() {
-    const configPromise = loadConfig('icons_2070');
-    const iconsPromise = loadImage('icons_2070.png');
+    const configPromise = loadConfig('icons');
+    const iconsPromise = loadIcons();
 
     const result = {
         ready: false,

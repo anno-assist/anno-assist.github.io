@@ -22,8 +22,6 @@ import { title } from './middlewares/title.js';
 import { chainsView } from './views/chains.js';
 import { builderExit, builderView } from './views/builder/builder.js';
 
-import { chains2070View } from './views/2070/chains_2070.js';
-import { icons2070View } from './views/2070/icons_2070.js';
 
 page('/:island/:mode', addSelection);
 page(addSession);
@@ -46,7 +44,6 @@ page('/chains', title('Production Chains'), chainsView);
 page('/layout', title('Building Layout'), builderView);
 page.exit('/layout', builderExit);
 
-page('/2070/chains', title('Production Chains'), chains2070View);
-page('/2070/icons', title('Icons'), icons2070View);
 
+page.base('/2070');
 page.start();

@@ -1,5 +1,5 @@
 import { html } from '../lib/lit-html.js';
-import { createSubmitHandler } from '../util.js';
+import { createSubmitHandler, to } from '../util.js';
 import { login } from '../data/auth.js';
 
 
@@ -37,7 +37,7 @@ export function loginView(ctx) {
                 };
             }
             await login(username, password);
-            ctx.page.redirect('/settings');
+            ctx.page.redirect(to('/settings'));
         } catch (err) {
             update({ username }, err.message);
             err.handled = true;

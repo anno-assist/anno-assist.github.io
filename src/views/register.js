@@ -1,5 +1,5 @@
 import { html } from '../lib/lit-html.js';
-import { createSubmitHandler } from '../util.js';
+import { createSubmitHandler, to } from '../util.js';
 import { register } from '../data/auth.js';
 
 
@@ -44,7 +44,7 @@ export function registerView(ctx) {
                 };
             }
             await register(username, password);
-            ctx.page.redirect('/settings');
+            ctx.page.redirect(to('/settings'));
         } catch (err) {
             update({ username }, err.message);
             err.handled = true;

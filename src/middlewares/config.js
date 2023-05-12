@@ -7,7 +7,6 @@ const settings = {
     population: undefined,
     consumption: undefined,
     production: undefined,
-    goods: undefined,
     icons: undefined,
 };
 

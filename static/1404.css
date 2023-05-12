@@ -1,0 +1,9 @@
+body {
+    background-image: url('/static/background.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.icon {
+    background-image: url('/static/icons_1404.webp');
+}

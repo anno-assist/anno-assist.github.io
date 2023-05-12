@@ -144,3 +144,21 @@ export function deepClone(ref) {
 export function pretty(...refs) {
     refs.forEach(r => console.log(JSON.stringify(r, null, 2)));
 }
+
+let base = window.basePath || null;
+delete window.basePath;
+if (base == null) {
+    alert('Application base path not configured');
+}
+
+export function setBase(value) {
+    base = value;
+}
+
+export function getBase() {
+    return base;
+}
+
+export function to(uri) {
+    return base + uri;
+}

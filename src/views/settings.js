@@ -4,7 +4,7 @@ import { getIslands } from '../data/islands.js';
 import { getPopulation } from '../data/population.js';
 import { html } from '../lib/lit-html.js';
 import { createSubmitHandler } from '../util.js';
-import { icon, smallIcon } from './partials.js';
+import { smallIcon } from './partials.js';
 
 
 const settingsTemplate = (games, user, onCreate, onDelete, onLoad, error) => html`

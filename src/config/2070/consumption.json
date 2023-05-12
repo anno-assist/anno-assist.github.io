@@ -1,0 +1,180 @@
+{
+    "peasant": [
+        {
+            "key": "fish",
+            "kgPerMinute": 10
+        },
+        {
+            "key": "cider",
+            "kgPerMinute": 4.4
+        }
+    ],
+    "citizen": [
+        {
+            "key": "fish",
+            "kgPerMinute": 4
+        },
+        {
+            "key": "cider",
+            "kgPerMinute": 4.4
+        },
+        {
+            "key": "linen",
+            "kgPerMinute": 4.2
+        },
+        {
+            "key": "spices",
+            "kgPerMinute": 4
+        }
+    ],
+    "patrician": [
+        {
+            "key": "fish",
+            "kgPerMinute": 2.2
+        },
+        {
+            "key": "cider",
+            "kgPerMinute": 2.3
+        },
+        {
+            "key": "linen",
+            "kgPerMinute": 1.9
+        },
+        {
+            "key": "spices",
+            "kgPerMinute": 2.2
+        },
+        {
+            "key": "bread",
+            "kgPerMinute": 5.5
+        },
+        {
+            "key": "beer",
+            "kgPerMinute": 2.4
+        },
+        {
+            "key": "leather",
+            "kgPerMinute": 2.8
+        },
+        {
+            "key": "books",
+            "kgPerMinute": 1.6
+        },
+        {
+            "key": "candlestick",
+            "kgPerMinute": 0.8
+        }
+    ],
+    "noble": [
+        {
+            "key": "fish",
+            "kgPerMinute": 1.6
+        },
+        {
+            "key": "cider",
+            "kgPerMinute": 1.3
+        },
+        {
+            "key": "linen",
+            "kgPerMinute": 0.8
+        },
+        {
+            "key": "spices",
+            "kgPerMinute": 1.6
+        },
+        {
+            "key": "bread",
+            "kgPerMinute": 3.9
+        },
+        {
+            "key": "beer",
+            "kgPerMinute": 1.4
+        },
+        {
+            "key": "leather",
+            "kgPerMinute": 1.6
+        },
+        {
+            "key": "books",
+            "kgPerMinute": 0.9
+        },
+        {
+            "key": "candlestick",
+            "kgPerMinute": 0.6
+        },
+        {
+            "key": "meat",
+            "kgPerMinute": 2.2
+        },
+        {
+            "key": "wine",
+            "kgPerMinute": 2
+        },
+        {
+            "key": "furcoats",
+            "kgPerMinute": 1.6
+        },
+        {
+            "key": "glasses",
+            "kgPerMinute": 1.17
+        },
+        {
+            "key": "brocade",
+            "kgPerMinute": 1.42
+        }
+    ],
+    "beggar": [
+        {
+            "key": "fish",
+            "kgPerMinute": 7
+        },
+        {
+            "key": "cider",
+            "kgPerMinute": 3
+        }
+    ],
+    "nomad": [
+        {
+            "key": "dates",
+            "kgPerMinute": 6.66
+        },
+        {
+            "key": "milk",
+            "kgPerMinute": 3.44
+        },
+        {
+            "key": "carpets",
+            "kgPerMinute": 1.65
+        }
+    ],
+    "envoy": [
+        {
+            "key": "dates",
+            "kgPerMinute": 5
+        },
+        {
+            "key": "milk",
+            "kgPerMinute": 2.25
+        },
+        {
+            "key": "carpets",
+            "kgPerMinute": 1
+        },
+        {
+            "key": "coffee",
+            "kgPerMinute": 1
+        },
+        {
+            "key": "necklaces",
+            "kgPerMinute": 1.33
+        },
+        {
+            "key": "perfume",
+            "kgPerMinute": 0.8
+        },
+        {
+            "key": "marzipan",
+            "kgPerMinute": 1.63
+        }
+    ]
+}

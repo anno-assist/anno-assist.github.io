@@ -1,4 +1,5 @@
 import { render } from '../lib/lit-html.js';
+import { to } from '../util.js';
 import { layoutTemplate } from '../views/layout.js';
 
 
@@ -22,6 +23,6 @@ function renderView(content) {
 
     function onChange(event) {
         const url = event.target.value;
-        this.page.redirect(`/${url}/${mode || 'population'}`);
+        this.page.redirect(to(`/${url}/${mode || 'population'}`));
     }
 }

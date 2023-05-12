@@ -1,7 +1,7 @@
 import { html } from '../lib/lit-html.js';
 import { repeat } from '../lib/directives/repeat.js';
 import { createAscension, updateAscension } from '../data/ascension.js';
-import { createSubmitHandler, popRate, throttle } from '../util.js';
+import { createSubmitHandler, popRate, throttle, to } from '../util.js';
 import { icon } from './partials.js';
 
 
@@ -95,7 +95,7 @@ export async function ascensionView(ctx) {
     const islandUrl = ctx.selection.island;
     const island = ctx.islands.find(i => i.url == islandUrl);
     if (!island) {
-        return ctx.page.redirect('/');
+        return ctx.page.redirect(to('/'));
     }
     if (ctx.ascension[islandUrl] == undefined) {
         const model = {

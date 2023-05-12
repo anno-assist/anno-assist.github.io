@@ -1,6 +1,6 @@
 import { html } from '../lib/lit-html.js';
 import { createIsland, deleteIsland, updateIsland } from '../data/islands.js';
-import { createSubmitHandler, createUrl } from '../util.js';
+import { createSubmitHandler, createUrl, to } from '../util.js';
 import { updateGame } from '../data/games.js';
 
 
@@ -54,10 +54,9 @@ const islandRow = (index, island, popSummary, onDelete, onRename, onMove) => htm
     <td class="wide"><span class="label prim">${popSummary}</span></td>
     <td>
         <div class="btn-grid">
-            <a class="btn" href="/${island.url}/ascension">Ascension</a>
-            <a class="btn" href="/${island.url}/population">Population</a>
-            <a class="btn" href="/${island.url}/needs">Needs</a>
-            <!-- <a href="/lit$398638298$/industry">Industry</a> -->
+            <a class="btn" href=${to(`/${island.url}/ascension`)}>Ascension</a>
+            <a class="btn" href=${to(`/${island.url}/population`)}>Population</a>
+            <a class="btn" href=${to(`/${island.url}/needs`)}>Needs</a>
         </div>
     </td>
     <td class="wide">
@@ -73,7 +72,7 @@ export async function islandsView(ctx) {
     const popSettings = ctx.settings.population;
     const game = ctx.game;
     if (!game) {
-        ctx.page.redirect('/settings');
+        ctx.page.redirect(to('/settings'));
     }
 
     const islands = ctx.islands;
