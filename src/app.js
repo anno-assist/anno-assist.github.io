@@ -20,7 +20,7 @@ import { ratesView } from './views/rates.js';
 import { iconsView } from './views/icons.js';
 import { title } from './middlewares/title.js';
 import { chainsView } from './views/chains.js';
-import { layoutExit, layoutView } from './views/layout/layout.js';
+import { builderExit, builderView } from './views/builder/builder.js';
 
 import { chains2070View } from './views/2070/chains_2070.js';
 import { icons2070View } from './views/2070/icons_2070.js';
@@ -43,8 +43,8 @@ page('/:island/needs', hasGame, title('$name | Needs'), needsView);
 page('/rates', title('Production'), ratesView);
 page('/icons', title('Icons'), iconsView);
 page('/chains', title('Production Chains'), chainsView);
-page('/layout', title('Building Layout'), layoutView);
-page.exit('/layout', layoutExit);
+page('/layout', title('Building Layout'), builderView);
+page.exit('/layout', builderExit);
 
 page('/2070/chains', title('Production Chains'), chains2070View);
 page('/2070/icons', title('Icons'), icons2070View);

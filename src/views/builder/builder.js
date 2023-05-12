@@ -6,7 +6,7 @@ import { listen, stop } from './eventBus.js';
 import { buildings } from './world.js';
 
 
-const layoutTemplate = (canvas, list, onForm, onSave) => html`<h1>Building Layout</h1>
+const builderTemplate = (canvas, list, onForm, onSave) => html`<h1>Building Layout</h1>
 <section class="canvas-main clear">
     <div id="canvas-container">
         ${canvas}
@@ -20,11 +20,11 @@ const layoutTemplate = (canvas, list, onForm, onSave) => html`<h1>Building Layou
     </div>
 </section>`;
 
-export function layoutView(ctx) {
+export function builderView(ctx) {
     const controller = LayoutController.instance;
     const list = Object.keys(buildings);
 
-    ctx.render(layoutTemplate(controller.canvas, list, createSubmitHandler(controller.onFormUpdate), onSave));
+    ctx.render(builderTemplate(controller.canvas, list, createSubmitHandler(controller.onFormUpdate), onSave));
 
     controller.activate(ctx.layoutStorage);
     controller.load();
@@ -32,7 +32,7 @@ export function layoutView(ctx) {
     listen('select', onSelect);
 }
 
-export function layoutExit(ctx, next) {
+export function builderExit(ctx, next) {
     const controller = LayoutController.instance;
     controller.disable();
     stop('select', onSelect);
