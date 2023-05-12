@@ -142,6 +142,7 @@ export async function islandsView(ctx) {
         const index = islands.findIndex(i => id == i.objectId);
         const island = islands[index];
 
+        const oldUrl = island.url;
         const newName = prompt(`Enter new name for ${island.name}`, island.name);
 
         if (newName) {
@@ -150,6 +151,13 @@ export async function islandsView(ctx) {
             const result = await updateIsland(id, island);
             Object.assign(island, result);
             ctx.setIslands(islands);
+
+            ctx.population[island.url] = ctx.population[oldUrl];
+            popSummary[island.url] = popSummary[oldUrl];
+            delete ctx.population[oldUrl];
+            delete popSummary[oldUrl];
+
+            ctx.setPopulation(ctx.population);
 
             update();
         }
