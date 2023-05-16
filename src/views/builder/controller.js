@@ -1,7 +1,8 @@
-import { buildings, createBuilding, World } from './world.js';
+import { createBuilding, World } from './world.js';
 import { canvas, gfx, handlers } from './canvas.js';
 import { createCluster, modes } from './util.js';
 import { emit, listen } from './eventBus.js';
+import { buildings } from './catalog.js';
 
 export class LayoutController {
     /** @type {LayoutController} */

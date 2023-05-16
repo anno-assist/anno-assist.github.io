@@ -1,4 +1,4 @@
-import { loadResources, modes, rgb, rgba, smoothZoom } from './util.js';
+import { loadResources, modes, rgb, rgba, smoothZoom, summarize } from './util.js';
 
 
 /**
@@ -8,7 +8,7 @@ export function bindContext(canvas) {
     const resources = loadResources();
     const ctx = canvas.getContext('2d');
     ctx.textBaseline = 'top';
-    ctx.font = '6px, sans-serif';
+    ctx.font = '6px sans-serif';
     const gridSize = 20;
 
     const camera = { x: 0, y: 0, scale: zoomFactors[currentZoom] };
@@ -177,6 +177,8 @@ export function bindContext(canvas) {
      * @param {import('./world.js').World} world 
      */
     function render(world) {
+        let summary = summarize(world.buildings);
+
         clear();
         beginFrame();
         grid();
@@ -198,7 +200,11 @@ export function bindContext(canvas) {
 
         endFrame();
 
-        ctx.fillText(debugText, 10, 16);
+        // ctx.fillText(debugText, 10, 16);
+        ctx.font = '18px sans-serif';
+        summary
+            .map(([k, v]) => `${k}: ${v}`)
+            .forEach((r, i) => ctx.fillText(r, 10, 24 + i * 24));
 
         valid = true;
     }
@@ -247,7 +253,7 @@ export function bindContext(canvas) {
             frame(building.x, building.y, building.width, building.height, 3);
         }
 
-        text(`${building.cx},${building.cy}`, building.x, building.y);
+        // text(`${building.cx},${building.cy}`, building.x, building.y);
     }
 
     function renderIcon(name, cx, cy) {

@@ -66,7 +66,7 @@ export function rgba(r, g, b, a) {
 
 /**
  * 
- * @param {Array<import('./world.js').Building>} buildings 
+ * @param {Array<Building>} buildings 
  */
 export function createCluster(buildings) {
     const left = Math.min(...buildings.map(b => b.cx));
@@ -105,3 +105,22 @@ export function loadResources() {
 
     return result;
 }
+
+/**
+ * 
+ * @param {Array<Building>} buildings 
+ */
+export function summarize(buildings) {
+    const summary = Object.entries(
+        buildings
+            .sort((a, b) => a.listOrder - b.listOrder)
+            .map(b => b.type)
+            .reduce((a, c) => Object.assign(a, { [c]: (a[c] || 0) + 1 }), {})
+    );
+
+    return summary;
+}
+
+/**
+ * @typedef {import('./world.js').Building} Building
+ */

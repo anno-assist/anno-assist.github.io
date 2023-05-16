@@ -1,10 +1,11 @@
 import { html, render } from '../../lib/lit-html.js';
 import { createSubmitHandler } from '../../util.js';
 import { icon } from '../partials.js';
+import { buildings } from './catalog.js';
 import { LayoutController } from './controller.js';
 import { detailsTemplate } from './details.js';
 import { listen, stop } from './eventBus.js';
-import { buildings } from './world.js';
+import { summarize } from './util.js';
 
 
 const builderTemplate = (canvas, layouts, activeLayout, list, onForm, onLayout) => html`<h1>Building Layout</h1>
@@ -72,9 +73,17 @@ export function builderExit(ctx, next) {
     next();
 }
 
-function onSelect(building) {
-    if (building) {
-        render(detailsTemplate(building), document.getElementById('building-details'));
+/**
+ * 
+ * @param {Array<import('./world.js').Building>?} buildings 
+ */
+function onSelect(buildings) {
+    if (buildings) {
+        let summary = [];
+        if (buildings.length == 1) {
+            summary = summarize([...buildings[0].summary.values()]);
+        }
+        render(detailsTemplate(buildings, summary), document.getElementById('building-details'));
     } else {
         render(null, document.getElementById('building-details'));
     }
