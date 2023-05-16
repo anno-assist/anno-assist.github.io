@@ -63,7 +63,7 @@ export class World {
     }
 
     deserialize(value) {
-        const data = value.map(b => createBuilding(b.type, b.x, b.y, b.width));
+        const data = value.map(b => createBuilding(b.type, b.x, b.y, b.width)).filter(b => b);
         this.buildings = data;
     }
 }
@@ -90,6 +90,8 @@ export class Building {
 
     effect = null;
     affected = [];
+    /** @type {[number, number, number]} */
+    color = [128, 128, 128];
 
     /** @type {boolean} */
     hover = false;
@@ -192,6 +194,9 @@ export class Building {
 
 export function createBuilding(type, x = 0, y = 0, w) {
     const template = buildingTemplates[type];
+    if (!template) {
+        return null;
+    }
     let [width, height] = [template.w, template.h];
     if (w !== undefined && w != template.w) {
         [width, height] = [height, width];
@@ -199,6 +204,10 @@ export function createBuilding(type, x = 0, y = 0, w) {
     const result = new Building(type, x, y, width, height, template.radius);
     result.effect = template.effect;
     result.affected = [...template.affected];
+
+    if (template.color) {
+        result.color = template.color;
+    }
 
     return result;
 }
@@ -215,6 +224,14 @@ export const buildings = {
     Firestation: 'firestation',
     Hospital: 'hospital',
     Police: 'police',
+    // Tech Buildings
+    Tech_Market: 'tech_market',
+    Tech_Laboratory: 'laboratory',
+    Tech_Information: 'tech_information',
+    Tech_Academy: 'academy',
+    Tech_Residence_L1: 'assistant',
+    Tech_Residence_L2: 'researcher',
+    Tech_Residence_L3: 'genius',
 };
 
 const influences = {
@@ -225,6 +242,7 @@ const influences = {
     Firestation: Symbol('firestation_influence'),
     Hospital: Symbol('hospital_influence'),
     Police: Symbol('police_influence'),
+    Academy: Symbol('academy_influence'),
 };
 
 const buildingTemplates = {
@@ -233,28 +251,32 @@ const buildingTemplates = {
         h: 8,
         radius: 25,
         effect: influences.Company,
-        affected: [influences.Firestation]
+        affected: [influences.Firestation],
+        color: [64, 64, 192]
     },
     [buildings.Activity]: {
         w: 6,
         h: 5,
         radius: 20,
         effect: influences.Activity,
-        affected: [influences.Firestation]
+        affected: [influences.Firestation],
+        color: [192, 64, 192]
     },
     [buildings.Information]: {
         w: 6,
         h: 6,
         radius: 26,
         effect: influences.Information,
-        affected: [influences.Firestation]
+        affected: [influences.Firestation],
+        color: [64, 192, 192]
     },
     [buildings.Participation]: {
         w: 7,
         h: 9,
         radius: 24,
         effect: influences.Participation,
-        affected: [influences.Firestation]
+        affected: [influences.Firestation],
+        color: [192, 192, 64]
     },
     [buildings.Residence_L1]: {
         w: 3,
@@ -267,7 +289,8 @@ const buildingTemplates = {
             influences.Firestation,
             influences.Hospital,
             influences.Police,
-        ]
+        ],
+        color: [210, 210, 210]
     },
     [buildings.Residence_L2]: {
         w: 3,
@@ -281,7 +304,8 @@ const buildingTemplates = {
             influences.Firestation,
             influences.Hospital,
             influences.Police,
-        ]
+        ],
+        color: [160, 160, 160]
     },
     [buildings.Residence_L3]: {
         w: 3,
@@ -296,7 +320,8 @@ const buildingTemplates = {
             influences.Firestation,
             influences.Hospital,
             influences.Police,
-        ]
+        ],
+        color: [110, 110, 110]
     },
     [buildings.Residence_L4]: {
         w: 3,
@@ -311,7 +336,8 @@ const buildingTemplates = {
             influences.Firestation,
             influences.Hospital,
             influences.Police,
-        ]
+        ],
+        color: [60, 60, 60]
     },
     [buildings.Firestation]: {
         w: 3,
@@ -333,5 +359,89 @@ const buildingTemplates = {
         radius: 22,
         effect: influences.Police,
         affected: [influences.Firestation]
+    },
+
+    // ------------------------------
+    // Tech Buildings
+    // ------------------------------
+
+    [buildings.Tech_Market]: {
+        w: 6,
+        h: 5,
+        radius: 22,
+        effect: influences.Company,
+        affected: [influences.Firestation],
+        color: [64, 64, 192]
+    },
+    [buildings.Tech_Laboratory]: {
+        w: 4,
+        h: 4,
+        radius: 14,
+        effect: influences.Activity,
+        affected: [influences.Firestation],
+        color: [192, 64, 192]
+    },
+    [buildings.Tech_Information]: {
+        w: 6,
+        h: 6,
+        radius: 26,
+        effect: influences.Information,
+        affected: [influences.Firestation],
+        color: [64, 192, 192]
+    },
+    [buildings.Tech_Academy]: {
+        w: 6,
+        h: 5,
+        radius: 20,
+        effect: influences.Academy,
+        affected: [influences.Firestation],
+        color: [192, 192, 64]
+    },
+    [buildings.Tech_Residence_L1]: {
+        w: 3,
+        h: 3,
+        radius: 0,
+        effect: null,
+        affected: [
+            influences.Company,
+            influences.Activity,
+            influences.Firestation,
+            influences.Hospital,
+            influences.Police,
+            influences.Academy,
+        ],
+        color: [210, 210, 210]
+    },
+    [buildings.Tech_Residence_L2]: {
+        w: 3,
+        h: 3,
+        radius: 0,
+        effect: null,
+        affected: [
+            influences.Company,
+            influences.Activity,
+            influences.Firestation,
+            influences.Hospital,
+            influences.Police,
+            influences.Academy,
+            influences.Information,
+        ],
+        color: [160, 160, 160]
+    },
+    [buildings.Tech_Residence_L3]: {
+        w: 3,
+        h: 3,
+        radius: 0,
+        effect: null,
+        affected: [
+            influences.Company,
+            influences.Activity,
+            influences.Firestation,
+            influences.Hospital,
+            influences.Police,
+            influences.Academy,
+            influences.Information,
+        ],
+        color: [110, 110, 110]
     },
 };

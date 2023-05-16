@@ -1,4 +1,6 @@
 {
+    "settings": [10,20],
+    "islands": [13,20],
     "eco": [10,3],
     "tycoon": [11,3],
     "tech": [12,3],
@@ -108,5 +110,9 @@
     "participation": [17,8],
     "firestation": [1,5],
     "hospital": [3,5],
-    "police": [2,5]
+    "police": [2,5],
+    "tech_market": [19,9],
+    "tech_information": [20,7],
+    "laboratory": [5,2],
+    "academy": [6,2]
 }

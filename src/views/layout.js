@@ -1,6 +1,7 @@
 import { html } from '../lib/lit-html.js';
 import { classMap } from '../lib/directives/class-map.js';
 import { to } from '../util.js';
+import { icon } from './partials.js';
 
 
 export const layoutTemplate = (tab, islands, current, mode = 'population', onChange, content) => html`
@@ -8,12 +9,12 @@ export const layoutTemplate = (tab, islands, current, mode = 'population', onCha
     <nav class="main-nav">
         <div class="nav-left">
             <a href=${to('/settings')} class=${classMap({ nav: true, tab: true, active: tab=='/settings'  })}>
-                <span class="icon" style="background-position: -368px -736px"></span>
+                ${icon('settings')}
             </a>
         </div>
         <div class="nav-left">
             <a href=${to('/')} class=${classMap({ nav: true, tab: true, active: tab=='/'  })}>
-                <span class="icon" style="background-position: -828px -736px"></span>
+                ${icon('islands')}
             </a>
         </div>
         <div class="nav-section">

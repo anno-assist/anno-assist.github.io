@@ -26,8 +26,6 @@ export class LayoutController {
     /** @type {WorldState?} */
     stateData = null;
 
-    storage;
-
     constructor() {
         this.world = new World();
 
@@ -47,18 +45,16 @@ export class LayoutController {
         listen('demolish', this.onBuildingDemolish.bind(this));
     }
 
-    load() {
-        this.world.deserialize(this.storage.get());
+    load(layout) {
+        this.world.deserialize(layout);
         gfx.invalidate();
     }
 
     save() {
-        this.storage.set(this.world.serialize());
+        return this.world.serialize();
     }
 
-    activate(storage) {
-        this.storage = storage;
-
+    activate() {
         this.active = true;
         this.update();
     }

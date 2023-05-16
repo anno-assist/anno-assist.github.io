@@ -128,16 +128,16 @@ export function bindContext(canvas) {
         ctx.restore();
     }
 
-    function frame(x, y, w = 1, h = 1, thickness = 1) {
+    function frame(x, y, w = 1, h = 1, thickness = 1, style = rgb(255, 255, 128)) {
         ctx.save();
-        ctx.strokeStyle = rgb(255, 255, 128);
+        ctx.strokeStyle = style;
         ctx.lineWidth = thickness;
         ctx.translate((x - 0.5) * gridSize, (y - 0.5) * gridSize);
         ctx.strokeRect(0, 0, w * gridSize, h * gridSize);
         ctx.restore();
     }
 
-    function circle(x, y, r, style = rgba(128, 255, 128, 0.1)) {
+    function circle(x, y, r, style = rgba(64, 192, 64, 0.3)) {
         const ox = x - Math.floor(x);
         const offsetY = Math.floor(r + y) - y;
 
@@ -153,17 +153,6 @@ export function bindContext(canvas) {
             const offsetX = left - ox;
             rect(x - offsetX, y, offsetX * 2 + 1, 1, style);
         }
-
-        /*
-        ctx.save();
-        ctx.fillStyle = style;
-        ctx.translate(x * gridSize, y * gridSize);
-        ctx.beginPath();
-        ctx.arc(0, 0, r * gridSize, 0, 2 * Math.PI, false);
-        ctx.fill();
-        ctx.closePath();
-        ctx.restore();
-        */
     }
 
     function text(text, x, y) {
@@ -239,12 +228,13 @@ export function bindContext(canvas) {
 
     /** @param {import('./world.js').Building} building */
     function renderBuilding(building) {
-        let style = rgb(128, 128, 128);
+        let style = rgb(...building.color);
         rect(building.x + 0.1, building.y + 0.1, building.width - 0.2, building.height - 0.2, style);
         renderIcon(building.type, building.cx, building.cy);
 
         if (building.influenced) {
-            rect(building.x, building.y, building.width, building.height, rgba(128, 255, 128, 0.5));
+            // rect(building.x, building.y, building.width, building.height, rgba(128, 255, 128, 0.5));
+            overlay.push(frame.bind(null, building.x, building.y, building.width, building.height, 10, rgba(128, 255, 128, 0.5)));
         }
         if (building.showInfluence && building.radius) {
             overlay.push(circle.bind(null, building.cx, building.cy, building.radius));

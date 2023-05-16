@@ -23,7 +23,7 @@ const gameStorage = createStorage('activeGame');
 const islandStorage = createStorage('islands');
 const ascensionStorage = createStorage('ascension', {});
 const populationStorage = createStorage('population', {});
-const layoutStorage = createStorage('layout', []);
+const layoutStorage = createStorage('layout', {});
 
 function setActiveGame(game) {
     this.game = game;

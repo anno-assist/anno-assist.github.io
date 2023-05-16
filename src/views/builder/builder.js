@@ -1,35 +1,68 @@
 import { html, render } from '../../lib/lit-html.js';
 import { createSubmitHandler } from '../../util.js';
+import { icon } from '../partials.js';
 import { LayoutController } from './controller.js';
 import { detailsTemplate } from './details.js';
 import { listen, stop } from './eventBus.js';
 import { buildings } from './world.js';
 
 
-const builderTemplate = (canvas, list, onForm, onSave) => html`<h1>Building Layout</h1>
+const builderTemplate = (canvas, layouts, activeLayout, list, onForm, onLayout) => html`<h1>Building Layout</h1>
 <section class="canvas-main clear">
     <div id="canvas-container">
         ${canvas}
     </div>
     <div id="canvas-controls">
-        <form @submit=${onForm} class="layout-controls">
-            ${list.map(i => html`<button type="submit" name="buildingType" value=${i}>${i}</button>`)}
+        <form @submit=${onLayout}>
+            <select name="layout">
+                ${layouts.map(l => html`<option value=${l}>${l}</option>`)}
+            </select>
+            <button name="action" value="load">Load</button>
+            <input type="text" name="layoutName" .value=${activeLayout}>
+            <button name="action" value="save">Save</button>
+            <button name="action" value="clear">Clear</button>
         </form>
-        <button @click=${onSave}>Save</button>
+        <form @submit=${onForm} class="layout-controls">
+            ${list.map(([i, img]) => html`<button type="submit" name="buildingType" value=${i}>${icon(img)}</button>`)}
+        </form>
         <div id="building-details"></div>
     </div>
 </section>`;
 
 export function builderView(ctx) {
+    let layouts = ctx.layoutStorage.get();
+    let activeLayout = '';
+
     const controller = LayoutController.instance;
-    const list = Object.keys(buildings);
+    const list = Object.entries(buildings);
 
-    ctx.render(builderTemplate(controller.canvas, list, createSubmitHandler(controller.onFormUpdate), onSave));
+    update();
 
-    controller.activate(ctx.layoutStorage);
-    controller.load();
+    controller.activate();
 
     listen('select', onSelect);
+
+    function onLayout({ action, layout, layoutName }) {
+        if (action == 'load') {
+            const layoutData = layouts[layout];
+            activeLayout = layout;
+            controller.load(layoutData);
+            update();
+        } else if (action == 'save') {
+            const layoutData = controller.save();
+            layouts[layoutName] = layoutData;
+            ctx.layoutStorage.set(layouts);
+            update();
+        } else if (action == 'clear') {
+            activeLayout = '';
+            controller.load([]);
+            update();
+        }
+    }
+
+    function update() {
+        ctx.render(builderTemplate(controller.canvas, Object.keys(layouts), activeLayout, list, createSubmitHandler(controller.onFormUpdate), createSubmitHandler(onLayout)));
+    }
 }
 
 export function builderExit(ctx, next) {
@@ -37,11 +70,6 @@ export function builderExit(ctx, next) {
     controller.disable();
     stop('select', onSelect);
     next();
-}
-
-function onSave() {
-    const controller = LayoutController.instance;
-    controller.save();
 }
 
 function onSelect(building) {
