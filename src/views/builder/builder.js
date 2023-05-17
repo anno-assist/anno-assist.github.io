@@ -27,6 +27,7 @@ const builderTemplate = (canvas, layouts, activeLayout, list, onForm, onLayout) 
             ${list.map(([i, img]) => html`<button type="submit" name="buildingType" value=${i}>${icon(img)}</button>`)}
         </form>
         <div id="building-details"></div>
+        <div id="building-replace"></div>
     </div>
 </section>`;
 
@@ -42,6 +43,7 @@ export function builderView(ctx) {
     controller.activate();
 
     listen('select', onSelect);
+    listen('replace', onReplace);
 
     function onLayout({ action, layout, layoutName }) {
         if (action == 'load') {
@@ -70,6 +72,7 @@ export function builderExit(ctx, next) {
     const controller = LayoutController.instance;
     controller.disable();
     stop('select', onSelect);
+    stop('replace', onReplace);
     next();
 }
 
@@ -87,5 +90,30 @@ function onSelect(buildings) {
     } else {
         render(null, document.getElementById('building-details'));
     }
+    render(null, document.getElementById('building-replace'));
 }
 
+function onReplace() {
+    const list = Object.entries(buildings);
+    render(replaceMenu(list, createSubmitHandler(onSubmit)), document.getElementById('building-replace'));
+
+    function onSubmit(data) {
+        if (data.action == 'cancel') {
+            render(null, document.getElementById('building-replace'));
+        } else if (data.buildingType) {
+            const type = buildings[data.buildingType];
+            const controller = LayoutController.instance;
+            controller.onBuildingReplace(type);
+            render(null, document.getElementById('building-details'));
+            render(null, document.getElementById('building-replace'));
+        }
+    }
+}
+
+const replaceMenu = (list, onForm) => html`
+<form @submit=${onForm} class="layout-controls">
+    <div>
+        <button name="action" value="cancel">Cancel</button>
+    </div>
+    ${list.map(([i, img]) => html`<button type="submit" name="buildingType" value=${i}>${icon(img)}</button>`)}
+</form>`;

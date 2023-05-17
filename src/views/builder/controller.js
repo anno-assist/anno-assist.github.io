@@ -44,7 +44,6 @@ export class LayoutController {
         listen('copy', this.onBuildingCopy.bind(this));
         listen('move', this.onBuildingMove.bind(this));
         listen('demolish', this.onBuildingDemolish.bind(this));
-        listen('replace', this.onBuildingReplace.bind(this));
     }
 
     load(layout) {
@@ -207,8 +206,16 @@ export class LayoutController {
         gfx.invalidate();
     }
 
-    onBuildingReplace() {
-        console.log('replacing buildings');
+    onBuildingReplace(newType) {
+        if (this.mode != modes.Default || this.world.index.selected.size == 0) {
+            return;
+        }
+        const selected = [...this.world.index.selected.values()];
+
+        for (let building of selected) {
+            this.world.replace(building, newType);
+        }
+        gfx.invalidate();
     }
 
     onSelectionStart(x, y) {

@@ -22,6 +22,16 @@ export class World {
         }
     }
 
+    replace(building, newType) {
+        const index = this.buildings.indexOf(building);
+        if (index !== -1) {
+            const newBuilding = createBuilding(newType, building.x, building.y);
+            newBuilding.id = building.id;
+            this.buildings[index] = newBuilding;
+            this.deselect();
+        }
+    }
+
     tryHover(x, y) {
         for (let building of this.buildings) {
             building.hover = building.pointInside(x, y);
