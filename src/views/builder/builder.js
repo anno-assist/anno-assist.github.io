@@ -85,6 +85,8 @@ function onSelect(buildings) {
         let summary = [];
         if (buildings.length == 1) {
             summary = summarize([...buildings[0].summary.values()]);
+        } else {
+            summary = summarize(buildings);
         }
         render(detailsTemplate(buildings, summary), document.getElementById('building-details'));
     } else {
