@@ -62,7 +62,7 @@ export function builderView(ctx) {
     }
 
     function update() {
-        ctx.render(builderTemplate(controller.canvas, Object.keys(layouts), activeLayout, list, createSubmitHandler(controller.onFormUpdate), createSubmitHandler(onLayout)));
+        ctx.render(builderTemplate(controller.canvas, Object.keys(layouts), activeLayout, list, createSubmitHandler(controller.onCatalogSelect), createSubmitHandler(onLayout)));
     }
 }
 

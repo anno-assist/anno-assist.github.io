@@ -5,28 +5,27 @@ import { emit } from './eventBus.js';
 export const detailsTemplate = (buildings, summary) => html`
 ${buildings?.length == 1 ? html`
 <h3>${buildings[0].type}</h3>
-${summary.map(([k,v]) => html`<p>${k}: <strong>${v}</strong></p>`)}` : html`<p>Selected ${buildings.length}</p>`}
-
 <div>
-    <button ?disabled=${buildings.length == 0} @click=${() => onCopy(buildings)}>Copy</button>
-    <button ?disabled=${buildings.length == 0} @click=${() => onMove(buildings)}>Move</button>
-    <button ?disabled=${buildings.length == 0} @click=${() => onDemolish(buildings)}>Demolish</button>
-    <button ?disabled=${buildings.length == 0} @click=${() => onReplace(buildings)}>Replace</button>
+    <button ?disabled=${buildings.length == 0} @click=${onCopy}>Copy</button>
+    <button ?disabled=${buildings.length == 0} @click=${onMove}>Move</button>
+    <button ?disabled=${buildings.length == 0} @click=${onDemolish}>Demolish</button>
+    <button ?disabled=${buildings.length == 0} @click=${onReplace}>Replace</button>
 </div>
+${summary.map(([k,v]) => html`<p>${k}: <strong>${v}</strong></p>`)}` : html`<p>Selected ${buildings.length}</p>`}
 `;
 
-function onCopy(buildings) {
-    emit('copy', buildings);
+function onCopy() {
+    emit('copy');
 }
 
-function onMove(buildings) {
-    emit('move', buildings);
+function onMove() {
+    emit('move');
 }
 
-function onDemolish(buildings) {
-    emit('demolish', buildings);
+function onDemolish() {
+    emit('demolish');
 }
 
-function onReplace(buildings) {
-    emit('replace', buildings);
+function onReplace() {
+    emit('replace');
 }

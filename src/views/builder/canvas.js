@@ -1,4 +1,5 @@
 import { throttle } from '../../util.js';
+import { emit } from './eventBus.js';
 import { bindContext } from './gfx.js';
 
 
@@ -131,6 +132,16 @@ function onKeyPress(event) {
         handlers.onCancel();
     } else if ((event.code == 'Comma' || event.code == 'Period') && typeof handlers.onRotate == 'function') {
         handlers.onRotate();
+    } else if (event.code == 'KeyM') {
+        emit('move');
+    } else if (event.code == 'KeyC') {
+        emit('copy');
+    } else if (event.code == 'KeyV') {
+        emit('demolish');
+    } else if (event.code == 'KeyU') {
+        emit('replace');
+    } else {
+        console.log(event.code);
     }
 }
 

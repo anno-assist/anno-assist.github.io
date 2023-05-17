@@ -33,7 +33,7 @@ export class LayoutController {
         this.canvas = canvas;
 
         this.update = this.update.bind(this);
-        this.onFormUpdate = this.onFormUpdate.bind(this);
+        this.onCatalogSelect = this.onCatalogSelect.bind(this);
 
         handlers.onClick = this.onClick.bind(this);
         handlers.onCancel = this.onCancel.bind(this);
@@ -44,6 +44,7 @@ export class LayoutController {
         listen('copy', this.onBuildingCopy.bind(this));
         listen('move', this.onBuildingMove.bind(this));
         listen('demolish', this.onBuildingDemolish.bind(this));
+        listen('replace', this.onBuildingReplace.bind(this));
     }
 
     load(layout) {
@@ -108,7 +109,9 @@ export class LayoutController {
             const selected = this.world.trySelect(x, y, this.stateData.startX, this.stateData.startY);
             emit('select', selected);
             this.mode = modes.Default;
-            this.stateData = null;
+            this.stateData = {
+                selected
+            };
         } else if (this.mode == modes.Default) {
             // This used to be selection mode
         }
@@ -137,37 +140,67 @@ export class LayoutController {
         gfx.preview([building], true);
     }
 
-    onFormUpdate(data) {
+    onCatalogSelect(data) {
         const type = buildings[data.buildingType];
         this.mode = modes.Preview;
         this.prepareBuilding(type);
     }
 
-    onBuildingCopy(buildings) {
-        if (buildings.length == 1) {
-            this.stateData = { building: buildings[0].clone() };
+    onBuildingCopy() {
+        if (this.mode != modes.Default || !this.stateData?.selected) {
+            return;
+        }
+        const selected = this.stateData.selected;
+
+        if (selected.length == 1) {
+            this.stateData = { building: selected[0].clone() };
             this.mode = modes.Preview;
             gfx.preview([this.stateData.building], true);
         } else {
-            const cluster = createCluster(buildings);
+            const cluster = createCluster(selected);
             this.stateData = { cluster };
             this.mode = modes.Preview;
             gfx.preview(cluster.buildings.map(r => r.ref), true);
         }
     }
 
-    onBuildingMove(buildings) {
-        for (let building of buildings) {
+    onBuildingMove() {
+        if (this.mode != modes.Default || !this.stateData?.selected) {
+            return;
+        }
+        const selected = this.stateData.selected;
+
+        for (let building of selected) {
             this.world.demolish(building);
         }
-        this.onBuildingCopy(buildings);
+        this.onBuildingCopy();
     }
 
-    onBuildingDemolish(buildings) {
-        for (let building of buildings) {
+    onBuildingDemolish() {
+        if (this.mode != modes.Default || !this.stateData?.selected) {
+            return;
+        }
+        const selected = this.stateData.selected;
+
+        for (let building of selected) {
             this.world.demolish(building);
         }
         gfx.invalidate();
+    }
+
+    onBuildingReplace() {
+        console.log('replacing buildings');
+        /*
+        if (this.mode != modes.Default || !this.stateData?.selected) {
+            return;
+        }
+        const selected = this.stateData.selected;
+
+        for (let building of selected) {
+            this.world.demolish(building);
+        }
+        gfx.invalidate();
+        */
     }
 
     onSelectionStart(x, y) {
@@ -189,4 +222,5 @@ export class LayoutController {
  *  @property {{cx: number, cy: number, buildings: Array<{offsetX: number, offsetY: number, ref: Building}>}} cluster
  *  @property {number?} startX
  *  @property {number?} startY
+ *  @property {Building[]?} selected
  */
