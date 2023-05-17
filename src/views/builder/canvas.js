@@ -29,7 +29,7 @@ function setupEvents() {
     let lastX;
     let lastY;
 
-    canvas.addEventListener('mousedown', onClick);
+    canvas.addEventListener('mousedown', onMouseDown);
     canvas.addEventListener('contextmenu', onContext);
     canvas.addEventListener('mousemove', onMove);
     canvas.addEventListener('mouseup', onDragEnd);
@@ -37,7 +37,7 @@ function setupEvents() {
 
     canvas.addEventListener('wheel', onScroll);
 
-    function onClick(event) {
+    function onMouseDown(event) {
         if (event.buttons == 4) {
             dragMode = 'camera';
             onDragStart(event);
@@ -57,7 +57,7 @@ function setupEvents() {
         }
     }
 
-    function onPlace(event) {
+    function onClick(event) {
         if (typeof handlers.onClick == 'function') {
             let [x, y] = gfx.screenToWorld(event.offsetX, event.offsetY);
             handlers.onClick(x, y);
@@ -101,7 +101,7 @@ function setupEvents() {
     function onDragEnd(event) {
         dragging = false;
         if (dragMode == 'selection') {
-            onPlace(event);
+            onClick(event);
         }
         dragMode = null;
     }

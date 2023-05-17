@@ -116,7 +116,7 @@ export function bindContext(canvas) {
      */
     function preview(buildings, showPreview) {
         cursor.preview = buildings;
-        cursor.mode = showPreview ? modes.Preview : modes.Default;
+        cursor.mode = showPreview ? modes.PreviewPlacement : modes.Default;
         invalidate();
     }
 
@@ -158,6 +158,7 @@ export function bindContext(canvas) {
     function text(text, x, y) {
         ctx.save();
         ctx.fillStyle = 'white';
+        ctx.font = '12px sans-serif';
         ctx.fillText(text, (x - 0.5) * gridSize + 3, (y - 0.5) * gridSize + 10);
         ctx.restore();
     }
@@ -173,10 +174,16 @@ export function bindContext(canvas) {
         valid = false;
     }
 
+    let lastTime = performance.now();
+
     /**
      * @param {import('./world.js').World} world 
      */
     function render(world) {
+        const now = performance.now();
+        const delta = now - lastTime;
+        lastTime = now;
+
         let summary = summarize(world.buildings);
 
         clear();
@@ -190,7 +197,7 @@ export function bindContext(canvas) {
         overlay.forEach(o => o());
         overlay.length = 0;
 
-        if (cursor.mode == modes.Preview) {
+        if (cursor.mode == modes.PreviewPlacement) {
             renderPreview();
         }
 
@@ -201,10 +208,17 @@ export function bindContext(canvas) {
         endFrame();
 
         // ctx.fillText(debugText, 10, 16);
+        const offset = 24;
+        let row = 0;
+
+        ctx.fillText(delta, 10, (1 + row++) * offset);
+        ctx.fillText(world.index.selected.size, 10, (1 + row++) * offset);
+        ctx.fillText(world.index.influenced.size, 10, (1 + row++) * offset);
+        
         ctx.font = '18px sans-serif';
         summary
             .map(([k, v]) => `${k}: ${v}`)
-            .forEach((r, i) => ctx.fillText(r, 10, 24 + i * 24));
+            .forEach(r => ctx.fillText(r, 10, (1 + row++) * offset));
 
         valid = true;
     }
@@ -254,6 +268,7 @@ export function bindContext(canvas) {
         }
 
         // text(`${building.cx},${building.cy}`, building.x, building.y);
+        text(building.id, building.x, building.y);
     }
 
     function renderIcon(name, cx, cy) {

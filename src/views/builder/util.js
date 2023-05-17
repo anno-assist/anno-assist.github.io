@@ -9,7 +9,7 @@ let going = false;
 
 export const modes = {
     Default: Symbol('default'),
-    Preview: Symbol('preview'),
+    PreviewPlacement: Symbol('preview'),
     Selection: Symbol('selection'),
 };
 
@@ -69,7 +69,7 @@ export function rgba(r, g, b, a) {
  * 
  * @param {Array<Building>} buildings 
  */
-export function createCluster(buildings) {
+export function createCluster(buildings, dontClone) {
     const left = Math.min(...buildings.map(b => b.cx));
     const right = Math.max(...buildings.map(b => b.cx));
     const top = Math.min(...buildings.map(b => b.cy));
@@ -83,7 +83,7 @@ export function createCluster(buildings) {
         buildings: buildings.map(ref => ({
             offsetX: ref.cx - cx,
             offsetY: ref.cy - cy,
-            ref: ref.clone()
+            ref: dontClone ? ref : ref.clone()
         }))
     };
 }
@@ -129,6 +129,10 @@ export function summarize(buildings) {
     summary.push(['Total residences', residences]);
 
     return summary;
+}
+
+export function uuid() {
+    return 'xxxxxx'.replace(/x/g, () => (Math.random() * 16 | 0).toString(16));
 }
 
 /**

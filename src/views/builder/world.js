@@ -1,9 +1,15 @@
 import { buildingTemplates } from './catalog.js';
-import { pointInRect, positionRect, rectInRect } from './util.js';
+import { pointInRect, positionRect, rectInRect, uuid } from './util.js';
 
 export class World {
     /** @type {Building[]} */
     buildings = [];
+    index = {
+        /** @type {Set<Building>} */
+        selected: new Set(),
+        /** @type {Set<Building>} */
+        influenced: new Set(),
+    };
 
     place(building) {
         this.buildings.push(building);
@@ -11,7 +17,10 @@ export class World {
 
     demolish(building) {
         const index = this.buildings.indexOf(building);
-        this.buildings.splice(index, 1);
+        console.log(`Removing ${building.id}... Found building ${this.buildings[index]?.id}`);
+        if (index !== -1) {
+            this.buildings.splice(index, 1);
+        }
     }
 
     tryHover(x, y) {
@@ -20,11 +29,23 @@ export class World {
         }
     }
 
+    deselect() {
+        for (let building of this.buildings) {
+            building.selected = false;
+            building.influenced = false;
+            building.showInfluence = false;
+            this.index.selected.clear();
+            this.index.influenced.clear();
+        }
+    }
+
     trySelect(x, y, x1, y1) {
         const [left, top] = [Math.min(x, x1), Math.min(y, y1)];
         const [width, height] = [Math.abs(x - x1), Math.abs(y - y1)];
 
         const selected = [];
+        this.index.selected.clear();
+        this.index.influenced.clear();
 
         if (width > 0.1 && height > 0.1) {
             for (let building of this.buildings) {
@@ -33,6 +54,7 @@ export class World {
                 building.showInfluence = false;
                 if (value) {
                     selected.push(building);
+                    this.index.selected.add(building);
                 }
             }
         } else {
@@ -42,6 +64,7 @@ export class World {
                 building.showInfluence = value;
                 if (value) {
                     selected.push(building);
+                    this.index.selected.add(building);
                 }
             }
             for (let building of this.buildings) {
@@ -53,6 +76,7 @@ export class World {
                     building.influenced = influenced;
                     if (influenced) {
                         selected[0].summary.add(building);
+                        this.index.influenced.add(building);
                     }
                 } else {
                     building.influenced = false;
@@ -74,6 +98,8 @@ export class World {
 }
 
 export class Building {
+    /** @type {string} */
+    id;
     type = null;
 
     /** @type {number} */
@@ -117,6 +143,7 @@ export class Building {
      * @param {number} h Height
      */
     constructor(type, left, top, w, h, r = 0) {
+        this.id = uuid();
         this.type = type;
 
         this.x = left;
