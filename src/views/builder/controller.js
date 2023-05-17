@@ -1,6 +1,6 @@
 import { createBuilding, World } from './world.js';
 import { canvas, gfx, handlers } from './canvas.js';
-import { createCluster, modes } from './util.js';
+import { createCluster, modes, rotateCluster } from './util.js';
 import { emit, listen } from './eventBus.js';
 import { buildings } from './catalog.js';
 
@@ -126,11 +126,16 @@ export class LayoutController {
     }
 
     onRotate() {
-        if (this.mode == modes.PreviewPlacement && this.stateData?.building) {
-            const t = this.stateData.building.width;
-            this.stateData.building.width = this.stateData.building.height;
-            this.stateData.building.height = t;
-            gfx.invalidate();
+        if (this.mode == modes.PreviewPlacement) {
+            if (this.stateData?.building) {
+                const t = this.stateData.building.width;
+                this.stateData.building.width = this.stateData.building.height;
+                this.stateData.building.height = t;
+                gfx.invalidate();
+            } else if (this.stateData?.cluster) {
+                rotateCluster(this.stateData.cluster);
+                gfx.invalidate();
+            }
         }
     }
 

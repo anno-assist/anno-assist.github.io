@@ -68,6 +68,7 @@ export function rgba(r, g, b, a) {
 /**
  * 
  * @param {Array<Building>} buildings 
+ * @returns {Cluster}
  */
 export function createCluster(buildings, dontClone) {
     const left = Math.min(...buildings.map(b => b.cx));
@@ -86,6 +87,18 @@ export function createCluster(buildings, dontClone) {
             ref: dontClone ? ref : ref.clone()
         }))
     };
+}
+
+/**
+ * @param {Cluster} cluster 
+ */
+export function rotateCluster(cluster) {
+    for (let building of cluster.buildings) {
+        [building.offsetX, building.offsetY] = [building.offsetY, -building.offsetX];
+        if (building.ref.width != building.ref.height) {
+            [building.ref.width, building.ref.height] = [building.ref.height, building.ref.width];
+        }
+    }
 }
 
 export function loadResources() {
@@ -137,4 +150,11 @@ export function uuid() {
 
 /**
  * @typedef {import('./world.js').Building} Building
+ */
+
+/**
+ * @typedef {Object} Cluster
+ * @property {number} cx
+ * @property {number} cy
+ * @property {Array<{ offsetX: number, offsetY: number, ref: Building }} buildings
  */

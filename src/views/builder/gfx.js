@@ -207,14 +207,16 @@ export function bindContext(canvas) {
 
         endFrame();
 
-        // ctx.fillText(debugText, 10, 16);
         const offset = 24;
         let row = 0;
 
+        /*
         ctx.fillText(delta, 10, (1 + row++) * offset);
         ctx.fillText(world.index.selected.size, 10, (1 + row++) * offset);
         ctx.fillText(world.index.influenced.size, 10, (1 + row++) * offset);
-        
+        */
+        // ctx.fillText(debugText, 10, (1 + row++) * offset);
+
         ctx.font = '18px sans-serif';
         summary
             .map(([k, v]) => `${k}: ${v}`)
@@ -268,7 +270,7 @@ export function bindContext(canvas) {
         }
 
         // text(`${building.cx},${building.cy}`, building.x, building.y);
-        text(building.id, building.x, building.y);
+        // text(building.id, building.x, building.y);
     }
 
     function renderIcon(name, cx, cy) {

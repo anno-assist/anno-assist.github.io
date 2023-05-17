@@ -17,7 +17,6 @@ export class World {
 
     demolish(building) {
         const index = this.buildings.indexOf(building);
-        console.log(`Removing ${building.id}... Found building ${this.buildings[index]?.id}`);
         if (index !== -1) {
             this.buildings.splice(index, 1);
         }
