@@ -1,4 +1,5 @@
 import { loadConfig, loadIcons } from '../../config/config.js';
+import { influences } from './catalog.js';
 
 let camera = null;
 let target = null;
@@ -111,12 +112,21 @@ export function loadResources() {
  * @param {Array<Building>} buildings 
  */
 export function summarize(buildings) {
+    let residences = 0;
+
     const summary = Object.entries(
         buildings
             .sort((a, b) => a.listOrder - b.listOrder)
-            .map(b => b.type)
+            .map(b => {
+                if (b.effect == influences.Residence) {
+                    residences++;
+                }
+                return b.type;
+            })
             .reduce((a, c) => Object.assign(a, { [c]: (a[c] || 0) + 1 }), {})
     );
+
+    summary.push(['Total residences', residences]);
 
     return summary;
 }

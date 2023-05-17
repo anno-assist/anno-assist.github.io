@@ -29,6 +29,7 @@ function setupEvents() {
     let lastY;
 
     canvas.addEventListener('mousedown', onClick);
+    canvas.addEventListener('contextmenu', onContext);
     canvas.addEventListener('mousemove', onMove);
     canvas.addEventListener('mouseup', onDragEnd);
     canvas.addEventListener('mouseleave', onDragEnd);
@@ -45,6 +46,13 @@ function setupEvents() {
                 let [x, y] = gfx.screenToWorld(event.offsetX, event.offsetY);
                 handlers.onSelectionStart(x, y);
             }
+        }
+    }
+
+    function onContext(event) {
+        event.preventDefault();
+        if (typeof handlers.onCancel == 'function') {
+            handlers.onCancel();
         }
     }
 

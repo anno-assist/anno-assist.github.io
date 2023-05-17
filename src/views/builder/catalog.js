@@ -21,7 +21,8 @@ export const buildings = {
     Tech_Residence_L3: 'genius',
 };
 
-const influences = {
+export const influences = {
+    Residence: Symbol('residence_influence'),
     Company: Symbol('company_influence'),
     Activity: Symbol('activity_influence'),
     Information: Symbol('information_influence'),
@@ -69,7 +70,7 @@ export const buildingTemplates = {
         w: 3,
         h: 3,
         radius: 0,
-        effect: null,
+        effect: influences.Residence,
         affected: [
             influences.Company,
             influences.Activity,
@@ -84,7 +85,7 @@ export const buildingTemplates = {
         w: 3,
         h: 3,
         radius: 0,
-        effect: null,
+        effect: influences.Residence,
         affected: [
             influences.Company,
             influences.Activity,
@@ -100,7 +101,7 @@ export const buildingTemplates = {
         w: 3,
         h: 3,
         radius: 0,
-        effect: null,
+        effect: influences.Residence,
         affected: [
             influences.Company,
             influences.Activity,
@@ -117,7 +118,7 @@ export const buildingTemplates = {
         w: 3,
         h: 3,
         radius: 0,
-        effect: null,
+        effect: influences.Residence,
         affected: [
             influences.Company,
             influences.Activity,
@@ -192,7 +193,7 @@ export const buildingTemplates = {
         w: 3,
         h: 3,
         radius: 0,
-        effect: null,
+        effect: influences.Residence,
         affected: [
             influences.Company,
             influences.Activity,
@@ -208,7 +209,7 @@ export const buildingTemplates = {
         w: 3,
         h: 3,
         radius: 0,
-        effect: null,
+        effect: influences.Residence,
         affected: [
             influences.Company,
             influences.Activity,
@@ -225,7 +226,7 @@ export const buildingTemplates = {
         w: 3,
         h: 3,
         radius: 0,
-        effect: null,
+        effect: influences.Residence,
         affected: [
             influences.Company,
             influences.Activity,

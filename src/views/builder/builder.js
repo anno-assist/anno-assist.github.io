@@ -78,7 +78,7 @@ export function builderExit(ctx, next) {
  * @param {Array<import('./world.js').Building>?} buildings 
  */
 function onSelect(buildings) {
-    if (buildings) {
+    if (buildings?.length > 0) {
         let summary = [];
         if (buildings.length == 1) {
             summary = summarize([...buildings[0].summary.values()]);

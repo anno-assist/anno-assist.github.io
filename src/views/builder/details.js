@@ -8,9 +8,10 @@ ${buildings?.length == 1 ? html`
 ${summary.map(([k,v]) => html`<p>${k}: <strong>${v}</strong></p>`)}` : html`<p>Selected ${buildings.length}</p>`}
 
 <div>
-    <button @click=${() => onCopy(buildings)}>Copy</button>
-    <button @click=${() => onMove(buildings)}>Move</button>
-    <button @click=${() => onDemolish(buildings)}>Demolish</button>
+    <button ?disabled=${buildings.length == 0} @click=${() => onCopy(buildings)}>Copy</button>
+    <button ?disabled=${buildings.length == 0} @click=${() => onMove(buildings)}>Move</button>
+    <button ?disabled=${buildings.length == 0} @click=${() => onDemolish(buildings)}>Demolish</button>
+    <button ?disabled=${buildings.length == 0} @click=${() => onReplace(buildings)}>Replace</button>
 </div>
 `;
 
@@ -24,4 +25,8 @@ function onMove(buildings) {
 
 function onDemolish(buildings) {
     emit('demolish', buildings);
+}
+
+function onReplace(buildings) {
+    emit('replace', buildings);
 }
