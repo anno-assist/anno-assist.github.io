@@ -10,26 +10,43 @@ export class World {
         /** @type {Set<Building>} */
         influenced: new Set(),
     };
+    undoStack = [];
 
-    place(building) {
-        this.buildings.push(building);
+    place(buildings) {
+        if (Array.isArray(buildings) == false) {
+            buildings = [buildings];
+        }
+        this.pushStack();
+        this.buildings.push(...buildings);
     }
 
-    demolish(building) {
-        const index = this.buildings.indexOf(building);
-        if (index !== -1) {
-            this.buildings.splice(index, 1);
+    demolish(buildings) {
+        if (Array.isArray(buildings) == false) {
+            buildings = [buildings];
+        }
+        this.pushStack();
+        for (let building of buildings) {
+            const index = this.buildings.indexOf(building);
+            if (index !== -1) {
+                this.buildings.splice(index, 1);
+            }
         }
     }
 
-    replace(building, newType) {
-        const index = this.buildings.indexOf(building);
-        if (index !== -1) {
-            const newBuilding = createBuilding(newType, building.x, building.y);
-            newBuilding.id = building.id;
-            this.buildings[index] = newBuilding;
-            this.deselect();
+    replace(buildings, newType) {
+        if (Array.isArray(buildings) == false) {
+            buildings = [buildings];
         }
+        this.pushStack();
+        for (let building of buildings) {
+            const index = this.buildings.indexOf(building);
+            if (index !== -1) {
+                const newBuilding = createBuilding(newType, building.x, building.y);
+                newBuilding.id = building.id;
+                this.buildings[index] = newBuilding;
+            }
+        }
+        this.deselect();
     }
 
     tryHover(x, y) {
@@ -45,6 +62,21 @@ export class World {
             building.showInfluence = false;
             this.index.selected.clear();
             this.index.influenced.clear();
+        }
+    }
+
+    pushStack() {
+        const state = this.serialize();
+        this.undoStack.push(state);
+        if (this.undoStack.length > 10) {
+            this.undoStack.shift();
+        }
+    }
+
+    undo() {
+        if (this.undoStack.length > 0) {
+            const state = this.undoStack.pop();
+            this.deserialize(state);
         }
     }
 
@@ -101,6 +133,8 @@ export class World {
     }
 
     deserialize(value) {
+        this.index.selected.clear();
+        this.index.influenced.clear();
         const data = value.map(b => createBuilding(b.type, b.x, b.y, b.width)).filter(b => b);
         this.buildings = data;
     }

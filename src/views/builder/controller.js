@@ -44,6 +44,7 @@ export class LayoutController {
         listen('copy', this.onBuildingCopy.bind(this));
         listen('move', this.onBuildingMove.bind(this));
         listen('demolish', this.onBuildingDemolish.bind(this));
+        listen('undo', this.onUndo.bind(this));
     }
 
     load(layout) {
@@ -74,6 +75,11 @@ export class LayoutController {
         }
     }
 
+    onUndo() {
+        this.world.undo();
+        gfx.invalidate();
+    }
+
     onMove(x, y) {
         if (this.stateData?.building) {
             this.stateData.building.centerOn(x, y);
@@ -100,14 +106,15 @@ export class LayoutController {
             } else if (this.stateData.cluster) {
                 for (let building of this.stateData.cluster.buildings) {
                     building.ref.centerOn(x + building.offsetX, y + building.offsetY);
-                    this.world.place(building.ref);
                 }
+                this.world.place(this.stateData.cluster.buildings.map(b => b.ref));
                 this.onCancel(true);
             }
         } else if (this.mode == modes.Selection) {
             const selected = this.world.trySelect(x, y, this.stateData.startX, this.stateData.startY);
             emit('select', selected);
             this.mode = modes.Default;
+            gfx.invalidate();
         } else if (this.mode == modes.Default) {
             // This used to be selection mode
         }
@@ -176,11 +183,7 @@ export class LayoutController {
         }
         const selected = [...this.world.index.selected.values()];
 
-        console.log(selected.map(s => s.id));
-
-        for (let building of selected) {
-            this.world.demolish(building);
-        }
+        this.world.demolish(selected);
 
         if (selected.length == 1) {
             this.stateData = { building: selected[0] };
@@ -200,9 +203,7 @@ export class LayoutController {
         }
         const selected = [...this.world.index.selected.values()];
 
-        for (let building of selected) {
-            this.world.demolish(building);
-        }
+        this.world.demolish(selected);
         gfx.invalidate();
     }
 
@@ -212,9 +213,7 @@ export class LayoutController {
         }
         const selected = [...this.world.index.selected.values()];
 
-        for (let building of selected) {
-            this.world.replace(building, newType);
-        }
+        this.world.replace(selected, newType);
         gfx.invalidate();
     }
 

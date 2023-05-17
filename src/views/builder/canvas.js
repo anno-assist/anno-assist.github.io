@@ -136,12 +136,12 @@ function onKeyPress(event) {
         emit('move');
     } else if (event.code == 'KeyC') {
         emit('copy');
-    } else if (event.code == 'KeyV') {
+    } else if (event.code == 'KeyV' || event.code == 'Delete') {
         emit('demolish');
     } else if (event.code == 'KeyU') {
         emit('replace');
-    } else {
-        console.log(event.code);
+    } else if (event.code == 'KeyZ' && event.ctrlKey) {
+        emit('undo');
     }
 }
 
