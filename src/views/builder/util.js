@@ -116,7 +116,7 @@ export function summarize(buildings) {
 
     const summary = Object.entries(
         buildings
-            .sort((a, b) => a.listOrder - b.listOrder)
+            .sort((a, b) => (a.listOrder || 0) - (b.listOrder || 0))
             .map(b => {
                 if (b.effect == influences.Residence) {
                     residences++;
