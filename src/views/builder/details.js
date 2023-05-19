@@ -11,7 +11,8 @@ ${buildings?.length == 1 ? html`<h3>${buildings[0].type}</h3>` : html`<h3>Select
     <button ?disabled=${buildings.length == 0} @click=${onReplace}>Replace</button>
 </div>
 <p><strong>${buildings?.length == 1 ? 'Influenced buildings:' : 'Summary:'}</strong></p>
-${summary.map(([k, v]) => html`<p>${k}: <strong>${v}</strong></p>`)}`;
+${summary.map(([k, v]) => html`<p>${k}: <strong>${v}</strong></p>`)}
+${buildings?.length == 1 && html`<p><button @click=${onTotal}>Total coverage</button></p>`}`;
 
 function onCopy() {
     emit('copy');
@@ -27,4 +28,8 @@ function onDemolish() {
 
 function onReplace() {
     emit('replace');
+}
+
+function onTotal() {
+    emit('total');
 }

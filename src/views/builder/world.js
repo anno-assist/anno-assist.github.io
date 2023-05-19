@@ -86,7 +86,6 @@ export class World {
 
         const selected = [];
         this.index.selected.clear();
-        this.index.influenced.clear();
 
         if (width > 0.1 && height > 0.1) {
             for (let building of this.buildings) {
@@ -108,24 +107,45 @@ export class World {
                     this.index.selected.add(building);
                 }
             }
-            for (let building of this.buildings) {
-                if (selected.length > 0) {
-                    if (building == selected[0]) {
-                        continue;
-                    }
-                    const influenced = selected[0].hasInfluence(building) || building.hasInfluence(selected[0]);
-                    building.influenced = influenced;
-                    if (influenced) {
-                        selected[0].summary.add(building);
-                        this.index.influenced.add(building);
-                    }
-                } else {
-                    building.influenced = false;
-                }
-            }
+            this.calcInfluence(selected);
         }
 
         return selected;
+    }
+
+    /**
+     * @param {Building[]} selected 
+     */
+    calcInfluence(selected) {
+        this.index.influenced.clear();
+
+        for (let building of this.buildings) {
+            if (selected.length > 0) {
+                if (selected.includes(building)) {
+                    continue;
+                }
+                let influenced = false;
+                for (let effector of selected) {
+                    influenced = influenced || effector.hasInfluence(building) || building.hasInfluence(effector);
+                }
+                building.influenced = influenced;
+                if (influenced) {
+                    selected[0].summary.add(building);
+                    this.index.influenced.add(building);
+                }
+            } else {
+                building.influenced = false;
+            }
+        }
+    }
+
+    showCoverage(type) {
+        const effectors = this.buildings.filter(b => b.type == type);
+        for (let effector of effectors) {
+            effector.showInfluence = true;
+        }
+        this.calcInfluence(effectors);
+        return [...this.index.influenced.values()];
     }
 
     serialize() {

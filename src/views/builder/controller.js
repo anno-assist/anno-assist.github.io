@@ -83,6 +83,7 @@ export class LayoutController {
     onMove(x, y) {
         if (this.stateData?.building) {
             this.stateData.building.centerOn(x, y);
+            this.world.calcInfluence([this.stateData.building]);
             gfx.setCursor(x, y);
         } else if (this.stateData?.cluster) {
             for (let building of this.stateData.cluster.buildings) {
@@ -225,6 +226,20 @@ export class LayoutController {
             };
             this.mode = modes.Selection;
         }
+    }
+
+    showCoverage() {
+        if (this.mode != modes.Default || this.world.index.selected.size == 0) {
+            return;
+        }
+        const selected = [...this.world.index.selected.values()];
+        if (selected.length != 1) {
+            return;
+        }
+        const type = selected[0].type;
+        const buildings = this.world.showCoverage(type);
+        gfx.invalidate();
+        return buildings;
     }
 }
 

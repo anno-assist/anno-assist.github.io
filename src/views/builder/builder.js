@@ -44,6 +44,7 @@ export function builderView(ctx) {
 
     listen('select', onSelect);
     listen('replace', onReplace);
+    listen('total', onShowTotal);
 
     function onLayout({ action, layout, layoutName }) {
         if (action == 'load') {
@@ -73,6 +74,7 @@ export function builderExit(ctx, next) {
     controller.disable();
     stop('select', onSelect);
     stop('replace', onReplace);
+    stop('total', onShowTotal);
     next();
 }
 
@@ -88,6 +90,18 @@ function onSelect(buildings) {
         } else {
             summary = summarize(buildings);
         }
+        render(detailsTemplate(buildings, summary), document.getElementById('building-details'));
+    } else {
+        render(null, document.getElementById('building-details'));
+    }
+    render(null, document.getElementById('building-replace'));
+}
+
+function onShowTotal() {
+    const controller = LayoutController.instance;
+    const buildings = controller.showCoverage();
+    if (buildings?.length > 0) {
+        let summary = summarize(buildings);
         render(detailsTemplate(buildings, summary), document.getElementById('building-details'));
     } else {
         render(null, document.getElementById('building-details'));
