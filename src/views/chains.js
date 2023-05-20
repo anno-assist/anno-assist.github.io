@@ -3,10 +3,11 @@ import { getRate, round } from '../util.js';
 import { icon } from './partials.js';
 
 
-export const chainsTemplate = (chains) => html`
+export const chainsTemplate = (chains, filtered, search, onSearch) => html`
 <h1>Production and Consumption chains</h1>
 <section class="main">
-    <style>th { position: sticky; top: 0; }</style>
+    <label>Filter <input type="text" name="search" .value=${search} @input=${onSearch}></label>
+    <style>th { position: sticky; top: 0; color: white; background-color: black; }</style>
     <table>
         <thead>
             <tr>
@@ -21,14 +22,14 @@ export const chainsTemplate = (chains) => html`
             </tr>
         </thead>
         <tbody>
-            ${chains.map(data => chainsRow(data, Object.fromEntries(chains)))}
+            ${filtered.map(data => chainsRow(data, chains))}
         </tbody>
     </table>
 </section>`;
 
-const chainsRow = ([type, { output, inputs }], settings) => html`
+const chainsRow = ([type, { output, inputs,name }], settings) => html`
 <tr>
-    <td><abbr title=${type}>${icon(type, 'dist')}</abbr><span class="label">${type}</span></td>
+    <td><abbr title=${name}>${icon(type, 'dist')}</abbr><span class="label">${name}</span></td>
     <td><span class="label">${output}</span></td>
     ${inputCols(inputs[0], output, settings)}
     ${inputCols(inputs[1], output, settings)}
@@ -38,7 +39,7 @@ ${inputs.length > 0 ? html`<tr>
 </tr>` : null}`;
 
 const inputCols = (input, output, settings) => input ? html`
-<td>${icon(input.type, 'dist')}<span class="label">${input.type}</span></td>
+<td>${icon(input.type, 'dist')}<span class="label">${settings[input.type].name}</span></td>
 <td><span class="label">${input.rate}</span></td>
 <td><span class="label">${getRate(output, input.type, input.rate, settings)}</span></td>` : html`
 <td colspan="3"></td>`;
@@ -215,6 +216,25 @@ function cell(content, depth, rate, position) {
 
 export async function chainsView(ctx) {
     const chains = ctx.settings.production;
+    Object.values(chains).forEach(c => c.inputs.forEach(i => i.name = chains[i.type].name));
+    let filtered = Object.entries(chains);
 
-    ctx.render(chainsTemplate(Object.entries(chains)));
+    let search = '';
+
+    update();
+
+    function onSearch(event) {
+        search = (event.target.value || '').toLowerCase();
+        if (search) {
+            filtered = Object.entries(chains).filter(([k,v]) => k.toLowerCase().includes(search)
+            || v.name.toLowerCase().includes(search)
+            || v.inputs.map(i => i.type).some(i => i.toLowerCase().includes(search))
+            || v.inputs.map(i => i.name).some(i => i.toLowerCase().includes(search)));
+        }
+        update();
+    }
+
+    function update() {
+        ctx.render(chainsTemplate(chains, filtered, search, onSearch));
+    }
 }

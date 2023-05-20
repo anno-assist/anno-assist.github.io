@@ -2,7 +2,7 @@
     "SuperFlavor": {
         "output": 20,
         "inputs": [],
-        "name": "SuperFlavor",
+        "name": "Super Flavor",
         "factory": "flavor_lab"
     },
     "Meat": {
@@ -23,7 +23,7 @@
                 "rate": 1
             }
         ],
-        "name": "TVDinner",
+        "name": "Convenience Food",
         "factory": "food_supply_factory"
     },
     "Lobster": {
@@ -50,7 +50,7 @@
                 "rate": 1.5
             }
         ],
-        "name": "LuxuryMeal",
+        "name": "Luxury Meals",
         "factory": "gourmet_factory"
     },
     "Liquor": {
@@ -83,7 +83,7 @@
     "RawOil": {
         "output": 60,
         "inputs": [],
-        "name": "RawOil",
+        "name": "Crude Oil",
         "factory": "oil_driller"
     },
     "Toys": {
@@ -94,13 +94,13 @@
                 "rate": 1
             }
         ],
-        "name": "Toys",
+        "name": "Plastics",
         "factory": "plastic_factory"
     },
     "GoldNuggets": {
         "output": 45,
         "inputs": [],
-        "name": "GoldNuggets",
+        "name": "Gold Nuggets",
         "factory": "gold_refinery"
     },
     "Gold": {
@@ -136,7 +136,7 @@
     "OmegaAcids": {
         "output": 120,
         "inputs": [],
-        "name": "OmegaAcids",
+        "name": "Omega Acids",
         "factory": "fat_factory"
     },
     "SecretIngredient": {
@@ -151,7 +151,7 @@
                 "rate": 1
             }
         ],
-        "name": "SecretIngredient",
+        "name": "Secret Ingredient",
         "factory": "chemical_plant"
     },
     "Pharmaceuticals": {
@@ -198,7 +198,7 @@
                 "rate": 1
             }
         ],
-        "name": "HeavyWeapons",
+        "name": "Heavy Weapons",
         "factory": "heavy_arsenal"
     },
     "Explosives": {
@@ -235,7 +235,7 @@
                 "rate": 1
             }
         ],
-        "name": "FuleRod",
+        "name": "Fuel Rods",
         "factory": "fuel_assembly_factory"
     },
     "Granulate": {
@@ -253,7 +253,7 @@
     "Soy": {
         "output": 20,
         "inputs": [],
-        "name": "Soy",
+        "name": "Rice",
         "factory": "rice_farm"
     },
     "HealthFood": {
@@ -268,7 +268,7 @@
                 "rate": 1
             }
         ],
-        "name": "HealthFood",
+        "name": "Health Food",
         "factory": "health_food_factory"
     },
     "Grain": {
@@ -285,7 +285,7 @@
                 "rate": 1
             }
         ],
-        "name": "Flour",
+        "name": "Pasta",
         "factory": "water_mill"
     },
     "ComfortFood": {
@@ -300,7 +300,7 @@
                 "rate": 1.5
             }
         ],
-        "name": "ComfortFood",
+        "name": "Pasta Dishes",
         "factory": "bakery"
     },
     "Tea": {
@@ -333,7 +333,7 @@
                 "rate": 1
             }
         ],
-        "name": "HealthDrink",
+        "name": "Bio Drinks",
         "factory": "health_drink_factory"
     },
     "Communicator": {
@@ -359,7 +359,7 @@
                 "rate": 0.5
             }
         ],
-        "name": "Holographer",
+        "name": "3D Projector",
         "factory": "holograph_factory"
     },
     "Corn": {
@@ -395,7 +395,7 @@
                 "rate": 1
             }
         ],
-        "name": "HomeRobot",
+        "name": "Service Bots",
         "factory": "robot_factory"
     },
     "Wood": {
@@ -422,7 +422,7 @@
     "Granulate_2": {
         "output": 40,
         "inputs": [],
-        "name": "Granulate",
+        "name": "Granules",
         "factory": "rubble_recycler"
     },
     "Algae": {
@@ -439,13 +439,13 @@
                 "rate": 1
             }
         ],
-        "name": "FunctionalFood",
+        "name": "Functional Food",
         "factory": "functional_food_factory"
     },
     "Caffeine": {
         "output": 48,
         "inputs": [],
-        "name": "Caffeine",
+        "name": "Coffee",
         "factory": "coffee_plantation"
     },
     "EnergyDrink": {
@@ -460,7 +460,7 @@
                 "rate": 1
             }
         ],
-        "name": "EnergyDrink",
+        "name": "Functional Drinks",
         "factory": "energy_drink_factory"
     },
     "Kerosene": {
@@ -486,13 +486,13 @@
                 "rate": 3
             }
         ],
-        "name": "AdvancedWeapons",
+        "name": "High-Tech Weapons",
         "factory": "advanced_arsenal"
     },
     "BuildingModules_2": {
         "output": 20,
         "inputs": [],
-        "name": "BuildingModules",
+        "name": "Building Modules",
         "factory": "recycling_station"
     },
     "Carbon": {
@@ -525,7 +525,7 @@
     "IronOre": {
         "output": 30,
         "inputs": [],
-        "name": "IronOre",
+        "name": "Iron Ore",
         "factory": "iron_mine"
     },
     "Iron": {
@@ -613,7 +613,7 @@
     "RawOil_2": {
         "output": 20,
         "inputs": [],
-        "name": "RawOil",
+        "name": "Crude Oil",
         "factory": "oilrig"
     },
     "Oil": {
@@ -630,7 +630,7 @@
     "ManganeseNodules": {
         "output": 45,
         "inputs": [],
-        "name": "ManganeseNodules",
+        "name": "Manganese Nodules",
         "factory": "manganese_miner"
     },
     "RareEarths": {
@@ -641,7 +641,7 @@
                 "rate": 1
             }
         ],
-        "name": "RareEarths",
+        "name": "Rare-Earth Elements",
         "factory": "manganese_harvesting_station"
     },
     "Diamonds": {
@@ -653,7 +653,7 @@
     "GoldNuggets_2": {
         "output": 40,
         "inputs": [],
-        "name": "GoldNuggets",
+        "name": "Gold Nuggets",
         "factory": "black_smoker_miner_gold"
     },
     "Copper_2": {
@@ -671,7 +671,7 @@
     "IronOre_2": {
         "output": 20,
         "inputs": [],
-        "name": "IronOre",
+        "name": "Iron Ore",
         "factory": "black_smoker_miner_iron"
     },
     "BuildingModules": {
@@ -682,7 +682,7 @@
                 "rate": 1
             }
         ],
-        "name": "BuildingModules",
+        "name": "Building Modules",
         "factory": "smelting_works"
     },
     "Enzymes": {
@@ -715,7 +715,7 @@
                 "rate": 1.5
             }
         ],
-        "name": "NeuroImplants",
+        "name": "Neuroimplants",
         "factory": "neurotechnology_factory"
     },
     "EnergyCells": {
@@ -730,7 +730,7 @@
                 "rate": 1
             }
         ],
-        "name": "EnergyCells",
+        "name": "Electrolyte Cells",
         "factory": "energy_cell_factory"
     },
     "Lithium": {
@@ -751,7 +751,7 @@
                 "rate": 1.5
             }
         ],
-        "name": "BioSuites",
+        "name": "Bionic Suits",
         "factory": "bio_suite_factory"
     },
     "LaboratoryInstruments": {
@@ -766,7 +766,7 @@
                 "rate": 1.5
             }
         ],
-        "name": "LaboratoryInstruments",
+        "name": "Laboratory Instruments",
         "factory": "equipment_factory"
     },
     "Exoskeleton": {
@@ -781,7 +781,7 @@
                 "rate": 1.5
             }
         ],
-        "name": "Exoskeleton",
+        "name": "Exoskeletons",
         "factory": "cybernatic_factory"
     },
     "CoralExtract": {
@@ -796,7 +796,7 @@
                 "rate": 1
             }
         ],
-        "name": "CoralExtract",
+        "name": "Immunity Drugs",
         "factory": "coral_extract_factory"
     },
     "Platinum": {
@@ -814,7 +814,7 @@
     "RawOil_3": {
         "output": 20,
         "inputs": [],
-        "name": "RawOil",
+        "name": "Crude Oil",
         "factory": "oil_driller_variation_Sokow"
     }
 }
