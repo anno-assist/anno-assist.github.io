@@ -3,7 +3,7 @@ import { create, deleteGame, getGames } from '../data/games.js';
 import { getIslands } from '../data/islands.js';
 import { getPopulation } from '../data/population.js';
 import { html } from '../lib/lit-html.js';
-import { createSubmitHandler } from '../util.js';
+import { createSubmitHandler, to } from '../util.js';
 import { smallIcon } from './partials.js';
 
 
@@ -12,10 +12,10 @@ const settingsTemplate = (games, user, onCreate, onDelete, onLoad, error) => htm
 <section class="main">
     ${!user ? html`
     <div class="box label">
-        <a class="link" href="/login">Sign in</a> to enable cloud sync
+        <a class="link" href=${to('/login')}>Sign in</a> to enable cloud sync
     </div>` : html`
     <div class="box">
-        <i class="fa-solid fa-user-check"></i> Logged in as ${user.username}. <a class="link" href="/logout">Logout</a>
+        <i class="fa-solid fa-user-check"></i> Logged in as ${user.username}. <a class="link" href=${to('/logout')}>Logout</a>
     </div>
     <table>
         <thead>

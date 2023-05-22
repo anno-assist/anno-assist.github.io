@@ -1,4 +1,4 @@
-const storageVersion = '1';
+const storageVersion = '2';
 const userDataName = 'userData';
 
 
@@ -8,20 +8,21 @@ export const setUserData = userData.set;
 export const clearUserData = userData.clear;
 
 export function createStorage(name, defaultValue = null) {
-    if (name != userDataName && localStorage.getItem(`${name}_version`) != storageVersion) {
-        localStorage.removeItem(name);
-        localStorage.setItem(`${name}_version`, storageVersion);
+    const path = name == userDataName ? name : name + getBase();
+    if (path != userDataName && localStorage.getItem(`${path}_version`) != storageVersion) {
+        localStorage.removeItem(path);
+        localStorage.setItem(`${path}_version`, storageVersion);
     }
     let data;
 
     return {
         get: () => {
             if (data == undefined) {
-                const value = localStorage.getItem(name);
+                const value = localStorage.getItem(path);
                 try {
                     data = JSON.parse(value);
                 } catch (err) {
-                    localStorage.removeItem(name);
+                    localStorage.removeItem(path);
                     data = null;
                 }
             }
@@ -29,11 +30,11 @@ export function createStorage(name, defaultValue = null) {
         },
         set: (value) => {
             data = value;
-            localStorage.setItem(name, JSON.stringify(value));
+            localStorage.setItem(path, JSON.stringify(value));
         },
         clear: () => {
             data = undefined;
-            localStorage.removeItem(name);
+            localStorage.removeItem(path);
         }
     };
 }
