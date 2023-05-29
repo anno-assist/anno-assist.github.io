@@ -3,9 +3,9 @@ import { filter, addOwner, islandPointer, gamePointer } from './queries.js';
 
 
 const endpoints = {
-    catalog: '/classes/Population',
-    byGameId: gameId => `/classes/Population?${filter('game', gamePointer(gameId))}`,
-    byId: '/classes/Population/'
+    catalog: '/classes/Population_Old',
+    byGameId: gameId => `/classes/Population_Old?${filter('game', gamePointer(gameId))}`,
+    byId: '/classes/Population_Old/'
 };
 
 export async function getPopulation(gameId) {
