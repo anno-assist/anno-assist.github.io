@@ -4,34 +4,28 @@ import { createSubmitHandler, round, throttle, to } from '../util.js';
 import { icon } from './partials.js';
 
 
-const populationTemplate = (data, settings, onSubmit) => html`
+const populationTemplate = (keysData, settings, onSubmit) => html`
 <h1>Population</h1>
 <section class="main">
     <form @submit=${onSubmit} @input=${onSubmit}>
         <table>
             <tbody>
-                <tr>
-                    <th colspan="3">Occident</th>
-                </tr>
-                <tr>
-                    <th>Level</th>
-                    <th>Residences</th>
-                    <th>Inhabitants</th>
-                </tr>
-                ${Object.entries(data.occident).map(([k, v]) => levelRow(settings, k, v))}
-                <tr>
-                    <th colspan="3">Orient</th>
-                </tr>
-                <tr>
-                    <th>Level</th>
-                    <th>Residences</th>
-                    <th>Inhabitants</th>
-                </tr>
-                ${Object.entries(data.orient).map(([k, v]) => levelRow(settings, k, v))}
+                ${keysData.map(k => factionTable(k.name, k.data, settings))}
             </tbody>
         </table>
     </form>
 </section>`;
+
+const factionTable = (name, factionData, settings) => html`
+<tr>
+    <th colspan="3">${name}</th>
+</tr>
+<tr>
+    <th>Level</th>
+    <th>Residences</th>
+    <th>Inhabitants</th>
+</tr>
+${factionData.map(([k, v]) => levelRow(settings, k, v))}`;
 
 const levelRow = (settings, type, pop) => html`
 <tr>
@@ -55,16 +49,11 @@ export async function populationView(ctx) {
         return ctx.page.redirect(to('/'));
     }
     if (ctx.population[islandUrl] == undefined) {
+        const dataModel = Object.fromEntries(Object.keys(popSettings.ascension).map(k => [k, 0]));
         const model = {
             game: ctx.game.objectId,
             island: island.objectId,
-            peasant: 0,
-            citizen: 0,
-            patrician: 0,
-            noble: 0,
-            beggar: 0,
-            nomad: 0,
-            envoy: 0,
+            data: dataModel
         };
 
         const result = await createPopulation(model);
@@ -76,17 +65,14 @@ export async function populationView(ctx) {
 
     ctx.commit = throttle(updatePopulation, 5000);
 
-    const occidentKeys = Object.entries(popSettings.ascension).filter(([k, { type }]) => type == 'occident').map(([k]) => k);
-    const orientKeys = Object.entries(popSettings.ascension).filter(([k, { type }]) => type == 'orient').map(([k]) => k);
+    const factionKeys = popSettings.types.map(({ type, name }) => ({ type, name, keys: Object.entries(popSettings.ascension).filter(([k, { type: t }]) => t == type).map(([k]) => k) }));
 
     update();
 
     function update() {
-        const data = {
-            occident: Object.fromEntries(occidentKeys.map(k => keysToPop(k, population, popSettings.ascension))),
-            orient: Object.fromEntries(orientKeys.map(k => keysToPop(k, population, popSettings.ascension))),
-        };
-        ctx.render(populationTemplate(data, popSettings.ascension, createSubmitHandler(onSubmit)));
+        const keysData = factionKeys.map(faction => Object.assign({}, faction, { data: faction.keys.map(k => keysToPop(k, population.data, popSettings.ascension)) }));
+
+        ctx.render(populationTemplate(keysData, popSettings.ascension, createSubmitHandler(onSubmit)));
     }
 
     function onSubmit(data, form, event) {
@@ -100,10 +86,10 @@ export async function populationView(ctx) {
 
         if (mode == 'houses') {
             const houses = data[`${type}_houses`];
-            population[type] = round(houses * popSettings.ascension[type].capacity, 0);
+            population.data[type] = round(houses * popSettings.ascension[type].capacity, 0);
         } else if (mode == 'pop') {
             const pop = data[`${type}_pop`];
-            population[type] = pop;
+            population.data[type] = pop;
         }
 
         ctx.setPopulation(ctx.population);

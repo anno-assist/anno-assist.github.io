@@ -1,4 +1,14 @@
 {
+    "types": [
+        {
+            "type": "occident",
+            "name": "Occident"
+        },
+        {
+            "type": "orient",
+            "name": "Orient"
+        }
+    ],
     "ascension": {
         "peasant": {
             "type": "occident",

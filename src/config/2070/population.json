@@ -1,74 +1,107 @@
 {
+    "types": [
+        {
+            "type": "tycoon",
+            "name": "Tycoon"
+        },
+        {
+            "type": "eco",
+            "name": "Eco"
+        },
+        {
+            "type": "tech",
+            "name": "Tech"
+        }
+    ],
     "ascension": {
-        "peasant": {
-            "type": "occident",
+        "tycoon_worker": {
+            "type": "tycoon",
             "level": 0,
-            "name": "Peasants",
+            "name": "Workers",
             "capacity": 8,
-            "next": "citizen",
+            "next": "tycoon_employee",
             "rate": 100
         },
-        "citizen": {
-            "type": "occident",
+        "tycoon_employee": {
+            "type": "tycoon",
             "level": 1,
-            "name": "Citizens",
+            "name": "Employees",
             "capacity": 15,
-            "next": "patrician",
+            "next": "tycoon_engineer",
             "rate": 80
         },
-        "patrician": {
-            "type": "occident",
+        "tycoon_engineer": {
+            "type": "tycoon",
             "level": 2,
-            "name": "Patricians",
+            "name": "Engineers",
             "capacity": 25,
-            "next": "noble",
+            "next": "tycoon_executive",
             "rate": 60
         },
-        "noble": {
-            "type": "occident",
+        "tycoon_executive": {
+            "type": "tycoon",
             "level": 3,
-            "name": "Noblemen",
+            "name": "Executives",
             "capacity": 40,
             "next": null,
             "rate": 40
         },
-        "beggar": {
-            "type": "occident",
-            "level": -1,
-            "name": "Beggars",
-            "capacity": 500,
-            "next": null,
-            "rate": null
-        },
-        "nomad": {
-            "type": "orient",
+        "eco_worker": {
+            "type": "eco",
             "level": 0,
-            "name": "Nomads",
-            "capacity": 15,
-            "next": "envoy",
+            "name": "Workers",
+            "capacity": 8,
+            "next": "eco_employee",
             "rate": 100
         },
-        "envoy": {
-            "type": "orient",
+        "eco_employee": {
+            "type": "eco",
             "level": 1,
-            "name": "Envoys",
+            "name": "Employees",
+            "capacity": 15,
+            "next": "eco_engineer",
+            "rate": 80
+        },
+        "eco_engineer": {
+            "type": "eco",
+            "level": 2,
+            "name": "Engineers",
             "capacity": 25,
+            "next": "eco_executive",
+            "rate": 60
+        },
+        "eco_executive": {
+            "type": "eco",
+            "level": 3,
+            "name": "Executives",
+            "capacity": 40,
             "next": null,
-            "rate": 70
+            "rate": 40
+        },
+        "assistant": {
+            "type": "tech",
+            "level": 0,
+            "name": "Assistants",
+            "capacity": 5,
+            "next": "researcher",
+            "rate": 100
+        },
+        "researcher": {
+            "type": "tech",
+            "level": 1,
+            "name": "Researchers",
+            "capacity": 30,
+            "next": "genius",
+            "rate": 60
+        },
+        "genius": {
+            "type": "tech",
+            "level": 1,
+            "name": "Geniuses",
+            "capacity": 50,
+            "next": null,
+            "rate": 30
         }
     },
-    "bonuses": {
-        "beggarLvl": [
-            40,
-            37,
-            34,
-            30
-        ],
-        "envoyLvl": [
-            110,
-            105,
-            100,
-            90
-        ]
-    }
+    "bonuses": {}
 }

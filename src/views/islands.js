@@ -88,7 +88,7 @@ export async function islandsView(ctx) {
 
     for (let i in popSummary) {
         if (ctx.population[i]) {
-            popSummary[i] = Object.keys(popSettings.ascension).map(k => ctx.population[i][k]).reduce((a, c) => a + c, 0);
+            popSummary[i] = Object.keys(popSettings.ascension).map(k => ctx.population[i].data[k]).reduce((a, c) => a + c, 0);
         }
     }
 
