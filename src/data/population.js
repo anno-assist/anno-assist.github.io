@@ -1,4 +1,4 @@
-import { del, get, post, put } from './api.js';
+import { batchDel, get, post, put } from './api.js';
 import { filter, addOwner, islandPointer, gamePointer } from './queries.js';
 
 
@@ -35,6 +35,6 @@ export async function updatePopulation(id, population, dontMask = false) {
     return put(endpoints.byId + id, population, dontMask);
 }
 
-export async function deletePopulation(id) {
-    return del(endpoints.byId + id);
+export function deletePopulationBatch(id) {
+    return batchDel(endpoints.byId + id);
 }

@@ -1,7 +1,10 @@
 import { html } from '../lib/lit-html.js';
-import { createIsland, deleteIsland, updateIsland } from '../data/islands.js';
+import { createIsland, deleteIslandBatch, updateIsland } from '../data/islands.js';
 import { createSubmitHandler, createUrl, to } from '../util.js';
 import { updateGame } from '../data/games.js';
+import { deleteAscensionBatch } from '../data/ascension.js';
+import { deletePopulationBatch } from '../data/population.js';
+import { batch } from '../data/api.js';
 
 
 const islandsTemplate = (islands, popSummary, onCreate, onDelete, onRename, onMove) => html`
@@ -132,15 +135,30 @@ export async function islandsView(ctx) {
         const choice = confirm(`Are you sure you want to delete ${islands[index].name}?`);
 
         if (choice) {
-            await deleteIsland(id);
-            islands.splice(index, 1);
-            game.islands.splice(index, 1);
-            ctx.setIslands(islands);
+            const ascensionId = ctx.ascension[this.url]?.objectId;
+            const populationId = ctx.population[this.url]?.objectId;
+            const operations = [deleteIslandBatch(id)];
+            if (ascensionId) {
+                operations.push(deleteAscensionBatch(ascensionId));
+            }
+            if (populationId) {
+                operations.push(deletePopulationBatch(populationId));
+            }
 
-            // NOTE: Async operation
-            updateGame(game.objectId, game).then(() => ctx.setGame(game));
+            const result = await batch(operations);
 
-            update();
+            if (result.every(x => x.hasOwnProperty('success'))) {
+                islands.splice(index, 1);
+                game.islands.splice(index, 1);
+                ctx.setIslands(islands);
+                
+                // NOTE: Async operation
+                updateGame(game.objectId, game).then(() => ctx.setGame(game));
+                
+                update();
+            } else {
+                alert('An error occured. Please, reload the game and try again.');
+            }
         }
     }
 

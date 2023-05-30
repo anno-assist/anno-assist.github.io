@@ -1,4 +1,4 @@
-import { del, get, post, put } from './api.js';
+import { batchDel, get, post, put } from './api.js';
 import { filter, addOwner, islandPointer, gamePointer } from './queries.js';
 
 
@@ -35,6 +35,6 @@ export async function updateAscension(id, ascension, dontMask = false) {
     return put(endpoints.byId + id, ascension, dontMask);
 }
 
-export async function deleteAscension(id) {
-    return del(endpoints.byId + id);
+export function deleteAscensionBatch(id) {
+    return batchDel(endpoints.byId + id);
 }

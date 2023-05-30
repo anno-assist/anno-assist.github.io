@@ -1,4 +1,4 @@
-import { del, get, post, put } from './api.js';
+import { batchDel, get, post, put } from './api.js';
 import { filter, addOwner, gamePointer } from './queries.js';
 
 
@@ -19,8 +19,8 @@ export async function createIsland(island) {
     return post(endpoints.catalog, island);
 }
 
-export async function deleteIsland(id) {
-    return del(endpoints.byId + id);
+export function deleteIslandBatch(id) {
+    return batchDel(endpoints.byId + id);
 }
 
 export async function updateIsland(id, island) {

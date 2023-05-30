@@ -48,7 +48,7 @@ export async function populationView(ctx) {
     if (!island) {
         return ctx.page.redirect(to('/'));
     }
-    if (ctx.population[islandUrl] == undefined) {
+    if (ctx.population[islandUrl] == undefined || ctx.population[islandUrl].island.objectId != island.objectId) {
         const dataModel = Object.fromEntries(Object.keys(popSettings.ascension).map(k => [k, 0]));
         const model = {
             game: ctx.game.objectId,

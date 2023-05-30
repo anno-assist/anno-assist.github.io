@@ -79,3 +79,79 @@ export const get = request.bind(null, 'get');
 export const post = request.bind(null, 'post');
 export const put = request.bind(null, 'put');
 export const del = request.bind(null, 'delete');
+
+
+const bacthLimit = 20;
+
+function prepare(method, url, data) {
+    const options = {
+        method,
+        path: url
+    };
+
+    if (data !== undefined) {
+        options.body = data;
+    }
+
+    return options;
+}
+
+export const batchPost = prepare.bind(null, 'POST');
+export const batchPut = prepare.bind(null, 'PUT');
+export const batchDel = prepare.bind(null, 'DELETE');
+
+export async function batch(...requests) {
+    if (Array.isArray(requests[0]) && requests.length == 1) {
+        requests = requests[0];
+    }
+    const pages = Math.ceil(requests.length / bacthLimit);
+    const batches = new Array(pages);
+
+    for (let i = 0; i < batches.length; i++) {
+        batches[i] = requests.slice(i * bacthLimit, (i + 1) * bacthLimit);
+    }
+
+    const batchResult = [];
+    const userData = getUserData();
+
+    for (let batch of batches) {
+        const options = {
+            method: 'post',
+            headers: {
+                'X-Parse-Application-Id': appId,
+                'X-Parse-JavaScript-Key': apiKey,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ requests: batch })
+        };
+
+        if (userData) {
+            const token = userData.sessionToken;
+            options.headers['X-Parse-Session-Token'] = token;
+        }
+    
+        try {
+            const response = await fetch(host + '/batch', options);
+    
+            let result;
+            if (response.status != 204) {
+                result = await response.json();
+            }
+    
+            if (response.ok == false) {
+                const error = result;
+                throw {
+                    message: error.error,
+                    handled: false
+                };
+            }
+    
+            batchResult.push(result);
+    
+        } catch (err) {
+            batchResult.push(err);
+        }
+    }
+
+    return batchResult.flat();
+}

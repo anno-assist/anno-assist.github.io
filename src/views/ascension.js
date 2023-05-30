@@ -97,7 +97,7 @@ export async function ascensionView(ctx) {
     if (!island) {
         return ctx.page.redirect(to('/'));
     }
-    if (ctx.ascension[islandUrl] == undefined) {
+    if (ctx.ascension[islandUrl] == undefined || ctx.ascension[islandUrl].island.objectId != island.objectId) {
         const model = {
             game: ctx.game.objectId,
             island: island.objectId,
