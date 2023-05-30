@@ -127,6 +127,6 @@ export async function settingsView(ctx) {
         const population = Object.fromEntries(populationData.map(a => [islandIndex[a.island.objectId].url, a]));
         ctx.setPopulation(population);
 
-        update();
+        ctx.page.redirect(to('/'));
     }
 }

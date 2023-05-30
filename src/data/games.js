@@ -1,19 +1,23 @@
+import { getBase } from '../util.js';
 import { del, get, post, put } from './api.js';
-import { addOwner } from './queries.js';
+import { addOwner, filter } from './queries.js';
 
 
 const endpoints = {
-    catalog: '/classes/Game',
+    catalog: version => `/classes/Game?${filter('version', version)}`,
+    create: '/classes/Game',
     byId: '/classes/Game/'
 };
 
 export async function getGames() {
-    return (await get(endpoints.catalog)).results;
+    const version = getBase();
+    return (await get(endpoints.catalog(version))).results;
 }
 
 export async function create(game) {
     addOwner(game);
-    return post(endpoints.catalog, game);
+    game.version = getBase();
+    return post(endpoints.create, game);
 }
 
 export async function deleteGame(id) {

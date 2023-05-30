@@ -67,12 +67,20 @@ const islandRow = (index, island, popSummary, onDelete, onRename, onMove) => htm
     </td>
 </tr>`;
 
+const noActiveGameTemplate = () => html`
+<h1>Islands Overview</h1>
+<section class="main">
+    <div class="box">
+        There is no game selected. Go to the settings page to <a class="link" href=${to('/settings')}>Load or Create a game.</a>
+    </div>
+</section>`;
+
 
 export async function islandsView(ctx) {
     const popSettings = ctx.settings.population;
     const game = ctx.game;
     if (!game) {
-        ctx.page.redirect(to('/settings'));
+        return ctx.render(noActiveGameTemplate());
     }
 
     const islands = ctx.islands;
