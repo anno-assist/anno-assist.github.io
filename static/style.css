@@ -8,36 +8,10 @@ a {
     color: black;
 }
 
-.nav,
-.sub-nav a {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: antiquewhite;
-}
-
-.nav:hover,
-.sub-nav a:hover {
-    background-color: rgba(255, 255, 255, 0.5);
-    color: black;
-}
-
-.nav.active,
-.sub-nav a.active {
-    background-color: rgba(255, 255, 255, 0.5);
-    color: black;
-    font-weight: 700;
-}
-
 h1, h2, h3 {
     font-size: 120%;
     margin: 8px 0;
     padding: 0;
-}
-
-h1 {
-    margin: 0 4px ;
-    padding: 4px 8px;
-    background-color: rgba(170, 126, 65, 0.9);
-    color: antiquewhite;
 }
 
 .prim {
@@ -82,11 +56,6 @@ h1 {
     padding: 8px 16px;
     box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.3);
     background-color: rgba(0, 0, 0, 0.4);
-}
-
-.box {
-    background-color: antiquewhite;
-    box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
 

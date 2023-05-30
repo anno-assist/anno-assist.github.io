@@ -4,18 +4,6 @@ textarea {
     font-size: 16px;
 }
 
-.btn {
-    border: none;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: antiquewhite;
-    margin: 0;
-    padding: 4px 8px;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.3);
-    display: inline-block;
-    border-radius: 4px;
-    text-align: center;
-}
-
 .btn:hover {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.5);

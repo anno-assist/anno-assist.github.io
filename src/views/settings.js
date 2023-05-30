@@ -51,8 +51,9 @@ const gameRow = (game, onDelete, onLoad) => html`
         ${game.active ? smallIcon('arrow', 'left') : null}<span class="label left">${game.name}</span>
     </td>
     <td>
+        ${game.active ? 'Current game' : html`
         <button @click=${onLoad} class="btn"><i class="fa-solid fa-download"></i> Load</button>
-        <button @click=${onDelete} class="btn"><i class="fa-solid fa-trash-can"></i> Delete</button>
+        <button @click=${onDelete} class="btn"><i class="fa-solid fa-trash-can"></i> Delete</button>`}
     </td>
 </tr>`;
 
