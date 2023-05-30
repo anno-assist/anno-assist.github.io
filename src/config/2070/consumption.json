@@ -1,180 +1,244 @@
 {
-    "peasant": [
+    "tycoon_worker": [
         {
-            "key": "fish",
-            "kgPerMinute": 10
+            "key": "Fish",
+            "kgPerMinute": 8
         },
         {
-            "key": "cider",
-            "kgPerMinute": 4.4
+            "key": "Liquor",
+            "kgPerMinute": 5
         }
     ],
-    "citizen": [
+    "tycoon_employee": [
         {
-            "key": "fish",
-            "kgPerMinute": 4
-        },
-        {
-            "key": "cider",
-            "kgPerMinute": 4.4
-        },
-        {
-            "key": "linen",
-            "kgPerMinute": 4.2
-        },
-        {
-            "key": "spices",
-            "kgPerMinute": 4
-        }
-    ],
-    "patrician": [
-        {
-            "key": "fish",
-            "kgPerMinute": 2.2
-        },
-        {
-            "key": "cider",
-            "kgPerMinute": 2.3
-        },
-        {
-            "key": "linen",
-            "kgPerMinute": 1.9
-        },
-        {
-            "key": "spices",
-            "kgPerMinute": 2.2
-        },
-        {
-            "key": "bread",
+            "key": "Fish",
             "kgPerMinute": 5.5
         },
         {
-            "key": "beer",
-            "kgPerMinute": 2.4
+            "key": "Liquor",
+            "kgPerMinute": 4.5
         },
         {
-            "key": "leather",
-            "kgPerMinute": 2.8
+            "key": "TVDinner",
+            "kgPerMinute": 5.2
         },
         {
-            "key": "books",
-            "kgPerMinute": 1.6
-        },
-        {
-            "key": "candlestick",
-            "kgPerMinute": 0.8
-        }
-    ],
-    "noble": [
-        {
-            "key": "fish",
-            "kgPerMinute": 1.6
-        },
-        {
-            "key": "cider",
-            "kgPerMinute": 1.3
-        },
-        {
-            "key": "linen",
-            "kgPerMinute": 0.8
-        },
-        {
-            "key": "spices",
-            "kgPerMinute": 1.6
-        },
-        {
-            "key": "bread",
-            "kgPerMinute": 3.9
-        },
-        {
-            "key": "beer",
-            "kgPerMinute": 1.4
-        },
-        {
-            "key": "leather",
-            "kgPerMinute": 1.6
-        },
-        {
-            "key": "books",
-            "kgPerMinute": 0.9
-        },
-        {
-            "key": "candlestick",
-            "kgPerMinute": 0.6
-        },
-        {
-            "key": "meat",
-            "kgPerMinute": 2.2
-        },
-        {
-            "key": "wine",
-            "kgPerMinute": 2
-        },
-        {
-            "key": "furcoats",
-            "kgPerMinute": 1.6
-        },
-        {
-            "key": "glasses",
-            "kgPerMinute": 1.17
-        },
-        {
-            "key": "brocade",
-            "kgPerMinute": 1.42
-        }
-    ],
-    "beggar": [
-        {
-            "key": "fish",
-            "kgPerMinute": 7
-        },
-        {
-            "key": "cider",
+            "key": "Toys",
             "kgPerMinute": 3
         }
     ],
-    "nomad": [
+    "tycoon_engineer": [
         {
-            "key": "dates",
-            "kgPerMinute": 6.66
+            "key": "Fish",
+            "kgPerMinute": 3.5
         },
         {
-            "key": "milk",
-            "kgPerMinute": 3.44
-        },
-        {
-            "key": "carpets",
-            "kgPerMinute": 1.65
-        }
-    ],
-    "envoy": [
-        {
-            "key": "dates",
+            "key": "Liquor",
             "kgPerMinute": 5
         },
         {
-            "key": "milk",
+            "key": "TVDinner",
+            "kgPerMinute": 4.2
+        },
+        {
+            "key": "Toys",
+            "kgPerMinute": 2
+        },
+        {
+            "key": "LuxuryMeal",
+            "kgPerMinute": 1.2
+        },
+        {
+            "key": "Champagne",
+            "kgPerMinute": 1.2
+        }
+    ],
+    "tycoon_executive": [
+        {
+            "key": "Fish",
+            "kgPerMinute": 2.5
+        },
+        {
+            "key": "Liquor",
+            "kgPerMinute": 2
+        },
+        {
+            "key": "TVDinner",
+            "kgPerMinute": 3.5
+        },
+        {
+            "key": "Toys",
+            "kgPerMinute": 1.2
+        },
+        {
+            "key": "LuxuryMeal",
+            "kgPerMinute": 0.9
+        },
+        {
+            "key": "Champagne",
+            "kgPerMinute": 0.9
+        },
+        {
+            "key": "Jewelry",
+            "kgPerMinute": 2
+        },
+        {
+            "key": "Pharmaceuticals",
+            "kgPerMinute": 1.75
+        }
+    ],
+    "eco_worker": [
+        {
+            "key": "Fish",
+            "kgPerMinute": 8
+        },
+        {
+            "key": "Tea",
+            "kgPerMinute": 4
+        }
+    ],
+    "eco_employee": [
+        {
+            "key": "Fish",
+            "kgPerMinute": 5.5
+        },
+        {
+            "key": "Tea",
+            "kgPerMinute": 4
+        },
+        {
+            "key": "HealthFood",
+            "kgPerMinute": 4.5
+        },
+        {
+            "key": "Communicator",
+            "kgPerMinute": 3.5
+        }
+    ],
+    "eco_engineer": [
+        {
+            "key": "Fish",
+            "kgPerMinute": 3.5
+        },
+        {
+            "key": "Tea",
+            "kgPerMinute": 3
+        },
+        {
+            "key": "HealthFood",
+            "kgPerMinute": 3.5
+        },
+        {
+            "key": "Communicator",
+            "kgPerMinute": 2.5
+        },
+        {
+            "key": "ComfortFood",
+            "kgPerMinute": 1.5
+        },
+        {
+            "key": "HealthDrink",
+            "kgPerMinute": 1.5
+        }
+    ],
+    "eco_executive": [
+        {
+            "key": "Fish",
+            "kgPerMinute": 2.5
+        },
+        {
+            "key": "Tea",
+            "kgPerMinute": 2
+        },
+        {
+            "key": "HealthFood",
+            "kgPerMinute": 3
+        },
+        {
+            "key": "Communicator",
+            "kgPerMinute": 1.6
+        },
+        {
+            "key": "ComfortFood",
+            "kgPerMinute": 1.1
+        },
+        {
+            "key": "HealthDrink",
+            "kgPerMinute": 1.1
+        },
+        {
+            "key": "Holographer",
+            "kgPerMinute": 2
+        },
+        {
+            "key": "HomeRobot",
+            "kgPerMinute": 1.5
+        }
+    ],
+    "assistant": [
+        {
+            "key": "Fish",
+            "kgPerMinute": 2.5
+        },
+        {
+            "key": "EnergyDrink",
+            "kgPerMinute": 4.15
+        },
+        {
+            "key": "FunctionalFood",
+            "kgPerMinute": 3.35
+        }
+    ],
+    "researcher": [
+        {
+            "key": "Fish",
+            "kgPerMinute": 2.5
+        },
+        {
+            "key": "EnergyDrink",
+            "kgPerMinute": 1.7
+        },
+        {
+            "key": "FunctionalFood",
             "kgPerMinute": 2.25
         },
         {
-            "key": "carpets",
+            "key": "NeuroImplants",
             "kgPerMinute": 1
         },
         {
-            "key": "coffee",
+            "key": "CoralExtract",
+            "kgPerMinute": 2
+        }
+    ],
+    "genius": [
+        {
+            "key": "Fish",
+            "kgPerMinute": 1.25
+        },
+        {
+            "key": "EnergyDrink",
             "kgPerMinute": 1
         },
         {
-            "key": "necklaces",
-            "kgPerMinute": 1.33
-        },
-        {
-            "key": "perfume",
+            "key": "FunctionalFood",
             "kgPerMinute": 0.8
         },
         {
-            "key": "marzipan",
-            "kgPerMinute": 1.63
+            "key": "NeuroImplants",
+            "kgPerMinute": 1
+        },
+        {
+            "key": "CoralExtract",
+            "kgPerMinute": 1.5
+        },
+        {
+            "key": "LaboratoryInstruments",
+            "kgPerMinute": 3
+        },
+        {
+            "key": "BioSuites",
+            "kgPerMinute": 0.45
         }
     ]
 }

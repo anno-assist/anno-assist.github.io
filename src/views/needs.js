@@ -1,8 +1,7 @@
 import { html } from '../lib/lit-html.js';
-import { deepClone, outputToKgPerMin, pretty, round } from '../util.js';
+import { deepClone, outputToKgPerMin, round, to } from '../util.js';
 import { productionChain } from './chains.js';
 import { icon, smallIcon } from './partials.js';
-import { productionSection } from './production.js';
 
 
 const needsTemplate = (sections) => html`
@@ -17,7 +16,7 @@ const needsSection = ({ civIndex, needsIndex, needsByGroup, summary }, productio
         <tr>
             <th>Goods</th>
             <th>Total</th>
-            ${civIndex.map(type => html`<th>${icon(type)}</th>`)}
+            ${civIndex.map(type => html`<th>${icon(type, 'dist')}<span class="sub">${needsByGroup[type].pop}</span></th>`)}
             <th>Production Chains</th>
         </tr>
     </thead>
@@ -42,18 +41,18 @@ const needsRow = (needType, { required, chains }, needsByGroup, productionSettin
         <td>
             ${needsCell({ required, chains })}
         </td>
-
+    
         ${Object.values(needsByGroup).map(p => html`<td class="wide">
             ${needsCell(p.needs[needType])}
         </td>`)}
-
+    
         <td class="narrow">
             <div class="needs-grid">
                 ${Object.values(needsByGroup).map(p => narrowCell(p.type, p.needs[needType]?.required,
-        p.needs[needType]?.chains))}
+                p.needs[needType]?.chains))}
             </div>
         </td>
-
+    
         <td class="wide" style="position: relative">
             ${productionChain(needType, productionSettings, chains, true)}
             ${details && smallIcon('process', 'toggle')}
@@ -83,6 +82,14 @@ const narrowCell = (type, required, chains) => !required ? null : html`
     <span class="label">${round(chains, 1)}</span>
     <span class="label sub">(${round(required / 1000, 1)}&nbsp;t/min)</span>`;
 
+const noPopulationTemplate = () => html`
+<h1>Needs</h1>
+<section class="main">
+    <div class="box">
+        This island is not populated
+    </div>
+</section>`;
+
 export function needsView(ctx) {
     const popSettings = ctx.settings.population;
     const consumption = ctx.settings.consumption;
@@ -90,17 +97,17 @@ export function needsView(ctx) {
     const islandUrl = ctx.selection.island;
     const population = ctx.population[islandUrl];
 
-    const occident = Object.fromEntries(Object.entries(popSettings.ascension).filter(([k, { type }]) => type == 'occident').map(([k]) => [k, population[k]]));
-    const orient = Object.fromEntries(Object.entries(popSettings.ascension).filter(([k, { type }]) => type == 'orient').map(([k]) => [k, population[k]]));
-
-    const sections = [];
-    if (population) {
-        const occidentSummary = summarizeNeeds(occident, consumption, production);
-        const orientSummary = summarizeNeeds(orient, consumption, production);
-
-        sections.push(occidentSummary && needsSection(occidentSummary, production));
-        sections.push(orientSummary && needsSection(orientSummary, production));
+    if (!population) {
+        return ctx.render(noPopulationTemplate());
     }
+
+    const factionKeys = popSettings.types.map(({ type, name }) => ({ type, name, keys: Object.entries(popSettings.ascension).filter(([k, { type: t }]) => t == type).map(([k]) => k) }));
+    const keysData = factionKeys.map(faction => Object.assign({}, faction, { data: Object.fromEntries(faction.keys.map(k => [k, population.data[k]])) }));
+
+    const sections = keysData
+        .map(faction => summarizeNeeds(faction.data, consumption, production))
+        .filter(s => s)
+        .map(s => needsSection(s, production));
 
     ctx.render(needsTemplate(sections));
 }
