@@ -163,3 +163,15 @@ export function getBase() {
 export function to(uri) {
     return base + uri;
 }
+
+export function getIslandRelations(islandId, ctx) {
+    const island = ctx.islands.find(i => islandId == i.objectId);
+    const ascensionId = ctx.ascension[island?.url]?.objectId;
+    const populationId = ctx.population[island?.url]?.objectId;
+
+    return {
+        islandId,
+        ascensionId,
+        populationId
+    };
+}

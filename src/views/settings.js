@@ -1,7 +1,8 @@
-import { getAscension } from '../data/ascension.js';
-import { create, deleteGame, getGames } from '../data/games.js';
-import { getIslands } from '../data/islands.js';
-import { getPopulation } from '../data/population.js';
+import { batch } from '../data/api.js';
+import { deleteAscensionBatch, getAscension } from '../data/ascension.js';
+import { create, deleteGameBatch, getGames } from '../data/games.js';
+import { deleteIslandBatch, getIslands } from '../data/islands.js';
+import { deletePopulationBatch, getPopulation } from '../data/population.js';
 import { html } from '../lib/lit-html.js';
 import { createSubmitHandler, to } from '../util.js';
 import { smallIcon } from './partials.js';
@@ -12,36 +13,33 @@ const settingsTemplate = (games, user, onCreate, onDelete, onLoad, error) => htm
 <section class="main">
     ${!user ? html`
     <div class="box label">
-        <a class="link" href=${to('/login')}>Sign in</a> to enable cloud sync
-    </div>` : html`
-    <div class="box">
-        <i class="fa-solid fa-user-check"></i> Logged in as ${user.username}. <a class="link" href=${to('/logout')}>Logout</a>
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Game Name</th>
-                <th>Controls</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${games.length == 0 ? html`
-            <tr>
-                <td colspan="2">No games are recorded</td>
-            </tr>` : games.map((g, i) => gameRow(g, onDelete.bind(null, i), onLoad.bind(null, i)))}
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="2">
-                    <form @submit=${onCreate}>
-                        ${error ? html`<p class="error">${error}</p>` : null}
-                        <input type="text" name="name" placeholder="Game Name">
-                        <button class="btn"><i class="fa-solid fa-plus"></i> Create</button>
-                    </form>
-                </td>
-            </tr>
-        </tfoot>
-    </table>`}
+        <a class="link" href=${to('/login')}>Sign in</a> to enable cloud sync </div>` : html` <div class="box">
+            <i class="fa-solid fa-user-check"></i> Logged in as ${user.username}. <a class="link"
+                href=${to('/logout')}>Logout </a> </div> <table>
+                <thead>
+                    <tr>
+                        <th>Game Name</th>
+                        <th>Controls</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${games.length == 0 ? html`
+                    <tr>
+                        <td colspan="2">No games are recorded</td>
+                    </tr>` : games.map((g, i) => gameRow(g, onDelete.bind(null, i), onLoad.bind(null, i)))}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <form @submit=${onCreate}>
+                                ${error ? html`<p class="error">${error}</p>` : null}
+                                <input type="text" name="name" placeholder="Game Name">
+                                <button class="btn"><i class="fa-solid fa-plus"></i> Create</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tfoot>
+                </table>`}
 
 </section>`;
 
@@ -105,9 +103,27 @@ export async function settingsView(ctx) {
         const choice = confirm(`Are you sure you want to delete "${game.name}"?`);
 
         if (choice) {
-            await deleteGame(game.objectId);
-            games.splice(index, 1);
-            update();
+            const [islandData, ascensionData, populationData] = await Promise.all([
+                getIslands(game.objectId),
+                getAscension(game.objectId),
+                getPopulation(game.objectId)
+            ]);
+
+            const operations = [
+                deleteGameBatch(game.objectId),
+                ...islandData.map(i => deleteIslandBatch(i.objectId)),
+                ...ascensionData.map(a => deleteAscensionBatch(a.objectId)),
+                ...populationData.map(p => deletePopulationBatch(p.objectId))
+            ];
+
+            const result = await batch(operations);
+            
+            if (result.every(x => x.hasOwnProperty('success'))) {
+                games.splice(index, 1);
+                update();
+            } else {
+                alert('An error occured. Please, reload the page and try again.');
+            }
         }
     }
 

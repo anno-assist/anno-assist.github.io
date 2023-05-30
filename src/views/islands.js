@@ -1,6 +1,6 @@
 import { html } from '../lib/lit-html.js';
 import { createIsland, deleteIslandBatch, updateIsland } from '../data/islands.js';
-import { createSubmitHandler, createUrl, to } from '../util.js';
+import { createSubmitHandler, createUrl, getIslandRelations, to } from '../util.js';
 import { updateGame } from '../data/games.js';
 import { deleteAscensionBatch } from '../data/ascension.js';
 import { deletePopulationBatch } from '../data/population.js';
@@ -21,7 +21,8 @@ const islandsTemplate = (islands, popSummary, onCreate, onDelete, onRename, onMo
             </tr>
         </thead>
         <tbody>
-            ${islands.map((i, index) => islandRow(index, i, popSummary[i.url], onDelete.bind(i), onRename.bind(i), onMove.bind(i)))}
+            ${islands.map((i, index) => islandRow(index, i, popSummary[i.url], onDelete.bind(i), onRename.bind(i),
+            onMove.bind(i)))}
         </tbody>
         <tfoot>
             <tr>
@@ -74,9 +75,8 @@ const noActiveGameTemplate = () => html`
 <h1>Islands Overview</h1>
 <section class="main">
     <div class="box">
-        There is no game selected. Go to the settings page to <a class="link" href=${to('/settings')}>Load or Create a game.</a>
-    </div>
-</section>`;
+        There is no game selected. Go to the settings page to <a class="link" href=${to('/settings')}>Load or Create a
+            game.</a> </div> </section>`;
 
 
 export async function islandsView(ctx) {
@@ -135,8 +135,8 @@ export async function islandsView(ctx) {
         const choice = confirm(`Are you sure you want to delete ${islands[index].name}?`);
 
         if (choice) {
-            const ascensionId = ctx.ascension[this.url]?.objectId;
-            const populationId = ctx.population[this.url]?.objectId;
+            const { ascensionId, populationId } = getIslandRelations(id, ctx);
+
             const operations = [deleteIslandBatch(id)];
             if (ascensionId) {
                 operations.push(deleteAscensionBatch(ascensionId));
@@ -151,10 +151,10 @@ export async function islandsView(ctx) {
                 islands.splice(index, 1);
                 game.islands.splice(index, 1);
                 ctx.setIslands(islands);
-                
+
                 // NOTE: Async operation
                 updateGame(game.objectId, game).then(() => ctx.setGame(game));
-                
+
                 update();
             } else {
                 alert('An error occured. Please, reload the game and try again.');

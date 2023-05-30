@@ -1,5 +1,5 @@
 import { getBase } from '../util.js';
-import { del, get, post, put } from './api.js';
+import { batchDel, get, post, put } from './api.js';
 import { addOwner, filter } from './queries.js';
 
 
@@ -20,8 +20,8 @@ export async function create(game) {
     return post(endpoints.create, game);
 }
 
-export async function deleteGame(id) {
-    return del(endpoints.byId + id);
+export function deleteGameBatch(id) {
+    return batchDel(endpoints.byId + id);
 }
 
 export async function updateGame(id, game) {
